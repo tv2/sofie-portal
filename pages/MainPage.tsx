@@ -34,8 +34,8 @@ export const MainPage = () => {
                     <button
                         className={
                             iframeIndex === -1
-                            ? styles.cardselected
-                            : styles.card
+                                ? styles.cardselected
+                                : styles.card
                         }
                         onClick={(event) => IframeViewHandler(-1)}
                     >
@@ -45,23 +45,29 @@ export const MainPage = () => {
                         (client: ClientAddress, index: number) => {
                             return (
                                 <button
-                                className={
-                                    iframeIndex === index
-                                    ? styles.cardselected
-                                    : styles.card
-                                }
-                                onClick={(event) =>
-                                    IframeViewHandler(index)
-                                }
+                                    className={
+                                        iframeIndex === index
+                                            ? styles.cardselected
+                                            : styles.card
+                                    }
+                                    onClick={(event) =>
+                                        IframeViewHandler(index)
+                                    }
                                 >
                                     {client.name}
                                 </button>
                             )
                         }
-                        )}
+                    )}
                 </div>
             </main>
-            <div className={styles.users}>{"Active Users: Afv.D Lyd"}</div>
+            <div className={styles.usergrid}>
+                <div className={styles.usercard}>{'Active Users: '}</div>
+                <div className={styles.usercard}>{'Afv.D Lyd'}</div>
+                <div className={styles.usercard}>{'Afv.D Producer'}</div>
+                <div className={styles.usercard}>{'MCR 1'}</div>
+                <div className={styles.usercard}>{'CONT 4'}</div>
+            </div>
             {iframeIndex === -1
                 ? ''
                 : IframeView(clientAddress[iframeIndex].hostname)}

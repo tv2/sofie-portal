@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import styles from '../styles/MainPage.module.css'
-import IframeView from './IframeView'
+import IframeView from '../pages/IframeView'
 interface ClientAddress {
     name: string
     description: string
@@ -20,11 +19,7 @@ const clientAddress: ClientAddress[] = [
     { name: 'Q-BOX 10', description: '', hostname: 'http://localhost:3000' },
 ]
 
-export const MainPage = () => {
-    const [iframeIndex, setIframeIndex] = useState(-1)
-    const IframeViewHandler = (index: number) => {
-        setIframeIndex(index)
-    }
+export const MainPage = (props) => {
     return (
         <div className={styles.container}>
             <main className={styles.main}>
@@ -33,11 +28,11 @@ export const MainPage = () => {
 
                     <button
                         className={
-                            iframeIndex === -1
+                            props.iframeIndex === -1
                                 ? styles.cardselected
                                 : styles.card
                         }
-                        onClick={(event) => IframeViewHandler(-1)}
+                        onClick={() => props.iframeViewHandler(-1)}
                     >
                         HOME
                     </button>
@@ -45,13 +40,14 @@ export const MainPage = () => {
                         (client: ClientAddress, index: number) => {
                             return (
                                 <button
+                                    key={index}
                                     className={
-                                        iframeIndex === index
+                                        props.iframeIndex === index
                                             ? styles.cardselected
                                             : styles.card
                                     }
-                                    onClick={(event) =>
-                                        IframeViewHandler(index)
+                                    onClick={() =>
+                                        props.iframeViewHandler(index)
                                     }
                                 >
                                     {client.name}
@@ -68,9 +64,9 @@ export const MainPage = () => {
                 <div className={styles.usercard}>{'MCR 1'}</div>
                 <div className={styles.usercard}>{'CONT 4'}</div>
             </div>
-            {iframeIndex === -1
+            {props.iframeIndex === -1
                 ? ''
-                : IframeView(clientAddress[iframeIndex].hostname)}
+                : IframeView(clientAddress[props.iframeIndex].hostname)}
         </div>
     )
 }

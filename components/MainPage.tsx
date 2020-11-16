@@ -1,23 +1,14 @@
 import styles from '../styles/MainPage.module.css'
 import IframeView from '../pages/IframeView'
-interface ClientAddress {
+
+import webAddressJSON from '../storage/webpages.json'
+interface IWebAddress {
     name: string
     description: string
     hostname: string
 }
+const webAddress: IWebAddress[] = webAddressJSON
 
-const clientAddress: ClientAddress[] = [
-    { name: 'Q-BOX 01', description: '', hostname: 'http://localhost:1176' },
-    { name: 'Q-BOX 02', description: '', hostname: 'http://localhost:3000' },
-    { name: 'Q-BOX 03', description: '', hostname: 'http://localhost:3000' },
-    { name: 'Q-BOX 04', description: '', hostname: 'http://localhost:3000' },
-    { name: 'Q-BOX 05', description: '', hostname: 'http://localhost:3000' },
-    { name: 'Q-BOX 06', description: '', hostname: 'http://localhost:3000' },
-    { name: 'Q-BOX 07', description: '', hostname: 'http://localhost:3000' },
-    { name: 'Q-BOX 08', description: '', hostname: 'http://localhost:3000' },
-    { name: 'Q-BOX 09', description: '', hostname: 'http://localhost:3000' },
-    { name: 'Q-BOX 10', description: '', hostname: 'http://localhost:3000' },
-]
 
 export const MainPage = (props) => {
     return (
@@ -36,7 +27,7 @@ export const MainPage = (props) => {
                     >
                         HOME
                     </button>
-                    {clientAddress.map(
+                    {webAddress.map(
                         (client: ClientAddress, index: number) => {
                             return (
                                 <button
@@ -66,7 +57,7 @@ export const MainPage = (props) => {
             </div>
             {props.iframeIndex === -1
                 ? ''
-                : IframeView(clientAddress[props.iframeIndex].hostname)}
+                : IframeView(webAddress[props.iframeIndex].hostname)}
         </div>
     )
 }

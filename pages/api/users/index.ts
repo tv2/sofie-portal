@@ -1,6 +1,6 @@
 import usersjson from '../../../storage/users.json'
 
-interface IUsers {
+export interface IUsers {
     id: string
     name: string
 }

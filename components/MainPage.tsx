@@ -15,8 +15,7 @@ export const MainPage = (props) => {
         <div className={styles.container}>
             <main className={styles.main}>
                 <div className={styles.grid}>
-                    <div className={styles.clientname}>User : Afv.D Lyd</div>
-
+                    <div className={styles.clientname}>User : {props.user.name}</div>
                     <button
                         className={
                             props.iframeIndex === -1
@@ -28,7 +27,7 @@ export const MainPage = (props) => {
                         HOME
                     </button>
                     {webAddress.map(
-                        (client: ClientAddress, index: number) => {
+                        (client: IWebAddress, index: number) => {
                             return (
                                 <button
                                     key={index}
@@ -48,6 +47,16 @@ export const MainPage = (props) => {
                     )}
                 </div>
             </main>
+
+            {props.iframeIndex === -1
+                ? ''
+                : IframeView(webAddress[props.iframeIndex].hostname)}
+        </div>
+    )
+}
+
+
+/* USER Active list Example - not implemented yet
             <div className={styles.usergrid}>
                 <div className={styles.usercard}>{'Active Users: '}</div>
                 <div className={styles.usercard}>{'Afv.D Lyd'}</div>
@@ -55,9 +64,4 @@ export const MainPage = (props) => {
                 <div className={styles.usercard}>{'MCR 1'}</div>
                 <div className={styles.usercard}>{'CONT 4'}</div>
             </div>
-            {props.iframeIndex === -1
-                ? ''
-                : IframeView(webAddress[props.iframeIndex].hostname)}
-        </div>
-    )
-}
+*/

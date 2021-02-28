@@ -19,7 +19,7 @@ export default function Index() {
     const userName = urlParams.get('username')
     console.log(userName)
     if (!verifyUser(userName, data)) {
-        return <div></div>
+        return <div>UNKNOWN USER - /?username={userName}</div>
     }
 
     return (

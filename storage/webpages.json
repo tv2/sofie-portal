@@ -1,5 +1,4 @@
 [
-    { "name": "AFV D Sisyfos", "description": "", "hostname": "http://localhost:1176" },
     { "name": "Q-BOX 01", "description": "", "hostname": "http://localhost:1176" },
     { "name": "Q-BOX 02", "description": "", "hostname": "http://localhost:3000" },
     { "name": "Q-BOX 03", "description": "", "hostname": "http://localhost:3000" },

@@ -136,3 +136,4 @@ workflows:
                 - develop
                 - stage
                 - /release\d+/
+                - feat/deployment-docker-ci

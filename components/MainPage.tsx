@@ -9,13 +9,11 @@ interface IWebAddress {
 }
 const webAddress: IWebAddress[] = webAddressJSON
 
-
 export const MainPage = (props) => {
     return (
         <div className={styles.container}>
             <main className={styles.main}>
                 <div className={styles.grid}>
-                    <div className={styles.clientname}>User : {props.user.name}</div>
                     <button
                         className={
                             props.iframeIndex === -1
@@ -26,25 +24,25 @@ export const MainPage = (props) => {
                     >
                         HOME
                     </button>
-                    {webAddress.map(
-                        (client: IWebAddress, index: number) => {
-                            return (
-                                <button
-                                    key={index}
-                                    className={
-                                        props.iframeIndex === index
-                                            ? styles.cardselected
-                                            : styles.card
-                                    }
-                                    onClick={() =>
-                                        props.iframeViewHandler(index)
-                                    }
-                                >
-                                    {client.name}
-                                </button>
-                            )
-                        }
-                    )}
+
+                    {webAddress.map((client: IWebAddress, index: number) => {
+                        return (
+                            <button
+                                key={index}
+                                className={
+                                    props.iframeIndex === index
+                                        ? styles.cardselected
+                                        : styles.card
+                                }
+                                onClick={() => props.iframeViewHandler(index)}
+                            >
+                                {client.name}
+                            </button>
+                        )
+                    })}
+                </div>
+                <div className={styles.clientname}>
+                    User : {props.user.name}
                 </div>
             </main>
 
@@ -54,7 +52,6 @@ export const MainPage = (props) => {
         </div>
     )
 }
-
 
 /* USER Active list Example - not implemented yet
             <div className={styles.usergrid}>

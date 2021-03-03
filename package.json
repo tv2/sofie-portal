@@ -1,7 +1,18 @@
 {
   "name": "tv2-sofie-portal",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "MIT",
+  "author": {
+    "name": "Kasper Olsson Hans (TV2 Denmark)",
+    "email": "olzzon@github.com"
+},
+"contributors": [
+    {
+        "name": "Jesper Leerberg (TV2 Denmark",
+        "email": "leerberg@github.com"
+    }
+],
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",

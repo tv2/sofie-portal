@@ -1,4 +1,3 @@
-// @ts-ignore
 const app = require("express")();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -37,6 +36,9 @@ io.on("connection", socket => {
             channelUsers[roomId].splice(index, 1);
 
         io.sockets.in(roomId).emit("users", JSON.stringify(channelUsers[roomId]))
+    });
+
+    socket.once("disconnect", () => {
     });
 });
 

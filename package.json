@@ -3,14 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "NODE_OPTIONS='--inspect' node server.ts",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "yarn": "yarn dev"
   },
   "dependencies": {
+    "express": "4.17.1",
+    "fs": "0.0.1-security",
+    "moment": "2.29.1",
     "next": "^10.0.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "reactstrap": "8.9.0",
+    "socket.io": "3.1.2",
+    "socket.io-client": "3.1.2",
     "swr": "^0.3.8"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import React from "react";
+import styles from '../styles/MainPage.module.css'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
@@ -22,11 +23,11 @@ export default function Index() {
     }
 
     return (
-        <div className="">
+        <div className={styles.grid}>
             <ul>
                 {data.qboxes.map((qbox) => (
                     <a href={`/qbox/${[qbox.id]}?username=${userLoginId}`} key={data.id}>
-                        <button className="">{`Q-BOX ${qbox.id}`}</button>
+                        <button className={styles.card}>{`Q-BOX ${qbox.id}`}</button>
                     </a>
                 ))}
             </ul>

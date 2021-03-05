@@ -1,6 +1,4 @@
 .container {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -21,10 +19,22 @@
     width: 100vw;
 }
 
-.clientname {
+.clientlist {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100vw;
+    font-size: 1.4rem;
+    align-items: center;
+}
+
+.clientbutton {
     color: white;
-    font-size: 2rem;
-    align-items: left;
+    background-color: inherit;
+    margin: 10px;
+    font-size: 1.4rem;
+    border: inherit;
 }
 
 .usergrid {

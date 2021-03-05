@@ -17,7 +17,7 @@
     "dev": "NODE_OPTIONS='--inspect' node server.ts",
     "build": "next build",
     "start": "next start",
-    "yarn": "yarn dev"
+    "start-docker": "node server.ts",
     "release": "standard-version",
     "prepareChangelog": "standard-version --prerelease"
   },

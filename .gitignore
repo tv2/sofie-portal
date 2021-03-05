@@ -19,7 +19,7 @@
 .DS_Store
 *.pem
 /storage/users.json
-/storage/webpages.json
+/storage/settings.json
 
 # debug
 npm-debug.log*
@@ -34,3 +34,5 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+.idea

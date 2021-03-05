@@ -13,7 +13,7 @@ export interface IWebPages {
 }
 export interface ISettings {
     users: IUsers[]
-    qboxes: IWebPages[]
+    webpages: IWebPages[]
 }
 const settings: ISettings =  settingsJson
 

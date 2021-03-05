@@ -6,14 +6,14 @@ import useSocket from '../../hooks/useSocket'
 
 import settingsJSON from '../../storage/settings.json'
 
-export default function qbox() {
-    const [user, setUser] = useState({
+export default function iFramePage() {
+    const [userState, setUser] = useState({
         usersList: null,
     })
-    const [qboxUrl, setQboxUrl] = useState({
+    const [iframeUrlState, setIframeUrl] = useState({
         url: null,
     })
-    const [username, setUsername] = useState({
+    const [usernameState, setUsername] = useState({
         username: null,
     })
 
@@ -22,17 +22,17 @@ export default function qbox() {
 
     useEffect(() => {
         if (socket) {
-            const id = window.location.pathname.match(/\d+/)[0]
-            const username = new URLSearchParams(window.location.search).get(
+            const webPageId = window.location.pathname.match(/\d+/)[0]
+            const userId = new URLSearchParams(window.location.search).get(
                 'username'
             )
 
-            setQboxUrl({ url: settingsJSON.qboxes[Number(id) - 1].hostname })
-            setUsername({ username: username })
+            setIframeUrl({ url: settingsJSON.webpages[Number(webPageId) - 1].hostname })
+            setUsername({ username: userId })
 
-            socket.emit('room', { id: id, username: username })
-            socket.on('users', (data) => {
-                setUser({ usersList: JSON.parse(data) })
+            socket.emit('room', { id: webPageId, username: userId })
+            socket.on('users', (socketData: any) => {
+                setUser({ usersList: JSON.parse(socketData) })
             })
         }
     }, [socket])
@@ -41,25 +41,25 @@ export default function qbox() {
         <div className={mainPageStyles.container}>
             <div className={iFrameStyles.main}>
                 <div className={mainPageStyles.grid}>
-                    {settingsJSON.qboxes.map((qbox, index) => {
+                    {settingsJSON.webpages.map((webpage, index) => {
                         return (
                             <a
                                 href={
-                                    '/qbox/' +
-                                    qbox.id +
+                                    '/iframepage/' +
+                                    webpage.id +
                                     '?username=' +
-                                    username.username
+                                    usernameState.username
                                 }
-                                key={qbox.id}
+                                key={webpage.id}
                             >
                                 <button
                                     className={
-                                        qbox.id === index
+                                        webpage.id === index
                                             ? mainPageStyles.cardselected
                                             : mainPageStyles.card
                                     }
                                 >
-                                    {qbox.name}
+                                    {webpage.name}
                                 </button>
                             </a>
                         )
@@ -67,7 +67,7 @@ export default function qbox() {
                 </div>
                 <div className={mainPageStyles.clientlist}>
                     USERS :
-                    {user.usersList?.map((user) => {
+                    {userState.usersList?.map((user) => {
                         return (
                             <button className={mainPageStyles.clientbutton}>
                                 {user.userName}
@@ -77,7 +77,7 @@ export default function qbox() {
                 </div>
                 <iframe
                     className={iFrameStyles.iframeview}
-                    src={qboxUrl.url}
+                    src={iframeUrlState.url}
                 ></iframe>
             </div>
         </div>

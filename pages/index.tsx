@@ -1,11 +1,14 @@
 import useSWR from 'swr'
-import Link from 'next/link'
-import { IUsers } from './api/getUsers'
+import React from "react";
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
+export interface IUsers {
+    id: string
+    name: string
+}
 export default function Index() {
-    const { data, error } = useSWR('/api/getWebpages', fetcher)
+    const { data, error } = useSWR('/api/getSettings', fetcher)
     if (error) return <div>Failed to load </div>
     if (!data) return <div>Loading...</div>
 
@@ -19,14 +22,14 @@ export default function Index() {
     }
 
     return (
-        <ul>
-            {data.qboxes.map((webpage) => (
-                <li key={webpage.id}>
-                    <Link href={`/qbox/${[webpage.id]}?username=${userLoginId}`} as={`/qbox/${webpage.id}?username=${userLoginId}`}>
-                        <a>{`Webpage ${webpage.id}`}</a>
-                    </Link>
-                </li>
-            ))}
-        </ul>
+        <div className="">
+            <ul>
+                {data.qboxes.map((qbox) => (
+                    <a href={`/qbox/${[qbox.id]}?username=${userLoginId}`} key={data.id}>
+                        <button className="">{`Q-BOX ${qbox.id}`}</button>
+                    </a>
+                ))}
+            </ul>
+        </div>
     )
 }

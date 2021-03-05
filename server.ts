@@ -1,3 +1,4 @@
+// @ts-ignore
 const app = require("express")();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
@@ -10,18 +11,18 @@ const nextHandler = nextApp.getRequestHandler();
 const moment = require("moment");
 
 // fake DB
-let channelUsers = {};
+let roomUsers = {};
 
 // socket.io server
 io.on("connection", socket => {
 
-    socket.on("channel", (qboxInfo) => {
-        socket.join(qboxInfo.id)
-        if (channelUsers[qboxInfo.id] === undefined) {
-            channelUsers[qboxInfo.id] = []
+    socket.on("room", (roomInfo) => {
+        socket.join(roomInfo.id)
+        if (roomUsers[roomInfo.id] === undefined) {
+            roomUsers[roomInfo.id] = []
         }
-        channelUsers[qboxInfo.id].push({ id: socket.id, userName: qboxInfo.username, connectionTime: new moment().format("YYYY-MM-DD HH:mm:ss") })
-        io.sockets.in(qboxInfo.id).emit("users", JSON.stringify(channelUsers[qboxInfo.id]))
+        roomUsers[roomInfo.id].push({ id: socket.id, userName: roomInfo.username, connectionTime: new moment().format("YYYY-MM-DD HH:mm:ss") })
+        io.sockets.in(roomInfo.id).emit("users", JSON.stringify(roomUsers[roomInfo.id]))
     });
 
     socket.on('disconnecting', () => {
@@ -29,13 +30,15 @@ io.on("connection", socket => {
         const roomId = roomsArr[1]
 
         let index = -1;
-        if (channelUsers[roomId].length >= 0) {
-            index = channelUsers[roomId].findIndex(e => e.id == socket.id);
+        if (roomUsers[roomId].length >= 0) {
+            index = roomUsers[roomId].findIndex(e => e.id == socket.id);
         }
-        if (index >= 0)
-            channelUsers[roomId].splice(index, 1);
 
-        io.sockets.in(roomId).emit("users", JSON.stringify(channelUsers[roomId]))
+        if (index >= 0) {
+            roomUsers[roomId].splice(index, 1);
+        }
+
+        io.sockets.in(roomId).emit("users", JSON.stringify(roomUsers[roomId]))
     });
 
     socket.once("disconnect", () => {

@@ -7,14 +7,17 @@ import useSocket from '../../hooks/useSocket'
 import settingsJSON from '../../storage/settings.json'
 
 export default function iFramePage() {
-    const [userState, setUser] = useState({
+    const [users, setUsers] = useState({
         usersList: null,
     })
-    const [iframeUrlState, setIframeUrl] = useState({
+    const [user, setUser] = useState({
+        user: null,
+    })
+    const [iframeUrl, setIframeUrl] = useState({
         url: null,
     })
-    const [usernameState, setUsername] = useState({
-        username: null,
+    const [webPage, setWebPage] = useState({
+        webPage: null,
     })
 
     // @ts-ignore
@@ -23,16 +26,21 @@ export default function iFramePage() {
     useEffect(() => {
         if (socket) {
             const webPageId = window.location.pathname.match(/\d+/)[0]
-            const userId = new URLSearchParams(window.location.search).get(
+            const userUrlId = new URLSearchParams(window.location.search).get(
                 'username'
             )
+            const user = settingsJSON.users.find(
+                (userId) => userId.id === userUrlId
+            )
+            setUser({ user: user })
 
-            setIframeUrl({ url: settingsJSON.webpages[Number(webPageId) - 1].hostname })
-            setUsername({ username: userId })
+            setWebPage({
+                webPage: settingsJSON.webpages[Number(webPageId) - 1],
+            })
 
-            socket.emit('room', { id: webPageId, username: userId })
+            socket.emit('room', { id: webPageId, username: userUrlId })
             socket.on('users', (socketData: any) => {
-                setUser({ usersList: JSON.parse(socketData) })
+                setUsers({ usersList: JSON.parse(socketData) })
             })
         }
     }, [socket])
@@ -48,13 +56,13 @@ export default function iFramePage() {
                                     '/iframepage/' +
                                     webpage.id +
                                     '?username=' +
-                                    usernameState.username
+                                    user.user?.id
                                 }
                                 key={webpage.id}
                             >
                                 <button
                                     className={
-                                        webpage.id === index
+                                        webpage.id === webPage.webPage?.id
                                             ? mainPageStyles.cardselected
                                             : mainPageStyles.card
                                     }
@@ -67,17 +75,20 @@ export default function iFramePage() {
                 </div>
                 <div className={mainPageStyles.clientlist}>
                     USERS :
-                    {userState.usersList?.map((user) => {
+                    {users.usersList?.map((i) => {
+                        let userName = settingsJSON.users.find(
+                            (userId) => userId.id === i.userName
+                        ).name
                         return (
                             <button className={mainPageStyles.clientbutton}>
-                                {user.userName}
+                                {userName}
                             </button>
                         )
                     })}
                 </div>
                 <iframe
                     className={iFrameStyles.iframeview}
-                    src={iframeUrlState.url}
+                    src={webPage.webPage?.hostname}
                 ></iframe>
             </div>
         </div>

@@ -13,12 +13,13 @@ export default function iFramePage() {
     const [user, setUser] = useState({
         user: null,
     })
-    const [iframeUrl, setIframeUrl] = useState({
-        url: null,
-    })
     const [webPage, setWebPage] = useState({
         webPage: null,
     })
+    const [settings, setSettings] = useState({
+        settings: settingsJSON,
+    })
+
 
     // @ts-ignore
     const socket = useSocket()
@@ -29,13 +30,13 @@ export default function iFramePage() {
             const userUrlId = new URLSearchParams(window.location.search).get(
                 'username'
             )
-            const user = settingsJSON.users.find(
+            const user = settings.settings.users.find(
                 (userId) => userId.id === userUrlId
             )
             setUser({ user: user })
 
             setWebPage({
-                webPage: settingsJSON.webpages[Number(webPageId) - 1],
+                webPage: settings.settings.webpages[Number(webPageId) - 1],
             })
 
             socket.emit('room', { id: webPageId, username: userUrlId })
@@ -49,7 +50,7 @@ export default function iFramePage() {
         <div className={mainPageStyles.container}>
             <div className={iFrameStyles.main}>
                 <div className={mainPageStyles.grid}>
-                    {settingsJSON.webpages.map((webpage, index) => {
+                    {settings.settings?.webpages.map((webpage, index) => {
                         return (
                             <a
                                 href={
@@ -76,7 +77,7 @@ export default function iFramePage() {
                 <div className={mainPageStyles.clientlist}>
                     USERS :
                     {users.usersList?.map((i) => {
-                        let userName = settingsJSON.users.find(
+                        let userName = settings.settings.users.find(
                             (userId) => userId.id === i.userName
                         ).name
                         return (

@@ -2,7 +2,9 @@ import mainPageStyles from '../../styles/MainPage.module.css'
 import iFrameStyles from '../../styles/IframeView.module.css'
 
 import React, { useState, useEffect } from 'react'
-import useSocket from '../../hooks/useSocket'
+import io from 'socket.io-client'
+// @ts-ignore
+const socket = io()
 
 import settingsJSON from '../../storage/settings.json'
 import { ISettings, IUser, IWebPage } from '../api/getSettings'
@@ -12,9 +14,6 @@ export default function iFramePage() {
     const [thisUser, setThisUser] = useState<IUser>()
     const [webPage, setWebPage] = useState<IWebPage>()
     const [settings, setSettings] = useState<ISettings>(settingsJSON)
-
-    // @ts-ignore
-    const socket = useSocket()
 
     useEffect(() => {
         if (socket) {

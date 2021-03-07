@@ -3,4 +3,4 @@ COPY . /opt/tv2-sofie-portal
 WORKDIR /opt/tv2-sofie-portal
 EXPOSE 3000/tcp
 EXPOSE 3000/udp
-CMD ["yarn", "start"]
+CMD ["yarn", "start-docker"]

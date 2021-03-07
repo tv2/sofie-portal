@@ -14,10 +14,10 @@
     }
   ],
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' ts-node server.ts",
+    "dev": "NODE_OPTIONS='--inspect' ts-node ./server/server.ts",
     "build": "next build",
     "start": "next start",
-    "start-docker": "ts-node server.ts",
+    "start-docker": "ts-node ./server/server.ts",
     "release": "standard-version",
     "prepareChangelog": "standard-version --prerelease"
   },

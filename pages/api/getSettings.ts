@@ -1,19 +1,19 @@
 import settingsJson from '../../storage/settings.json'
 import {NextApiRequest, NextApiResponse} from "next";
 
-export interface IUsers {
+export interface IUser {
     id: string
     name: string
 }
-export interface IWebPages {
+export interface IWebPage {
     id: number
     name: string
     description: string
     hostname: string
 }
 export interface ISettings {
-    users: IUsers[]
-    webpages: IWebPages[]
+    users: IUser[]
+    webpages: IWebPage[]
 }
 const settings: ISettings =  settingsJson
 

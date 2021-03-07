@@ -33,15 +33,11 @@ export default function iFramePage() {
             }
             socket.emit('room', roomPayload)
 
-            socket.on('users', (socketData: any) => {
-                setUsersInRoom(JSON.parse(socketData))
+            socket.on('users', (socketPayload: any) => {
+                setUsersInRoom(JSON.parse(socketPayload))
             })
         }
     }, [socket])
-
-    const handleRoute = () => {
-        socket.emit('leave', { username: thisUser })
-    }
 
     return (
         <div className={mainPageStyles.container}>
@@ -57,7 +53,6 @@ export default function iFramePage() {
                                     thisUser?.id
                                 }
                                 key={webpage.id}
-                                onClick={handleRoute}
                             >
                                 <button
                                     className={

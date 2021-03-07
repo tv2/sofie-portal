@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.1...v0.1.2) (2021-03-07)
+
+
+### Features
+
+* Display usernames instead of user id ([630b9a1](https://github.com/olzzon/tv2-sofie-portal/commit/630b9a1dc1ffae6a3488751687c4ffac487a0bcb))
+* rewrite of socketio server and client with typescript support, types and major refactoring ([ce78dbc](https://github.com/olzzon/tv2-sofie-portal/commit/ce78dbc334afb0430755af7e2c5830a1d7a515fd))
+* Styling & CSS ([f63e747](https://github.com/olzzon/tv2-sofie-portal/commit/f63e747c181de9dd8a6de8ed11cdcc6028b2c61e))
+
+
+### Bug Fixes
+
+* add files missing in last commit ([dd4e272](https://github.com/olzzon/tv2-sofie-portal/commit/dd4e27295150645fadf8e6c9c65c91932ab14457))
+* Dockerfile use start-docker instead of start ([ebc752c](https://github.com/olzzon/tv2-sofie-portal/commit/ebc752c1b952af526c0960863ab05d43092ba22a))
+
 ### 0.1.1 (2021-03-03)
 
 

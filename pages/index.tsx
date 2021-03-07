@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import React from "react";
 import styles from '../styles/MainPage.module.css'
-import { ISettings, IUsers, IWebPages } from './api/getSettings';
+import { ISettings, IUser, IWebPage } from './api/getSettings';
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
@@ -14,7 +14,7 @@ export default function Index() {
 
     const urlParams: URLSearchParams = new URLSearchParams(window.location.search)
     const userLoginId: string = urlParams.get('username')
-    const user = settings.users.find((i: IUsers) => i.id === userLoginId)
+    const user = settings.users.find((i: IUser) => i.id === userLoginId)
     if (!user) {
         return <div>UNKNOWN USER - /?username={userLoginId}</div>
     }
@@ -22,7 +22,7 @@ export default function Index() {
     return (
         <div className={styles.grid}>
             <ul>
-                {settings.webpages.map((webpage: IWebPages) => (
+                {settings.webpages.map((webpage: IWebPage) => (
                     <a href={`/iframepage/${[webpage.id]}?username=${userLoginId}`} key={data.id}>
                         <button className={styles.card}>{webpage.name}</button>
                     </a>

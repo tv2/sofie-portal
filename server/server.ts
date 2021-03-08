@@ -39,19 +39,18 @@ io.on('connection', (socket) => {
         socketClients = socketClients.filter((client) => {
             return client.id !== socket.id
         })
-        socket.rooms.forEach((socketRoom) => {
-            let clientsInRoom = socketClients.filter((client) => {
-                return (client.roomName === socketRoom)
-            })
-            let usersInRoom = clientsInRoom.map((client)=> {return client.userUrlName})
-            io.to(socketRoom).emit('users', JSON.stringify(usersInRoom))
-        })
+        updateClientsInRooms()
     })
 
     socket.on('room', (payload: IRoomPayload) => {
         socket.join(payload.roomName)
         socketClients[findIndex(socket.id)].roomName = payload.roomName
         socketClients[findIndex(socket.id)].userUrlName = payload.userUrlName
+        updateClientsInRooms()
+    })
+    socket.once('disconnect', () => {})
+
+    function updateClientsInRooms() {
         socket.rooms.forEach((socketRoom) => {
             let clientsInRoom = socketClients.filter((client) => {
                 return (client.roomName === socketRoom)
@@ -59,8 +58,7 @@ io.on('connection', (socket) => {
             let usersInRoom = clientsInRoom.map((client)=> {return client.userUrlName})
             io.to(socketRoom).emit('users', JSON.stringify(usersInRoom))
         })
-    })
-    socket.once('disconnect', () => {})
+    }
 })
 
 const findIndex = (userId: string): number => {

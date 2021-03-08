@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
                 return (client.roomName === webpage.id.toString())
             })
             let usersInRoom = clientsInRoom.map((client)=> {return client.userUrlName})
-            io.to(webpage).emit('users', JSON.stringify(usersInRoom))
+            io.to(webpage.id.toString()).emit('users', JSON.stringify(usersInRoom))
         })
     }
 

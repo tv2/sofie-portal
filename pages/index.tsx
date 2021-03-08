@@ -20,14 +20,8 @@ export default function Index() {
     }
 
     return (
-        <div className={styles.grid}>
-            <ul>
-                {settings.webpages.map((webpage: IWebPage) => (
-                    <a href={`/iframepage/${[webpage.id]}?username=${userLoginId}`} key={data.id}>
-                        <button className={styles.card}>{webpage.name}</button>
+                    <a href={`/iframepage/1}?username=${userLoginId}`} key={data.id}>
+                        <button className={styles.card}>Offtubes</button>
                     </a>
-                ))}
-            </ul>
-        </div>
     )
 }

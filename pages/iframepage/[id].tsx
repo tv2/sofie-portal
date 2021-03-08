@@ -6,7 +6,6 @@ import io from 'socket.io-client'
 // @ts-ignore
 const socket = io()
 
-import settingsJSON from '../../storage/settings.json'
 import { ISettings, IUser, IWebPage } from '../../model/settingsInterface'
 import { IRoomPayload } from '../../model/socketClientInterface'
 
@@ -15,24 +14,30 @@ export default function iFramePage() {
     const [thisUser, setThisUser] = useState<IUser>()
     const [activeRoom, setRoom] = useState<number>()
     const [webPage, setWebPage] = useState<IWebPage>()
-    const [settings, setSettings] = useState<ISettings>(settingsJSON)
-
+    const [settings, setSettings] = useState<ISettings>()
 
     useEffect(() => {
         if (socket) {
             const room = 1
             setRoom(room)
-            setWebPage(settings.webpages[room])
+            //            setWebPage(settings.webpages[room])
             const userUrlId = new URLSearchParams(window.location.search).get(
                 'username'
             )
-            setThisUser(
-                settings.users.find((userId) => userId.id === userUrlId)
-            )
-            handleChangeRoom(room, userUrlId)
 
             socket.on('users', (socketPayload: any) => {
                 setUsersInRoom(JSON.parse(socketPayload))
+            })
+            socket.on('settings', (socketPayload: any) => {
+                if (!settings) {
+                    setThisUser(
+                        JSON.parse(socketPayload).users.find(
+                            (userId) => userId.id === userUrlId
+                        )
+                    )
+                    handleChangeRoom(room, userUrlId)
+                }
+                setSettings(JSON.parse(socketPayload))
             })
         }
     }, [socket])
@@ -43,15 +48,21 @@ export default function iFramePage() {
             userUrlName: userUrl,
         }
         setRoom(room)
-        setWebPage(settings.webpages.find((webpage) => {return webpage.id === room}))
+        setWebPage(findWebpage(room))
         socket.emit('room', roomPayload)
+    }
+
+    const findWebpage = (id: number) => {
+        return settings?.webpages.find((webpage) => {
+            return webpage.id === id
+        })
     }
 
     return (
         <div className={mainPageStyles.container}>
             <div className={iFrameStyles.main}>
                 <div className={mainPageStyles.grid}>
-                    {settings.webpages.map((webpage, index) => {
+                    {settings?.webpages.map((webpage, index) => {
                         return (
                             <button
                                 className={
@@ -83,7 +94,7 @@ export default function iFramePage() {
                 </div>
                 <iframe
                     className={iFrameStyles.iframeview}
-                    src={webPage?.hostname}
+                    src={findWebpage(activeRoom)?.hostname}
                 ></iframe>
             </div>
         </div>

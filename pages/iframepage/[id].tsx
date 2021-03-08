@@ -7,7 +7,8 @@ import io from 'socket.io-client'
 const socket = io()
 
 import settingsJSON from '../../storage/settings.json'
-import { ISettings, IUser, IWebPage } from '../api/getSettings'
+import { ISettings, IUser, IWebPage } from '../../model/settingsInterface'
+import { IRoomPayload } from '../../model/socketClientInterface'
 
 export default function iFramePage() {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])

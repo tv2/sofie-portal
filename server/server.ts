@@ -9,7 +9,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const nextApp = next({ dev })
 const nextHandler = nextApp.getRequestHandler()
 const moment = require('moment')
-
+//import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
 interface ISocketClient {
     id: string
     userUrlName: string

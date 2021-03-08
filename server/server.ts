@@ -1,10 +1,10 @@
-import express from "express";
+import express from 'express'
 const app = express()
 import next from 'next'
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
-import settingsJson from '../storage/settings.json'
+import * as settingsJson from '../storage/settings.json'
 import {ISettings} from "../model/settingsInterface";
 import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
 

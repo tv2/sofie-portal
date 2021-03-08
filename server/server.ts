@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
     }
 
     function leaveRoom() {
-        if (socketClients[findIndex(socket.id)].roomName === '') {
+        if (socketClients[findIndex(socket.id)].roomName !== '') {
             socket.leave(socketClients[findIndex(socket.id)].roomName)
         }
     }

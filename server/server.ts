@@ -44,12 +44,12 @@ io.on('connection', (socket) => {
     socket.once('disconnect', () => {})
 
     function updateClientsInRooms() {
-        socket.rooms.forEach((socketRoom) => {
+        settings.webpages.forEach((webpage) => {
             let clientsInRoom = socketClients.filter((client) => {
-                return (client.roomName === socketRoom)
+                return (client.roomName === webpage.id.toString())
             })
             let usersInRoom = clientsInRoom.map((client)=> {return client.userUrlName})
-            io.to(socketRoom).emit('users', JSON.stringify(usersInRoom))
+            io.to(webpage).emit('users', JSON.stringify(usersInRoom))
         })
     }
 

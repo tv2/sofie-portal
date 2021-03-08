@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import React from "react";
 import styles from '../styles/MainPage.module.css'
-import { ISettings, IUser, IWebPage } from './api/getSettings';
+import { ISettings, IUser, IWebPage } from '../model/settingsInterface';
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 

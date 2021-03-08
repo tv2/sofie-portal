@@ -1,0 +1,16 @@
+{
+    "configurations": [
+    {
+        "name": "Debug Server",
+        "type": "node",
+        "runtimeExecutable": "/usr/local/bin/node",
+        "request": "launch",
+        "program": "${workspaceFolder}/server/server.ts",
+        "args": ["${relativeFile}"],
+        "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+        "sourceMaps": true,
+        "cwd": "${workspaceRoot}",
+        "protocol": "inspector"
+    }
+    ]
+}

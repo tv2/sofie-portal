@@ -1,39 +1,32 @@
-// @ts-ignore
-const app = require('express')()
+import express from 'express'
+const app = express()
+import next from 'next'
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
-const next = require('next')
 
-const port = parseInt(process.env.PORT, 10) || 3000
-const dev = process.env.NODE_ENV !== 'production'
+import * as settingsJson from '../storage/settings.json'
+import {ISettings} from "../model/settingsInterface";
+import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
+
+const port: number = parseInt(process.env.PORT, 10) || 3000
+const dev: boolean = process.env.NODE_ENV !== 'production'
 const nextApp = next({ dev })
 const nextHandler = nextApp.getRequestHandler()
 const moment = require('moment')
-//import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
-interface ISocketClient {
-    id: string
-    userUrlName: string
-    roomName: string
-    connectionTime: Date
-}
 
-interface IRoomPayload {
-    roomName: string
-    userUrlName: string
-}
-
-// fake DB
 let socketClients: ISocketClient[] = []
+let settings: ISettings = settingsJson
 
 // socket.io server
 io.on('connection', (socket) => {
-    //console.log('Socket : ', socket.id)
     socketClients.push({
         id: socket.id,
         userUrlName: '',
         roomName: '',
         connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
     })
+
+    socket.emit('settings', JSON.stringify(settings))
 
     socket.on('disconnecting', () => {
         socketClients = socketClients.filter((client) => {
@@ -43,11 +36,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on('room', (payload: IRoomPayload) => {
-        socket.join(payload.roomName)
-        socketClients[findIndex(socket.id)].roomName = payload.roomName
-        socketClients[findIndex(socket.id)].userUrlName = payload.userUrlName
+        leaveRoom()
+        joinRoom(payload)
         updateClientsInRooms()
     })
+
     socket.once('disconnect', () => {})
 
     function updateClientsInRooms() {
@@ -58,6 +51,18 @@ io.on('connection', (socket) => {
             let usersInRoom = clientsInRoom.map((client)=> {return client.userUrlName})
             io.to(socketRoom).emit('users', JSON.stringify(usersInRoom))
         })
+    }
+
+    function joinRoom(payload: IRoomPayload) {
+        socket.join(payload.roomName)
+        socketClients[findIndex(socket.id)].roomName = payload.roomName
+        socketClients[findIndex(socket.id)].userUrlName = payload.userUrlName
+    }
+
+    function leaveRoom() {
+        if (socketClients[findIndex(socket.id)].roomName === '') {
+            socket.leave(socketClients[findIndex(socket.id)].roomName)
+        }
     }
 })
 

@@ -1,5 +1,5 @@
-import './styles/MainPage.css'
-import './styles/IframeView.css'
+import '../styles/MainPage.css'
+import '../styles/IframeView.css'
 
 import React, { useState, useEffect } from 'react'
 import { io } from 'socket.io-client'

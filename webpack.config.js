@@ -6,7 +6,8 @@ module.exports = {
     devtool: 'inline-source-map',
     module: {
         rules: [
-            { test: /\.tsx?$/, loader: 'ts-loader' },
+            { test: /\.(ts|tsx)$/,
+                loader: 'ts-loader' },
             {
                 test: /\.(css|scss)$/,
                 use: ['style-loader', 'css-loader'],
@@ -15,7 +16,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.js', '.jsx'],
     },
     output: {
         filename: 'index.js',

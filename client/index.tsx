@@ -1,8 +1,8 @@
-import ReactDom from 'react-dom'
+import ReactDOM from 'react-dom'
 import React from 'react'
-import MainPage from './mainPage'
+import MainPage from './components/mainPage'
 
-ReactDom.render(
+ReactDOM.render(
     <React.StrictMode>
         <MainPage />
     </React.StrictMode>,

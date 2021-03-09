@@ -8,7 +8,7 @@ import * as settingsJson from '../storage/settings.json'
 import {ISettings} from "../model/settingsInterface";
 import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
 
-const port: number = parseInt(process.env.PORT, 10) || 3000
+const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const dev: boolean = process.env.NODE_ENV !== 'production'
 const moment = require('moment')
 
@@ -16,7 +16,7 @@ let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
 
 // socket.io server
-io.on('connection', (socket) => {
+io.on('connection', (socket: any) => {
     socketClients.push({
         id: socket.id,
         userUrlName: '',

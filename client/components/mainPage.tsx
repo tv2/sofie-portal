@@ -6,10 +6,10 @@ import { io } from 'socket.io-client'
 // @ts-ignore
 const socket = io()
 
-import { ISettings, IUser, IWebPage } from '../model/settingsInterface'
-import { IRoomPayload } from '../model/socketClientInterface'
+import { ISettings, IUser, IWebPage } from '../../model/settingsInterface'
+import { IRoomPayload } from '../../model/socketClientInterface'
 
-export default function MainPage() {
+const MainPage = () => {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
     const [thisUser, setThisUser] = useState<IUser>()
     const [activeRoom, setRoom] = useState<number>()
@@ -100,3 +100,5 @@ export default function MainPage() {
         </div>
     )
 }
+
+export default MainPage

@@ -15,9 +15,9 @@
   ],
   "scripts": {
     "dev-server": "nodemon ./server/server.ts",
-    "dev-client": "cross-env NODE_ENV=development TS_NODE_PROJECT=\"tsconfig-client.json\" webpack-dev-server",
+    "dev-client": "cross-env NODE_ENV=development TS_NODE_PROJECT=\"tsconfig.json\" webpack --watch",
     "dev": "yarn dev-server && yarn dev-client",
-    "build-client": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"tsconfig-client.json\" webpack",
+    "build-client": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"client/tsconfig.json\" webpack",
     "build-server": "tsc ./server/server.ts",
     "build": "yarn build-client && yarn build-server",
     "start": "node ./build/server/server.js",

@@ -1,15 +1,15 @@
-import mainPageStyles from '../../styles/MainPage.module.css'
-import iFrameStyles from '../../styles/IframeView.module.css'
+import './styles/MainPage.css'
+import './styles/IframeView.css'
 
 import React, { useState, useEffect } from 'react'
-import io from 'socket.io-client'
+import { io } from 'socket.io-client'
 // @ts-ignore
 const socket = io()
 
-import { ISettings, IUser, IWebPage } from '../../model/settingsInterface'
-import { IRoomPayload } from '../../model/socketClientInterface'
+import { ISettings, IUser, IWebPage } from '../model/settingsInterface'
+import { IRoomPayload } from '../model/socketClientInterface'
 
-export default function iFramePage() {
+export default function MainPage() {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
     const [thisUser, setThisUser] = useState<IUser>()
     const [activeRoom, setRoom] = useState<number>()
@@ -23,7 +23,7 @@ export default function iFramePage() {
             //            setWebPage(settings.webpages[room])
             const userUrlId = new URLSearchParams(window.location.search).get(
                 'username'
-            )
+            ) || ''
 
             socket.on('users', (socketPayload: any) => {
                 setUsersInRoom(JSON.parse(socketPayload))
@@ -32,17 +32,17 @@ export default function iFramePage() {
                 if (!settings) {
                     setThisUser(
                         JSON.parse(socketPayload).users.find(
-                            (userId) => userId.id === userUrlId
+                            (userId: any) => userId.id === userUrlId
                         )
                     )
-                    handleChangeRoom(room, userUrlId)
+                    handleChangeRoom(room, userUrlId.toString())
                 }
                 setSettings(JSON.parse(socketPayload))
             })
         }
     }, [socket])
 
-    const handleChangeRoom = (room: number, userUrl) => {
+    const handleChangeRoom = (room: number, userUrl: string) => {
         let roomPayload: IRoomPayload = {
             roomName: room.toString(),
             userUrlName: userUrl,
@@ -59,19 +59,19 @@ export default function iFramePage() {
     }
 
     return (
-        <div className={mainPageStyles.container}>
-            <div className={iFrameStyles.main}>
-                <div className={mainPageStyles.grid}>
+        <div className={"container"}>
+            <div className={"main"}>
+                <div className={"grid"}>
                     {settings?.webpages.map((webpage, index) => {
                         return (
                             <button
                                 className={
                                     webpage.id === activeRoom
-                                        ? mainPageStyles.cardselected
-                                        : mainPageStyles.card
+                                        ? "cardselected"
+                                        : "card"
                                 }
                                 onClick={() => {
-                                    handleChangeRoom(index + 1, thisUser.id)
+                                    handleChangeRoom(index + 1, thisUser?.id || '')
                                 }}
                             >
                                 {webpage.name}
@@ -79,22 +79,22 @@ export default function iFramePage() {
                         )
                     })}
                 </div>
-                <div className={mainPageStyles.clientlist}>
+                <div className={"clientlist"}>
                     USERS :
                     {usersInRoom?.map((userInRoom) => {
-                        let userName = settings.users.find(
+                        let userName = settings?.users.find(
                             (user) => user.id === userInRoom
                         )?.name
                         return (
-                            <button className={mainPageStyles.clientbutton}>
+                            <button className={"clientbutton"}>
                                 {userName}
                             </button>
                         )
                     })}
                 </div>
                 <iframe
-                    className={iFrameStyles.iframeview}
-                    src={findWebpage(activeRoom)?.hostname}
+                    className={"iframeview"}
+                    src={findWebpage(activeRoom || 1)?.hostname}
                 ></iframe>
             </div>
         </div>

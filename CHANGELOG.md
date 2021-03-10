@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.3...v0.1.4) (2021-03-10)
+
+
+### Features
+
+* client-build copy html, fix build server - still mssing: path for loading index.js in index.html ([2ca141f](https://github.com/olzzon/tv2-sofie-portal/commit/2ca141f0035bc56fd207e5eba689dc2988b0bc85))
+* dev-client webpack with watch option ([f03949f](https://github.com/olzzon/tv2-sofie-portal/commit/f03949fc66766f5431a0890dba09e2c8d6f289df))
+* initial commit of Refactor to webpack - server working. ([c160328](https://github.com/olzzon/tv2-sofie-portal/commit/c160328a0f08f7c9d7269b67f53c7b4ff5fa6427))
+* refactor to ./src structure - build, watch using tsc and webpack full functioning ([3a2e455](https://github.com/olzzon/tv2-sofie-portal/commit/3a2e455f48383bedd73f2e371c89d84c05dd9900))
+* Webpack build - still not working ([f1aadb7](https://github.com/olzzon/tv2-sofie-portal/commit/f1aadb7813044e22d862b339da2f1aa4283d353b))
+* webpack build-client working ([9bec991](https://github.com/olzzon/tv2-sofie-portal/commit/9bec991085c56b615a816f0b2c91746f5330c68f))
+
+
+### Bug Fixes
+
+* CSS load background colors etc ([ab5c1b5](https://github.com/olzzon/tv2-sofie-portal/commit/ab5c1b5607ff818dd39708c8995e4f2c2d0de995))
+
 ### [0.1.3](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.2...v0.1.3) (2021-03-09)
 
 

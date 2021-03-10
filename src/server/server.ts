@@ -70,12 +70,12 @@ const findIndex = (userId: string): number => {
     })
 }
 
-app.use('/', express.static(path.join(__dirname, '..')))
+app.use('/', express.static(path.join(__dirname, '../client')))
 server.listen(port)
 console.log(`Server started at http://localhost:${port}`)
 
 server.on('connection', () => {
     app.get('/', (req: any, res: any) => {
-        res.sendFile(path.resolve('build/client/index.html'))
+        res.sendFile(path.resolve('index.html'))
     })
 })

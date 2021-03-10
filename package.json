@@ -14,10 +14,11 @@
     }
   ],
   "scripts": {
-    "dev": "nodemon ./server/server.ts",
-    "build-next": "next build",
-    "build-server": "tsc",
-    "build": "yarn build-next && yarn build-server",
+    "watch-server": "tsc -p src/server -watch",
+    "watch-client": "cross-env NODE_ENV=development TS_NODE_PROJECT=\"src/client/tsconfig.json\" webpack --watch",
+    "build": "yarn build-client && yarn build-server",
+    "build-server": "tsc -p ./src/server",
+    "build-client": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"./src/client/tsconfig.json\" webpack && cp ./src/client/index.html ./build/client/index.html",
     "start": "node ./build/server/server.js",
     "release": "standard-version",
     "prepareChangelog": "standard-version --prerelease"
@@ -26,21 +27,32 @@
     "express": "4.17.1",
     "fs": "0.0.1-security",
     "moment": "2.29.1",
-    "next": "^10.0.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "reactstrap": "8.9.0",
     "socket.io": "3.1.2",
-    "socket.io-client": "3.1.2",
-    "swr": "^0.3.8"
+    "socket.io-client": "3.1.2"
   },
   "devDependencies": {
-    "@types/node": "^14.14.6",
+    "@types/html-webpack-plugin": "^3.2.4",
+    "@types/node": "^14.14.32",
     "@types/react": "^16.9.55",
+    "@types/react-dom": "^17.0.1",
+    "@types/source-map": "0.5.2",
+    "@types/webpack": "^4.41.26",
+    "@types/webpack-dev-server": "^3.11.1",
+    "cross-env": "^7.0.3",
+    "css-loader": "^5.1.1",
+    "html-webpack-plugin": "^5.3.0",
     "nodemon": "^2.0.7",
     "standard-version": "^9.1.1",
-    "ts-node": "9.1.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.17",
+    "ts-node": "^9.1.1",
     "tsc": "^1.20150623.0",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }

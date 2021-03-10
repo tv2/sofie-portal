@@ -1,24 +1,22 @@
 import express from 'express'
 const app = express()
-import next from 'next'
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+const path = require('path')
 
 import * as settingsJson from '../storage/settings.json'
 import {ISettings} from "../model/settingsInterface";
 import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
 
-const port: number = parseInt(process.env.PORT, 10) || 3000
+const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const dev: boolean = process.env.NODE_ENV !== 'production'
-const nextApp = next({ dev })
-const nextHandler = nextApp.getRequestHandler()
 const moment = require('moment')
 
 let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
 
 // socket.io server
-io.on('connection', (socket) => {
+io.on('connection', (socket: any) => {
     socketClients.push({
         id: socket.id,
         userUrlName: '',
@@ -72,13 +70,12 @@ const findIndex = (userId: string): number => {
     })
 }
 
-nextApp.prepare().then(() => {
-    app.get('*', (req, res) => {
-        return nextHandler(req, res)
-    })
+app.use('/', express.static(path.join(__dirname, '../client')))
+server.listen(port)
+console.log(`Server started at http://localhost:${port}`)
 
-    server.listen(port, (err) => {
-        if (err) throw err
-        console.log(`> Ready on http://localhost:${port}`)
+server.on('connection', () => {
+    app.get('/', (req: any, res: any) => {
+        res.sendFile(path.resolve('index.html'))
     })
 })

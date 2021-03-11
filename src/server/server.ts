@@ -7,13 +7,14 @@ const path = require('path')
 import * as settingsJson from '../storage/settings.json'
 import {ISettings} from "../model/settingsInterface";
 import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
+import {logger} from "../utils/logger";
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
-const dev: boolean = process.env.NODE_ENV !== 'production'
 const moment = require('moment')
 
 let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
+logger.debug("Settings", settings);
 
 // socket.io server
 io.on('connection', (socket: any) => {
@@ -23,6 +24,7 @@ io.on('connection', (socket: any) => {
         roomName: '',
         connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
     })
+    logger.debug(`Number of active sockets: ${socketClients.length}`)
 
     socket.emit('settings', JSON.stringify(settings))
 
@@ -34,12 +36,15 @@ io.on('connection', (socket: any) => {
     })
 
     socket.on('room', (payload: IRoomPayload) => {
+        logger.debug(`Socket.on('room') payload: `, payload)
         leaveRoom()
         joinRoom(payload)
         updateClientsInRooms()
     })
 
-    socket.once('disconnect', () => {})
+    socket.once('disconnect', () => {
+        logger.debug(`Socket with id: ${socket.id} disconnected`)
+    })
 
     function updateClientsInRooms() {
         settings.webpages.forEach((webpage) => {
@@ -52,6 +57,7 @@ io.on('connection', (socket: any) => {
     }
 
     function joinRoom(payload: IRoomPayload) {
+        logger.debug(`Socket with id: ${socket.id} & username: ${payload.userUrlName} joined room: ${payload.roomName}`)
         socket.join(payload.roomName)
         socketClients[findIndex(socket.id)].roomName = payload.roomName
         socketClients[findIndex(socket.id)].userUrlName = payload.userUrlName
@@ -59,6 +65,7 @@ io.on('connection', (socket: any) => {
 
     function leaveRoom() {
         if (socketClients[findIndex(socket.id)].roomName !== '') {
+            logger.debug(`Socket with id: ${socket.id} left room: ${socketClients[findIndex(socket.id)].roomName}`)
             socket.leave(socketClients[findIndex(socket.id)].roomName)
         }
     }
@@ -72,7 +79,7 @@ const findIndex = (userId: string): number => {
 
 app.use('/', express.static(path.join(__dirname, '../client')))
 server.listen(port)
-console.log(`Server started at http://localhost:${port}`)
+logger.info(`Server started at http://localhost:${port}`)
 
 server.on('connection', () => {
     app.get('/', (req: any, res: any) => {

@@ -65,6 +65,7 @@ const MainPage = () => {
                     {settings?.webpages.map((webpage, index) => {
                         return (
                             <button
+                                key={index.toString()}
                                 className={
                                     webpage.id === activeRoom
                                         ? "cardselected"
@@ -81,12 +82,12 @@ const MainPage = () => {
                 </div>
                 <div className={"clientlist"}>
                     USERS :
-                    {usersInRoom?.map((userInRoom) => {
+                    {usersInRoom?.map((userInRoom, index) => {
                         let userName = settings?.users.find(
                             (user) => user.id === userInRoom
                         )?.name
                         return (
-                            <button className={"clientbutton"}>
+                            <button key={index.toString()} className={"clientbutton"}>
                                 {userName}
                             </button>
                         )

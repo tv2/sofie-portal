@@ -5,8 +5,9 @@ const io = require('socket.io')(server)
 const path = require('path')
 
 import * as settingsJson from '../storage/settings.json'
-import {ISettings} from "../model/settingsInterface";
-import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
+import { ISettings, IUser } from '../model/settingsInterface'
+import { ISocketClient, IRoomPayload } from '../model/socketClientInterface'
+import { JOIN_ROOM, THIS_USER, USERS_IN_ROOM, WEBPAGES } from '../model/socketConstants'
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const dev: boolean = process.env.NODE_ENV !== 'production'
@@ -24,7 +25,7 @@ io.on('connection', (socket: any) => {
         connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
     })
 
-    socket.emit('settings', JSON.stringify(settings))
+    socket.emit(WEBPAGES, JSON.stringify(settings.webpages))
 
     socket.on('disconnecting', () => {
         socketClients = socketClients.filter((client) => {
@@ -33,7 +34,10 @@ io.on('connection', (socket: any) => {
         updateClientsInRooms()
     })
 
-    socket.on('room', (payload: IRoomPayload) => {
+    socket.on(JOIN_ROOM, (payload: IRoomPayload) => {
+        socket.emit(THIS_USER, JSON.stringify(settings.users.find(
+            (userId: any) => userId.id === payload.userUrlName)
+        ))
         leaveRoom()
         joinRoom(payload)
         updateClientsInRooms()
@@ -41,31 +45,46 @@ io.on('connection', (socket: any) => {
 
     socket.once('disconnect', () => {})
 
-    function updateClientsInRooms() {
+    const updateClientsInRooms = () => {
         settings.webpages.forEach((webpage) => {
             let clientsInRoom = socketClients.filter((client) => {
-                return (client.roomName === webpage.id.toString())
+                return client.roomName === webpage.id.toString()
             })
-            let usersInRoom = clientsInRoom.map((client)=> {return client.userUrlName})
-            io.to(webpage.id.toString()).emit('users', JSON.stringify(usersInRoom))
+
+            let usersInRoom: string[] = clientsInRoom.map((client) => {
+                return settings.users.find((user: IUser) => { return client.userUrlName === user.id
+            }).name})
+            io.to(webpage.id.toString()).emit(
+                USERS_IN_ROOM,
+                JSON.stringify(usersInRoom)
+            )
         })
     }
 
-    function joinRoom(payload: IRoomPayload) {
+    const joinRoom = (payload: IRoomPayload) => {
+        if (
+            socketClients[findIndex(socket.id)].userUrlName !==
+            payload.userUrlName
+        ) {
+            disconnectClient()
+        }
         socket.join(payload.roomName)
         socketClients[findIndex(socket.id)].roomName = payload.roomName
         socketClients[findIndex(socket.id)].userUrlName = payload.userUrlName
     }
 
-    function leaveRoom() {
+    const leaveRoom = () => {
         if (socketClients[findIndex(socket.id)].roomName !== '') {
             socket.leave(socketClients[findIndex(socket.id)].roomName)
         }
     }
+    const disconnectClient = () => {
+        socket.emit('invaliduser')
+    }
 })
 
 const findIndex = (userId: string): number => {
-    return socketClients.findIndex((client)=> {
+    return socketClients.findIndex((client) => {
         return client.id === userId
     })
 }

@@ -2,19 +2,23 @@
     "users": [
         {
             "id": "afvdlyd",
-            "name": "Afv.D Lyd"
+            "name": "Afv.D Lyd",
+            "accessRights": []
         },
         {
             "id": "nyhedlyd",
-            "name": "Nyhederne Lyd"
+            "name": "Nyhederne Lyd",
+            "accessRights": []
         },
         {
             "id": "mcr1",
-            "name": "MCR 1"
+            "name": "MCR 1",
+            "accessRights": []
         },
         {
             "id": "cont1",
-            "name": "CONT 1"
+            "name": "CONT 1",
+            "accessRights": []
         }
     ],
    "webpages": [

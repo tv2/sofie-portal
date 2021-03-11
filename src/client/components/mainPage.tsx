@@ -6,15 +6,16 @@ import { io } from 'socket.io-client'
 // @ts-ignore
 const socket = io()
 
-import { ISettings, IUser, IWebPage } from '../../model/settingsInterface'
+import { IUser, IWebPage } from '../../model/settingsInterface'
 import { IRoomPayload } from '../../model/socketClientInterface'
+import { THIS_USER, WEBPAGES, USERS_IN_ROOM, JOIN_ROOM } from '../../model/socketConstants'
 
 const MainPage = () => {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
     const [thisUser, setThisUser] = useState<IUser>()
     const [activeRoom, setRoom] = useState<number>()
-    const [webPage, setWebPage] = useState<IWebPage>()
-    const [settings, setSettings] = useState<ISettings>()
+    const [currentWebPage, setCurrentWebPage] = useState<IWebPage>()
+    const [webpages, setWebpages] = useState<IWebPage[]>()
 
     useEffect(() => {
         if (socket) {
@@ -24,20 +25,16 @@ const MainPage = () => {
             const userUrlId = new URLSearchParams(window.location.search).get(
                 'username'
             ) || ''
+            socket.on(THIS_USER, (payload: any) => {
+                setThisUser(JSON.parse(payload))
+            })
 
-            socket.on('users', (socketPayload: any) => {
+            socket.on(USERS_IN_ROOM, (socketPayload: any) => {
                 setUsersInRoom(JSON.parse(socketPayload))
             })
-            socket.on('settings', (socketPayload: any) => {
-                if (!settings) {
-                    setThisUser(
-                        JSON.parse(socketPayload).users.find(
-                            (userId: any) => userId.id === userUrlId
-                        )
-                    )
-                    handleChangeRoom(room, userUrlId.toString())
-                }
-                setSettings(JSON.parse(socketPayload))
+            socket.on(WEBPAGES, (socketPayload: any) => {
+                handleChangeRoom(room, userUrlId.toString())
+                setWebpages(JSON.parse(socketPayload))
             })
         }
     }, [socket])
@@ -48,12 +45,12 @@ const MainPage = () => {
             userUrlName: userUrl,
         }
         setRoom(room)
-        setWebPage(findWebpage(room))
-        socket.emit('room', roomPayload)
+        setCurrentWebPage(findWebpage(room))
+        socket.emit(JOIN_ROOM, roomPayload)
     }
 
     const findWebpage = (id: number) => {
-        return settings?.webpages.find((webpage) => {
+        return webpages?.find((webpage) => {
             return webpage.id === id
         })
     }
@@ -62,7 +59,7 @@ const MainPage = () => {
         <div className={"container"}>
             <div className={"main"}>
                 <div className={"grid"}>
-                    {settings?.webpages.map((webpage, index) => {
+                    {webpages?.map((webpage, index) => {
                         return (
                             <button
                                 key={index.toString()}
@@ -83,12 +80,9 @@ const MainPage = () => {
                 <div className={"clientlist"}>
                     USERS :
                     {usersInRoom?.map((userInRoom, index) => {
-                        let userName = settings?.users.find(
-                            (user) => user.id === userInRoom
-                        )?.name
                         return (
                             <button key={index.toString()} className={"clientbutton"}>
-                                {userName}
+                                { userInRoom }
                             </button>
                         )
                     })}

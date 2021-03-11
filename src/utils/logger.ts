@@ -30,7 +30,7 @@ export const logger = createLogger({
     ]
 })
 
-export function setLogFormat(env: string) {
+function setLogFormat(env: string) {
     if (env === 'local') {
         addColors(logLevelSetup.colors);
         return format.combine(format.simple(), format.colorize());

@@ -7,7 +7,7 @@ const path = require('path')
 import * as settingsJson from '../storage/settings.json'
 import {ISettings} from "../model/settingsInterface";
 import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
-import {logger} from "../utils/logger";
+import {logger} from "./utils/logger";
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const moment = require('moment')

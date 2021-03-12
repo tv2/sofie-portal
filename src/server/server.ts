@@ -92,7 +92,7 @@ io.on('connection', (socket: any) => {
 
 
     const joinRoom = (room: string) => {
-        logger.debug(`Socket with id: ${socket.id} & username: ${payload.userUrlName} joined room: ${room}`)
+        logger.debug(`Socket with id: ${socket.id} joined room: ${room}`)
         socket.join(room)
         socketClients[findIndex(socket.id)].roomName = room
     }

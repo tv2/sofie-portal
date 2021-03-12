@@ -5,8 +5,14 @@ const io = require('socket.io')(server)
 const path = require('path')
 
 import * as settingsJson from '../storage/settings.json'
-import {ISettings} from "../model/settingsInterface";
-import { ISocketClient, IRoomPayload } from  '../model/socketClientInterface'
+import { ISettings, IUser, IWebPage } from '../model/settingsInterface'
+import { ISocketClient } from '../model/socketClientInterface'
+import {
+    JOIN_ROOM,
+    THIS_USER,
+    USERS_IN_ROOM,
+    WEBPAGES,
+} from '../model/socketConstants'
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const dev: boolean = process.env.NODE_ENV !== 'production'
@@ -17,14 +23,28 @@ let settings: ISettings = settingsJson
 
 // socket.io server
 io.on('connection', (socket: any) => {
+    const userUrlName = socket.handshake.headers.userurl
+    const thisUser: IUser = settings.users.find(
+        (userId: IUser) => userId.id === userUrlName
+    ) || {
+        id: userUrlName,
+        name: '',
+        accessRights: [-1],
+    }
     socketClients.push({
         id: socket.id,
-        userUrlName: '',
-        roomName: '',
+        userUrlName: userUrlName,
+        roomName: '-1',
         connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
     })
+    socket.emit(THIS_USER, JSON.stringify(thisUser))
 
-    socket.emit('settings', JSON.stringify(settings))
+    const accessToPages: IWebPage[] = settings.webpages.filter((webpage: IWebPage) => {
+        return thisUser.accessRights.find((access) => {
+            return access === webpage.id
+        })
+    })
+    socket.emit(WEBPAGES, JSON.stringify(accessToPages))
 
     socket.on('disconnecting', () => {
         socketClients = socketClients.filter((client) => {
@@ -33,31 +53,42 @@ io.on('connection', (socket: any) => {
         updateClientsInRooms()
     })
 
-    socket.on('room', (payload: IRoomPayload) => {
+    socket.on(JOIN_ROOM, (room: string) => {
         leaveRoom()
-        joinRoom(payload)
+        joinRoom(room)
         updateClientsInRooms()
     })
 
     socket.once('disconnect', () => {})
 
-    function updateClientsInRooms() {
+    const updateClientsInRooms = () => {
         settings.webpages.forEach((webpage) => {
             let clientsInRoom = socketClients.filter((client) => {
-                return (client.roomName === webpage.id.toString())
+                return client.roomName === webpage.id.toString()
             })
-            let usersInRoom = clientsInRoom.map((client)=> {return client.userUrlName})
-            io.to(webpage.id.toString()).emit('users', JSON.stringify(usersInRoom))
+            let usersUrlInRoom: IUser[] = clientsInRoom.map((client) => {
+                return settings.users.find((user: IUser) => {
+                    return client.userUrlName === user.id
+                })
+            })
+            let usersInRoom: string[] = usersUrlInRoom.map((user: IUser) => {
+                if (user) {
+                    return user.name
+                }
+            })
+            io.to(webpage.id.toString()).emit(
+                USERS_IN_ROOM,
+                JSON.stringify(usersInRoom)
+            )
         })
     }
 
-    function joinRoom(payload: IRoomPayload) {
-        socket.join(payload.roomName)
-        socketClients[findIndex(socket.id)].roomName = payload.roomName
-        socketClients[findIndex(socket.id)].userUrlName = payload.userUrlName
+    const joinRoom = (room: string) => {
+        socket.join(room)
+        socketClients[findIndex(socket.id)].roomName = room
     }
 
-    function leaveRoom() {
+    const leaveRoom = () => {
         if (socketClients[findIndex(socket.id)].roomName !== '') {
             socket.leave(socketClients[findIndex(socket.id)].roomName)
         }
@@ -65,7 +96,7 @@ io.on('connection', (socket: any) => {
 })
 
 const findIndex = (userId: string): number => {
-    return socketClients.findIndex((client)=> {
+    return socketClients.findIndex((client) => {
         return client.id === userId
     })
 }

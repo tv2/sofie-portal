@@ -1,6 +1,7 @@
 export interface IUser {
     id: string
     name: string
+    accessRights: number[]
 }
 export interface IWebPage {
     id: number

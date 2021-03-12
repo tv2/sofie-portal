@@ -4,8 +4,3 @@ export interface ISocketClient {
     roomName: string
     connectionTime: Date
 }
-
-export interface IRoomPayload {
-    roomName: string
-    userUrlName: string
-}

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.4...v0.1.5) (2021-03-12)
+
+
+### Features
+
+* user-access - full implementation. Moved management of users to serverside, so client only sees itself as user. ([cfd4213](https://github.com/olzzon/tv2-sofie-portal/commit/cfd4213edadaba8ec8e41a0845b8a415d84422df))
+* useracccess - added constants for socket IO and added accessRights in settings.json and in interface ([5514da0](https://github.com/olzzon/tv2-sofie-portal/commit/5514da06b46f6c5d4a9962a81db9b64dd9e2489f))
+
+
+### Bug Fixes
+
+* add key in child components to avoid react warning of iterations ([f5a39fa](https://github.com/olzzon/tv2-sofie-portal/commit/f5a39fa84be3b9606d9d78b42d5f5f15bcda42ad))
+
 ### [0.1.4](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.3...v0.1.4) (2021-03-10)
 
 

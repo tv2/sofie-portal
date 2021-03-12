@@ -7,7 +7,12 @@ const path = require('path')
 import * as settingsJson from '../storage/settings.json'
 import { ISettings, IUser } from '../model/settingsInterface'
 import { ISocketClient, IRoomPayload } from '../model/socketClientInterface'
-import { JOIN_ROOM, THIS_USER, USERS_IN_ROOM, WEBPAGES } from '../model/socketConstants'
+import {
+    JOIN_ROOM,
+    THIS_USER,
+    USERS_IN_ROOM,
+    WEBPAGES,
+} from '../model/socketConstants'
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const dev: boolean = process.env.NODE_ENV !== 'production'
@@ -18,9 +23,18 @@ let settings: ISettings = settingsJson
 
 // socket.io server
 io.on('connection', (socket: any) => {
+    const userUrlName = socket.handshake.headers.userurl
+    const thisUser: IUser = settings.users.find(
+        (userId: any) => userId.id === userUrlName
+    ) || {
+        id: userUrlName,
+        name: '',
+        accessRights: [-1]
+    }
+
     socketClients.push({
         id: socket.id,
-        userUrlName: '',
+        userUrlName: userUrlName,
         roomName: '',
         connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
     })
@@ -35,9 +49,12 @@ io.on('connection', (socket: any) => {
     })
 
     socket.on(JOIN_ROOM, (payload: IRoomPayload) => {
-        socket.emit(THIS_USER, JSON.stringify(settings.users.find(
-            (userId: any) => userId.id === payload.userUrlName)
-        ))
+        socket.emit(
+            THIS_USER,
+            JSON.stringify(
+                thisUser
+            )
+        )
         leaveRoom()
         joinRoom(payload)
         updateClientsInRooms()
@@ -51,9 +68,14 @@ io.on('connection', (socket: any) => {
                 return client.roomName === webpage.id.toString()
             })
 
-            let usersInRoom: string[] = clientsInRoom.map((client) => {
-                return settings.users.find((user: IUser) => { return client.userUrlName === user.id
-            }).name})
+            let usersUrlInRoom: IUser[] = clientsInRoom.map((client) => {
+                return settings.users.find((user: IUser) => {
+                    return client.userUrlName === user.id
+                })
+            })
+            let usersInRoom: string[] = usersUrlInRoom.map((user: IUser) => {
+                return user.name
+            })
             io.to(webpage.id.toString()).emit(
                 USERS_IN_ROOM,
                 JSON.stringify(usersInRoom)

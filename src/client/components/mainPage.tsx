@@ -3,8 +3,12 @@ import '../styles/IframeView.css'
 
 import React, { useState, useEffect } from 'react'
 import { io } from 'socket.io-client'
+
+const userUrlId = new URLSearchParams(window.location.search).get(
+    'username'
+) || ''
 // @ts-ignore
-const socket = io()
+const socket = io({ extraHeaders: { "userurl":  userUrlId }})
 
 import { IUser, IWebPage } from '../../model/settingsInterface'
 import { IRoomPayload } from '../../model/socketClientInterface'
@@ -22,9 +26,7 @@ const MainPage = () => {
             const room = 1
             setRoom(room)
             //            setWebPage(settings.webpages[room])
-            const userUrlId = new URLSearchParams(window.location.search).get(
-                'username'
-            ) || ''
+
             socket.on(THIS_USER, (payload: any) => {
                 setThisUser(JSON.parse(payload))
             })

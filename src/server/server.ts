@@ -5,6 +5,7 @@ const io = require('socket.io')(server)
 const path = require('path')
 
 import * as settingsJson from '../storage/settings.json'
+
 import { ISettings, IUser, IWebPage } from '../model/settingsInterface'
 import { ISocketClient } from '../model/socketClientInterface'
 import {
@@ -13,13 +14,14 @@ import {
     USERS_IN_ROOM,
     WEBPAGES,
 } from '../model/socketConstants'
+import {logger} from "./utils/logger";
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
-const dev: boolean = process.env.NODE_ENV !== 'production'
 const moment = require('moment')
 
 let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
+logger.debug("Settings", settings);
 
 // socket.io server
 io.on('connection', (socket: any) => {
@@ -37,6 +39,8 @@ io.on('connection', (socket: any) => {
         roomName: '-1',
         connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
     })
+
+    logger.debug(`Number of active sockets: ${socketClients.length}`)
     socket.emit(THIS_USER, JSON.stringify(thisUser))
 
     const accessToPages: IWebPage[] = settings.webpages.filter((webpage: IWebPage) => {
@@ -54,12 +58,15 @@ io.on('connection', (socket: any) => {
     })
 
     socket.on(JOIN_ROOM, (room: string) => {
+        logger.debug(`Socket.on('room') payload: ${room}`)
         leaveRoom()
         joinRoom(room)
         updateClientsInRooms()
     })
 
-    socket.once('disconnect', () => {})
+    socket.once('disconnect', () => {
+        logger.debug(`Socket with id: ${socket.id} disconnected`)
+    })
 
     const updateClientsInRooms = () => {
         settings.webpages.forEach((webpage) => {
@@ -83,13 +90,16 @@ io.on('connection', (socket: any) => {
         })
     }
 
+
     const joinRoom = (room: string) => {
+        logger.debug(`Socket with id: ${socket.id} & username: ${payload.userUrlName} joined room: ${room}`)
         socket.join(room)
         socketClients[findIndex(socket.id)].roomName = room
     }
 
     const leaveRoom = () => {
         if (socketClients[findIndex(socket.id)].roomName !== '') {
+            logger.debug(`Socket with id: ${socket.id} left room: ${socketClients[findIndex(socket.id)].roomName}`)
             socket.leave(socketClients[findIndex(socket.id)].roomName)
         }
     }
@@ -103,7 +113,7 @@ const findIndex = (userId: string): number => {
 
 app.use('/', express.static(path.join(__dirname, '../client')))
 server.listen(port)
-console.log(`Server started at http://localhost:${port}`)
+logger.info(`Server started at http://localhost:${port}`)
 
 server.on('connection', () => {
     app.get('/', (req: any, res: any) => {

@@ -9,6 +9,20 @@
     align-items: center;
 }
 
+input[type="text"]
+{
+    font-size: 1.4rem;
+    margin-left: 5px;
+}
+select{
+    font-size: 1.4rem;
+    margin-left: 5px;
+}
+
+.inputlabel {
+    margin-left: 5px;
+}
+
 .main {
     flex: 1;
     display: flex;
@@ -25,11 +39,12 @@
     width: 100vw;
 }
 
-.clientlist {
+.pageslist {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 10px;
     width: 100vw;
     font-size: 1.4rem;
     align-items: center;
@@ -37,10 +52,9 @@
 
 .adminbutton {
     color: white;
-    background-color: inherit;
+    background-color: rgb(73, 73, 73);
     margin: 10px;
     font-size: 1.4rem;
-    border: inherit;
 }
 
 .inputgrid {

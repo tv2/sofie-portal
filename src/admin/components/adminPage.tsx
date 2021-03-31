@@ -95,19 +95,31 @@ const AdminPage = () => {
 
     return (
         <div className={'container'}>
-            <select onChange={(event) => handleSelectUser(event)}>
-                {allUsers.map((user: IUser, index: number) => {
-                    return (
-                        <option key={index} value={index}>
-                            {user.name}
-                        </option>
-                    )
-                })}
-            </select>
+            <div className={'pageslist'}>
+                <div>SELECT USER :</div>
+                <select onChange={(event) => handleSelectUser(event)}>
+                    {allUsers.map((user: IUser, index: number) => {
+                        return (
+                            <option key={index} value={index}>
+                                {user.name}
+                            </option>
+                        )
+                    })}
+                </select>
+                <button
+                    className={'adminbutton'}
+                    onClick={() => {
+                        handleAddUser()
+                    }}
+                >
+                    New User
+                </button>
+            </div>
+            <hr/>
             {allUsers[selectedUser] ? (
-                <div className={'clientlist'}>
+                <div className={'pageslist'}>
                     <form>
-                        <label>
+                        <label className={'inputlabel'}>
                             User Id:
                             <input
                                 type="text"
@@ -115,7 +127,7 @@ const AdminPage = () => {
                                 onChange={(event) => handleUserIdInput(event)}
                             />
                         </label>
-                        <label>
+                        <label className={'inputlabel'}>
                             User Label:
                             <input
                                 type="text"
@@ -128,13 +140,13 @@ const AdminPage = () => {
             ) : (
                 <React.Fragment></React.Fragment>
             )}
-
+            <hr />
             {allUsers[selectedUser]?.accessRights.map(
                 (accessRight: IUserAccessRights, index: number) => {
                     return (
-                        <div key={index} className={'clientlist'}>
+                        <div key={index} className={'pageslist'}>
                             <form>
-                                <label>
+                                <label className={'inputlabel'}>
                                     WebPage Id:
                                     <input
                                         type="text"
@@ -148,7 +160,7 @@ const AdminPage = () => {
                                         }
                                     />
                                 </label>
-                                <label>
+                                <label className={'inputlabel'}>
                                     Button Label:
                                     <input
                                         type="text"
@@ -162,7 +174,7 @@ const AdminPage = () => {
                                         }
                                     />
                                 </label>
-                                <label>
+                                <label className={'inputlabel'}>
                                     Path and Args:
                                     <input
                                         type="text"
@@ -181,30 +193,28 @@ const AdminPage = () => {
                     )
                 }
             )}
-            <button
-                className={'adminbutton'}
-                onClick={() => {
-                    handleAddWebPage()
-                }}
-            >
-                Add Webpage
-            </button>
-            <button
-                className={'adminbutton'}
-                onClick={() => {
-                    handleAddUser()
-                }}
-            >
-                Add User
-            </button>
-            <button
-                className={'adminbutton'}
-                onClick={() => {
-                    handleSaveUsers()
-                }}
-            >
-                SAVE USER DATA
-            </button>
+
+            <div className={'pageslist'}>
+                <button
+                    className={'adminbutton'}
+                    onClick={() => {
+                        handleAddWebPage()
+                    }}
+                >
+                    New Weblink
+                </button>
+            </div>
+            <hr />
+            <div className={'pageslist'}>
+                <button
+                    className={'adminbutton'}
+                    onClick={() => {
+                        handleSaveUsers()
+                    }}
+                >
+                    SAVE USER DATA
+                </button>
+            </div>
         </div>
     )
 }

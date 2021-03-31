@@ -5,8 +5,10 @@ const io = require('socket.io')(server)
 const path = require('path')
 
 import * as settingsJson from '../storage/settings.json'
+import * as usersJson from '../storage/users.json'
 
-import { ISettings, IUser, IWebPage } from '../model/settingsInterface'
+import { ISettings, IWebPage } from '../model/settingsInterface'
+import { IUser } from '../model/usersInterface'
 import { ISocketClient } from '../model/socketClientInterface'
 import {
     JOIN_ROOM,
@@ -21,17 +23,18 @@ const moment = require('moment')
 
 let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
+let users: IUser[] = usersJson.users
 logger.debug("Settings", settings);
 
 // socket.io server
 io.on('connection', (socket: any) => {
     const userUrlName = socket.handshake.headers.userurl
-    const thisUser: IUser = settings.users.find(
+    const thisUser: IUser = users.find(
         (userId: IUser) => userId.id === userUrlName
     ) || {
         id: userUrlName,
         name: '',
-        accessRights: [-1],
+        accessRights: [],
     }
     socketClients.push({
         id: socket.id,
@@ -74,7 +77,7 @@ io.on('connection', (socket: any) => {
                 return client.roomName === webpage.id.toString()
             })
             let usersUrlInRoom: IUser[] = clientsInRoom.map((client) => {
-                return settings.users.find((user: IUser) => {
+                return users.find((user: IUser) => {
                     return client.userUrlName === user.id
                 })
             })

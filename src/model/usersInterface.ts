@@ -6,6 +6,6 @@ export interface IUser {
 
 export interface IUserAccessRights {
     webpageId: string
-    path?: string
-    label?: string
+    path: string
+    label: string
 }

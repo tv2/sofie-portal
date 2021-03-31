@@ -60,6 +60,7 @@ io.on('connection', (socket: any) => {
 
     socket.on(IO.ADMIN_STORE_USERS_JSON, (payload) => {
         saveUsersFile(payload)
+        users = payload
     })
 
 

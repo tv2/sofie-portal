@@ -1,6 +1,6 @@
 export interface IWebPage {
     id: string
-    name: string
+    label: string
     description: string
     hostname: string
 }

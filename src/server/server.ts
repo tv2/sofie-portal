@@ -44,14 +44,14 @@ io.on('connection', (socket: any) => {
     })
 
     logger.debug(`Number of active sockets: ${socketClients.length}`)
-    socket.emit(THIS_USER, JSON.stringify(thisUser))
+    socket.emit(THIS_USER, thisUser)
 
     const accessToPages: IWebPage[] = settings.webpages.filter((webpage: IWebPage) => {
         return thisUser.accessRights.find((access) => {
-            return access === webpage.id
+            return access.webpageId === webpage.id
         })
     })
-    socket.emit(WEBPAGES, JSON.stringify(accessToPages))
+    socket.emit(WEBPAGES, accessToPages)
 
     socket.on('disconnecting', () => {
         socketClients = socketClients.filter((client) => {
@@ -88,7 +88,7 @@ io.on('connection', (socket: any) => {
             })
             io.to(webpage.id.toString()).emit(
                 USERS_IN_ROOM,
-                JSON.stringify(usersInRoom)
+                usersInRoom
             )
         })
     }

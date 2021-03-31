@@ -3,22 +3,74 @@
         {
             "id": "afvdlyd",
             "name": "Afv.D Lyd",
-            "accessRights": ["1", "3"]
+            "accessRights": [
+                {
+                    "webpageId": "1",
+                    "path": ""
+                },
+                {
+                    "webpageId": "2",
+                    "path": "",
+                    "label": "MY SELF"
+                },
+                {
+                    "webpageId": "3",
+                    "path": ""
+                }
+            ]
         },
         {
             "id": "nyhedlyd",
             "name": "Nyhederne Lyd",
-            "accessRights": ["1", "2", "3"]
+            "accessRights": [
+                {
+                    "webpageId": "1",
+                    "path": ""
+                },
+                {
+                    "webpageId": "2",
+                    "path": "",
+                    "label": "THIS PAGE"
+                }
+            ]
         },
         {
             "id": "mcr1",
             "name": "MCR 1",
-            "accessRights": ["1", "2", "3"]
+            "accessRights": [
+                {
+                    "webpageId": "1",
+                    "path": ""
+                },
+                {
+                    "webpageId": "2",
+                    "path": "",
+                    "label": "MY SELF"
+                },
+                {
+                    "webpageId": "3",
+                    "path": ""
+                }
+            ]
         },
         {
             "id": "cont1",
             "name": "CONT 1",
-            "accessRights": ["1", "2", "3"]
+            "accessRights": [
+                {
+                    "webpageId": "1",
+                    "path": ""
+                },
+                {
+                    "webpageId": "2",
+                    "path": "",
+                    "label": "MY SELF"
+                },
+                {
+                    "webpageId": "3",
+                    "path": ""
+                }
+            ]
         }
     ]
 }

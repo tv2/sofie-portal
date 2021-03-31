@@ -2,19 +2,19 @@
    "webpages": [
         {
             "id": "1",
-            "name": "Q-BOX 01",
+            "label": "Q-BOX 01",
             "description": "",
             "hostname": "http://localhost:1176"
         },
         {
             "id": "2",
-            "name": "Q-BOX 02",
+            "label": "Q-BOX 02",
             "description": "",
             "hostname": "http://localhost:3000"
         },
         {
             "id": "3",
-            "name": "Q-BOX 03",
+            "label": "Q-BOX 03",
             "description": "",
             "hostname": "http://localhost:1176"
         }

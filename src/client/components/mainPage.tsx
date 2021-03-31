@@ -9,7 +9,8 @@ const userUrlId =
 // @ts-ignore
 const socket = io({ extraHeaders: { userurl: userUrlId } })
 
-import { IUser, IWebPage } from '../../model/settingsInterface'
+import { IWebPage } from '../../model/settingsInterface'
+import { IUser, IUserAccessRights } from '../../model/usersInterface'
 import {
     THIS_USER,
     WEBPAGES,
@@ -20,33 +21,30 @@ import {
 const MainPage = () => {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
     const [thisUser, setThisUser] = useState<IUser>()
-    const [activeRoom, setRoom] = useState<number>()
+    const [activeRoomIndex, setRoomIndex] = useState<number>(-1)
     const [webpages, setWebpages] = useState<IWebPage[]>()
 
     useEffect(() => {
         if (socket) {
-            const room = 1
-
             socket.on(THIS_USER, (payload: any) => {
-                setThisUser(JSON.parse(payload))
+                setThisUser(payload)
             })
 
             socket.on(USERS_IN_ROOM, (socketPayload: any) => {
-                setUsersInRoom(JSON.parse(socketPayload))
+                setUsersInRoom(socketPayload)
             })
             socket.on(WEBPAGES, (socketPayload: any) => {
-                handleChangeRoom(room)
-                setWebpages(JSON.parse(socketPayload))
+                setWebpages(socketPayload)
             })
         }
     }, [socket])
 
-    const handleChangeRoom = (room: number) => {
-        setRoom(room)
-        socket.emit(JOIN_ROOM, room.toString())
+    const handleChangeRoom = (room: IUserAccessRights, index: number) => {
+        setRoomIndex(index)
+        socket.emit(JOIN_ROOM, room.webpageId)
     }
 
-    const findWebpage = (id: number) => {
+    const findWebpage = (id: string) => {
         return webpages?.find((webpage) => {
             return webpage.id === id
         })
@@ -54,44 +52,60 @@ const MainPage = () => {
 
     return (
         <div className={'container'}>
-            {thisUser?.accessRights[0] !== -1 ? (
+            {thisUser?.accessRights?.[0].webpageId !== '-1' ? (
                 <div className={'main'}>
                     <div className={'grid'}>
-                        {webpages?.map((webpage, index) => {
+                        {thisUser?.accessRights?.map((accessRight, index) => {
                             return (
                                 <button
                                     key={index.toString()}
                                     className={
-                                        webpage.id === activeRoom
+                                        index === activeRoomIndex
                                             ? 'cardselected'
                                             : 'card'
                                     }
                                     onClick={() => {
-                                        handleChangeRoom(webpage.id)
+                                        handleChangeRoom(accessRight, index)
                                     }}
                                 >
-                                    {webpage.name}
+                                    {accessRight.label ||
+                                        findWebpage(
+                                            thisUser?.accessRights[index]
+                                                .webpageId
+                                        )?.label}
                                 </button>
                             )
                         })}
                     </div>
-                    <div className={'clientlist'}>
-                        USERS :
-                        {usersInRoom?.map((userInRoom, index) => {
-                            return (
-                                <button
-                                    key={index.toString()}
-                                    className={'clientbutton'}
-                                >
-                                    {userInRoom}
-                                </button>
-                            )
-                        })}
-                    </div>
-                    <iframe
-                        className={'iframeview'}
-                        src={findWebpage(activeRoom || 1)?.hostname}
-                    ></iframe>
+                    {activeRoomIndex >= 0 ? (
+                        <React.Fragment>
+                            <div className={'clientlist'}>
+                                USERS :
+                                {usersInRoom?.map((userInRoom, index) => {
+                                    return (
+                                        <button
+                                            key={index.toString()}
+                                            className={'clientbutton'}
+                                        >
+                                            {userInRoom}
+                                        </button>
+                                    )
+                                })}
+                            </div>
+
+                            <iframe
+                                className={'iframeview'}
+                                src={
+                                    findWebpage(
+                                        thisUser?.accessRights[activeRoomIndex]
+                                            .webpageId || '1'
+                                    )?.hostname
+                                }
+                            ></iframe>
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment></React.Fragment>
+                    )}
                 </div>
             ) : (
                 <h1 className={'main'}>WRONG USER LOGIN</h1>

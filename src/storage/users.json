@@ -5,17 +5,18 @@
             "name": "Afv.D Lyd",
             "accessRights": [
                 {
-                    "webpageId": "1",
-                    "path": ""
+                    "webpageId": "1"
                 },
                 {
                     "webpageId": "2",
-                    "path": "",
-                    "label": "MY SELF"
+                    "path": "/seneste",
+                    "label": "2 -To Path"
                 },
                 {
-                    "webpageId": "3",
-                    "path": ""
+                    "webpageId": "2"
+                },
+                {
+                    "webpageId": "3"
                 }
             ]
         },
@@ -24,12 +25,10 @@
             "name": "Nyhederne Lyd",
             "accessRights": [
                 {
-                    "webpageId": "1",
-                    "path": ""
+                    "webpageId": "1"
                 },
                 {
                     "webpageId": "2",
-                    "path": "",
                     "label": "THIS PAGE"
                 }
             ]
@@ -39,17 +38,13 @@
             "name": "MCR 1",
             "accessRights": [
                 {
-                    "webpageId": "1",
-                    "path": ""
+                    "webpageId": "1"
                 },
                 {
-                    "webpageId": "2",
-                    "path": "",
-                    "label": "MY SELF"
+                    "webpageId": "2"
                 },
                 {
-                    "webpageId": "3",
-                    "path": ""
+                    "webpageId": "3"
                 }
             ]
         },
@@ -63,12 +58,10 @@
                 },
                 {
                     "webpageId": "2",
-                    "path": "",
                     "label": "MY SELF"
                 },
                 {
-                    "webpageId": "3",
-                    "path": ""
+                    "webpageId": "3"
                 }
             ]
         }

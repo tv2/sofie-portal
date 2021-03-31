@@ -99,7 +99,9 @@ const MainPage = () => {
                                     findWebpage(
                                         thisUser?.accessRights[activeRoomIndex]
                                             .webpageId || '1'
-                                    )?.hostname
+                                    )?.hostname +
+                                    (thisUser?.accessRights[activeRoomIndex]
+                                        .path || '')
                                 }
                             ></iframe>
                         </React.Fragment>

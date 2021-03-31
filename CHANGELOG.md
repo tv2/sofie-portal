@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.5...v0.1.6) (2021-03-31)
+
+
+### Features
+
+* user buttons more than one on same webpage with "path" added to link ([6605edd](https://github.com/olzzon/tv2-sofie-portal/commit/6605eddbfc54bd6e97971684266bb154a7b3a5f3))
+* users overrides label - accessrights includes path and user specific label ([f88dc96](https://github.com/olzzon/tv2-sofie-portal/commit/f88dc96091a6e835384a876110a8c401fad75472))
+* webpages id as string - seperate users file from settings file ([f3f5bd9](https://github.com/olzzon/tv2-sofie-portal/commit/f3f5bd9c06441d95df1eaa2ef300e0809289c740))
+
+
+### Bug Fixes
+
+* margin was initial set as 8px - fix: force to 0px ([c6ac707](https://github.com/olzzon/tv2-sofie-portal/commit/c6ac707212698a57ef680dcb93870f31379fd9ce))
+
 ### [0.1.5](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.4...v0.1.5) (2021-03-12)
 
 

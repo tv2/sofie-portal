@@ -107,7 +107,7 @@ const AdminPage = () => {
 
     return (
         <div className={'container'}>
-            <div className={'pageslist'}>USER ACCESS ADMINISTRAION:</div>
+            <div className={'adminheader'}>USER ACCESS ADMINISTRATION:</div>
 
             <div className={'pageslist'}>
                 <div>SELECT USER :</div>
@@ -120,6 +120,8 @@ const AdminPage = () => {
                         )
                     })}
                 </select>
+            </div>
+            <div className={'pageslist'}>
                 <button
                     className={'adminbutton'}
                     onClick={() => {
@@ -171,24 +173,20 @@ const AdminPage = () => {
                                             handleAccessId(event, index)
                                         }
                                     >
-                                        {webpages.map(
-                                            (
-                                                webpage: IWebPage
-                                            ) => {
-                                                return (
-                                                    <option
-                                                        selected={
-                                                            accessRight.webpageId ===
-                                                            webpage.id
-                                                        }
-                                                        key={index}
-                                                        value={webpage.id}
-                                                    >
-                                                        {webpage.label}
-                                                    </option>
-                                                )
-                                            }
-                                        )}
+                                        {webpages.map((webpage: IWebPage) => {
+                                            return (
+                                                <option
+                                                    selected={
+                                                        accessRight.webpageId ===
+                                                        webpage.id
+                                                    }
+                                                    key={index}
+                                                    value={webpage.id}
+                                                >
+                                                    {webpage.label}
+                                                </option>
+                                            )
+                                        })}
                                     </select>
                                 </label>
                                 <label className={'inputlabel'}>

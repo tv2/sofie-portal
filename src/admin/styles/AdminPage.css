@@ -1,5 +1,8 @@
+body {
+    background-color: black;
+}
+
 .container {
-    background-color: rgb(29, 29, 29);
     color: white;
     padding: 0;
     margin: 0;
@@ -40,7 +43,18 @@ select{
     flex-wrap: wrap;
     width: 100vw;
 }
+.adminheader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100vw;
+    font-size: 1.6rem;
+    align-items: center;
 
+}
 .pageslist {
     display: flex;
     align-items: center;

@@ -13,10 +13,12 @@ input[type="text"]
 {
     font-size: 1.4rem;
     margin-left: 5px;
+    background-color: rgb(200, 200, 200);
 }
 select{
     font-size: 1.4rem;
     margin-left: 5px;
+    background-color: rgb(200, 200, 200);
 }
 
 .inputlabel {

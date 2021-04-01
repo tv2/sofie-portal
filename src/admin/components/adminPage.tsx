@@ -53,6 +53,18 @@ const AdminPage = () => {
         setAllUsers([...changed])
     }
 
+    const handleAccessId = (
+        event: React.ChangeEvent<HTMLSelectElement>,
+        index: number
+    ) => {
+        let changed = allUsers
+        if (changed[selectedUser].accessRights[index]) {
+            changed[selectedUser].accessRights[index].webpageId =
+                event.target.value
+            setAllUsers([...changed])
+        }
+    }
+
     const handleAccessTextInput = (
         event: React.ChangeEvent<HTMLInputElement>,
         index: number,
@@ -95,6 +107,8 @@ const AdminPage = () => {
 
     return (
         <div className={'container'}>
+            <div className={'pageslist'}>USER ACCESS ADMINISTRAION:</div>
+
             <div className={'pageslist'}>
                 <div>SELECT USER :</div>
                 <select onChange={(event) => handleSelectUser(event)}>
@@ -112,10 +126,12 @@ const AdminPage = () => {
                         handleAddUser()
                     }}
                 >
-                    New User
+                    Add New User
                 </button>
             </div>
-            <hr/>
+            <hr />
+            <div className={'pageslist'}>USER :</div>
+
             {allUsers[selectedUser] ? (
                 <div className={'pageslist'}>
                     <form>
@@ -141,24 +157,39 @@ const AdminPage = () => {
                 <React.Fragment></React.Fragment>
             )}
             <hr />
+            <div className={'pageslist'}>ACCESS RIGHTS :</div>
+
             {allUsers[selectedUser]?.accessRights.map(
                 (accessRight: IUserAccessRights, index: number) => {
                     return (
                         <div key={index} className={'pageslist'}>
                             <form>
                                 <label className={'inputlabel'}>
-                                    WebPage Id:
-                                    <input
-                                        type="text"
-                                        value={accessRight.webpageId}
+                                    WebPage :
+                                    <select
                                         onChange={(event) =>
-                                            handleAccessTextInput(
-                                                event,
-                                                index,
-                                                'webpageId'
-                                            )
+                                            handleAccessId(event, index)
                                         }
-                                    />
+                                    >
+                                        {webpages.map(
+                                            (
+                                                webpage: IWebPage
+                                            ) => {
+                                                return (
+                                                    <option
+                                                        selected={
+                                                            accessRight.webpageId ===
+                                                            webpage.id
+                                                        }
+                                                        key={index}
+                                                        value={webpage.id}
+                                                    >
+                                                        {webpage.label}
+                                                    </option>
+                                                )
+                                            }
+                                        )}
+                                    </select>
                                 </label>
                                 <label className={'inputlabel'}>
                                     Button Label:
@@ -201,7 +232,7 @@ const AdminPage = () => {
                         handleAddWebPage()
                     }}
                 >
-                    New Weblink
+                    Add New Weblink
                 </button>
             </div>
             <hr />

@@ -3,7 +3,6 @@ body {
 }
 
 .container {
-    background-color: rgb(0, 0, 0);
     color: white;
     padding: 0;
     margin: 0;
@@ -11,6 +10,29 @@ body {
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     justify-content: center;
     align-items: center;
+}
+
+input[type="text"]
+{
+    font-size: 1.4rem;
+    margin-left: 5px;
+    background-color: rgb(200, 200, 200);
+}
+input[type="file"]
+{
+    font-size: 1.4rem;
+    margin-left: 5px;
+    background-color: rgb(80, 80, 80);
+}
+
+select{
+    font-size: 1.4rem;
+    margin-left: 5px;
+    background-color: rgb(200, 200, 200);
+}
+
+.inputlabel {
+    margin-left: 5px;
 }
 
 .main {
@@ -28,26 +50,37 @@ body {
     flex-wrap: wrap;
     width: 100vw;
 }
-
-.clientlist {
+.adminheader {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100vw;
+    font-size: 1.6rem;
+    align-items: center;
+
+}
+.pageslist {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
     width: 100vw;
     font-size: 1.4rem;
     align-items: center;
 }
 
-.clientbutton {
+.adminbutton {
     color: white;
-    background-color: inherit;
+    background-color: rgb(73, 73, 73);
     margin: 10px;
     font-size: 1.4rem;
-    border: inherit;
 }
 
-.usergrid {
+.inputgrid {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,7 +88,7 @@ body {
     width: 100vw;
 }
 
-.usercard {
+.inputcard {
     margin-left: 1.2rem;
     color: white;
     font-size: 1.5rem;
@@ -86,22 +119,4 @@ body {
     border: 1px solid #0f12c0;
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.card:hover,
-.card:focus,
-.card:active {
-    color: #0070f3;
-    border-color: #0070f3;
-}
-
-.card h3 {
-    margin: 0 0 1rem 0;
-    font-size: 1.5rem;
-}
-
-.card p {
-    margin: 0;
-    font-size: 1.25rem;
-    line-height: 1.5;
 }

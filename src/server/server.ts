@@ -10,13 +10,9 @@ import * as usersJson from '../storage/users.json'
 import { ISettings, IWebPage } from '../model/settingsInterface'
 import { IUser } from '../model/usersInterface'
 import { ISocketClient } from '../model/socketClientInterface'
-import {
-    JOIN_ROOM,
-    THIS_USER,
-    USERS_IN_ROOM,
-    WEBPAGES,
-} from '../model/socketConstants'
-import {logger} from "./utils/logger";
+import * as IO from '../model/socketConstants'
+import { logger } from './utils/logger'
+import { saveUsersFile } from './utils/storage'
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const moment = require('moment')
@@ -24,34 +20,49 @@ const moment = require('moment')
 let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
 let users: IUser[] = usersJson.users
-logger.debug("Settings", settings);
+logger.debug('Settings', settings)
 
 // socket.io server
 io.on('connection', (socket: any) => {
-    const userUrlName = socket.handshake.headers.userurl
-    const thisUser: IUser = users.find(
-        (userId: IUser) => userId.id === userUrlName
-    ) || {
-        id: userUrlName,
-        name: '',
-        accessRights: [],
-    }
-    socketClients.push({
-        id: socket.id,
-        userUrlName: userUrlName,
-        roomName: '-1',
-        connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
-    })
-
-    logger.debug(`Number of active sockets: ${socketClients.length}`)
-    socket.emit(THIS_USER, thisUser)
-
-    const accessToPages: IWebPage[] = settings.webpages.filter((webpage: IWebPage) => {
-        return thisUser.accessRights.find((access) => {
-            return access.webpageId === webpage.id
+    if (socket.handshake.headers.userurl) {
+        const userUrlName = socket.handshake.headers.userurl
+        const thisUser: IUser = users.find(
+            (userId: IUser) => userId.id === userUrlName
+        ) || {
+            id: userUrlName,
+            name: '',
+            accessRights: [],
+        }
+        socketClients.push({
+            id: socket.id,
+            userUrlName: userUrlName,
+            roomName: '-1',
+            connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
         })
+
+        logger.debug(`Number of active sockets: ${socketClients.length}`)
+        socket.emit(IO.THIS_USER, thisUser)
+
+        const accessToPages: IWebPage[] = settings.webpages.filter(
+            (webpage: IWebPage) => {
+                return thisUser.accessRights.find((access) => {
+                    return access.webpageId === webpage.id
+                })
+            }
+        )
+        socket.emit(IO.WEBPAGES, accessToPages)
+    }
+
+    socket.on(IO.ADMIN_GET_DATA, () => {
+        socket.emit(IO.ADMIN_ALL_USERS, usersJson.users)
+        socket.emit(IO.ADMIN_ALL_WEBPAGES, settingsJson.webpages)
     })
-    socket.emit(WEBPAGES, accessToPages)
+
+    socket.on(IO.ADMIN_STORE_USERS_JSON, (payload) => {
+        saveUsersFile(payload)
+        users = payload
+    })
+
 
     socket.on('disconnecting', () => {
         socketClients = socketClients.filter((client) => {
@@ -60,7 +71,7 @@ io.on('connection', (socket: any) => {
         updateClientsInRooms()
     })
 
-    socket.on(JOIN_ROOM, (room: string) => {
+    socket.on(IO.JOIN_ROOM, (room: string) => {
         logger.debug(`Socket.on('room') payload: ${room}`)
         leaveRoom()
         joinRoom(room)
@@ -86,13 +97,9 @@ io.on('connection', (socket: any) => {
                     return user.name
                 }
             })
-            io.to(webpage.id.toString()).emit(
-                USERS_IN_ROOM,
-                usersInRoom
-            )
+            io.to(webpage.id.toString()).emit(IO.USERS_IN_ROOM, usersInRoom)
         })
     }
-
 
     const joinRoom = (room: string) => {
         logger.debug(`Socket with id: ${socket.id} joined room: ${room}`)
@@ -102,7 +109,11 @@ io.on('connection', (socket: any) => {
 
     const leaveRoom = () => {
         if (socketClients[findIndex(socket.id)].roomName !== '') {
-            logger.debug(`Socket with id: ${socket.id} left room: ${socketClients[findIndex(socket.id)].roomName}`)
+            logger.debug(
+                `Socket with id: ${socket.id} left room: ${
+                    socketClients[findIndex(socket.id)].roomName
+                }`
+            )
             socket.leave(socketClients[findIndex(socket.id)].roomName)
         }
     }
@@ -115,11 +126,15 @@ const findIndex = (userId: string): number => {
 }
 
 app.use('/', express.static(path.join(__dirname, '../client')))
+app.use('/admin', express.static(path.join(__dirname, '../admin')))
 server.listen(port)
 logger.info(`Server started at http://localhost:${port}`)
 
 server.on('connection', () => {
     app.get('/', (req: any, res: any) => {
+        res.sendFile(path.resolve('index.html'))
+    })
+    app.get('/admin', (req: any, res: any) => {
         res.sendFile(path.resolve('index.html'))
     })
 })

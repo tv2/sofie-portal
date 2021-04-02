@@ -4303,6 +4303,11 @@ react-dom@17.0.1:
     object-assign "^4.1.1"
     scheduler "^0.20.1"
 
+react-files@^3.0.0-alpha.1:
+  version "3.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/react-files/-/react-files-3.0.0-alpha.1.tgz#2fe4e51fd01f3c5b87d52b344aace3bb03fe12db"
+  integrity sha512-GAb3J2RhrGJIPSBnPYqGEppDgnLcaF8ok4gsND0jHkyMd14Jw1yhiTLber+uuAsifp2pfN0azA8x255EWr8zxw==
+
 react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"

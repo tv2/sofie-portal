@@ -10,12 +10,3 @@ export const loadUserFile = (file: any): Promise<any> => {
         }
     })
 }
-
-export const saveUserFile = (users: IUser[]) => {
-    try {
-        const serializedState = JSON.stringify(users)
-        localStorage.setItem('store', serializedState)
-    } catch (error) {
-        console.log(error.message)
-    }
-}

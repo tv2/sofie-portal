@@ -108,14 +108,9 @@ const AdminPage = () => {
         socket.emit(IO.ADMIN_STORE_USERS_JSON, allUsers)
     }
 
-    const handleDownload = () => {
-        saveUserFile(allUsers)
-    }
-
     const handleUpload = (event: any) => {
         console.log('upload file : ', event[0])
-        loadUserFile(event[0])
-        .then((response:any ) => {
+        loadUserFile(event[0]).then((response: any) => {
             if (response) {
                 setAllUsers(JSON.parse(response).users)
             }
@@ -149,7 +144,7 @@ const AdminPage = () => {
                 </button>
             </div>
             <hr />
-            <div className={'pageslist'}>USER :</div>
+            <div className={'pageslist'}>USER INFO :</div>
 
             {allUsers[selectedUser] ? (
                 <div className={'pageslist'}>
@@ -176,7 +171,7 @@ const AdminPage = () => {
                 <React.Fragment></React.Fragment>
             )}
             <hr />
-            <div className={'pageslist'}>ACCESS RIGHTS :</div>
+            <div className={'pageslist'}>USER ACCESS RIGHTS :</div>
 
             {allUsers[selectedUser]?.accessRights.map(
                 (accessRight: IUserAccessRights, index: number) => {
@@ -207,7 +202,7 @@ const AdminPage = () => {
                                     </select>
                                 </label>
                                 <label className={'inputlabel'}>
-                                    Button Label:
+                                    Special Label:
                                     <input
                                         type="text"
                                         value={accessRight.label}
@@ -251,16 +246,17 @@ const AdminPage = () => {
                 </button>
             </div>
             <hr />
+            <div className={'pageslist'}>EDIT USERS EXTERNALLY :</div>
             <div className={'pageslist'}>
-                <button
+                <a
                     className={'adminbutton'}
-                    onClick={() => {
-                        handleDownload()
-                    }}
+                    href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                        JSON.stringify({ users: allUsers })
+                    )}`}
+                    download="users.json"
                 >
                     DOWNLOAD FILE
-                </button>
-
+                </a>
                 <Files
                     className={'adminbutton'}
                     accepts={['.json']}
@@ -271,6 +267,11 @@ const AdminPage = () => {
                 >
                     UPLOAD FILE
                 </Files>
+            </div>
+            <hr />
+
+            <div className={'pageslist'}>UPDATE SERVER :</div>
+            <div className={'pageslist'}>
                 <button
                     className={'adminbutton'}
                     onClick={() => {
@@ -280,6 +281,7 @@ const AdminPage = () => {
                     SAVE DATA TO SERVER
                 </button>
             </div>
+            <hr/>
         </div>
     )
 }

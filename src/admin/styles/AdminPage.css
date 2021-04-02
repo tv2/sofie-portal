@@ -18,6 +18,13 @@ input[type="text"]
     margin-left: 5px;
     background-color: rgb(200, 200, 200);
 }
+input[type="file"]
+{
+    font-size: 1.4rem;
+    margin-left: 5px;
+    background-color: rgb(80, 80, 80);
+}
+
 select{
     font-size: 1.4rem;
     margin-left: 5px;

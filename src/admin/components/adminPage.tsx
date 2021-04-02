@@ -1,6 +1,8 @@
 import '../styles/AdminPage.css'
 
 import React, { useState, useEffect } from 'react'
+//@ts-ignore
+import Files from 'react-files'
 import { io } from 'socket.io-client'
 
 const userUrlId =
@@ -11,6 +13,7 @@ const socket = io({ extraHeaders: { userurl: userUrlId } })
 import { IWebPage } from '../../model/settingsInterface'
 import { IUser, IUserAccessRights } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
+import { loadUserFile, saveUserFile } from '../utils/localStorage'
 
 const AdminPage = () => {
     const [selectedUser, setSelectedUser] = useState<number>(0)
@@ -103,6 +106,20 @@ const AdminPage = () => {
 
     const handleSaveUsers = () => {
         socket.emit(IO.ADMIN_STORE_USERS_JSON, allUsers)
+    }
+
+    const handleDownload = () => {
+        saveUserFile(allUsers)
+    }
+
+    const handleUpload = (event: any) => {
+        console.log('upload file : ', event[0])
+        loadUserFile(event[0])
+        .then((response:any ) => {
+            if (response) {
+                setAllUsers(JSON.parse(response).users)
+            }
+        })
     }
 
     return (
@@ -238,10 +255,29 @@ const AdminPage = () => {
                 <button
                     className={'adminbutton'}
                     onClick={() => {
+                        handleDownload()
+                    }}
+                >
+                    DOWNLOAD FILE
+                </button>
+
+                <Files
+                    className={'adminbutton'}
+                    accepts={['.json']}
+                    type="file"
+                    onChange={(event: any) => {
+                        handleUpload(event)
+                    }}
+                >
+                    UPLOAD FILE
+                </Files>
+                <button
+                    className={'adminbutton'}
+                    onClick={() => {
                         handleSaveUsers()
                     }}
                 >
-                    SAVE USER DATA
+                    SAVE DATA TO SERVER
                 </button>
             </div>
         </div>

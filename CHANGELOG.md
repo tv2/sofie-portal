@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.6...v0.1.7) (2021-04-02)
+
+
+### Features
+
+* admin - default background and added header ([dd53245](https://github.com/olzzon/tv2-sofie-portal/commit/dd53245adfb349ef4e133f6098bdcb99e59a5b68))
+* admin - user access dropdown menu for selecting webpages ([620b986](https://github.com/olzzon/tv2-sofie-portal/commit/620b9864af65b42292c849ad9c5b31fcc1cba14c))
+* admin page download userfile ([5d9893f](https://github.com/olzzon/tv2-sofie-portal/commit/5d9893f4de240c09e8b7e82b44a328f2bf928337))
+* Adminpage - css ([e3897e4](https://github.com/olzzon/tv2-sofie-portal/commit/e3897e4fada8ced2c159c4c929b32c85a2589e6d))
+* upload users.json files ([2a7fade](https://github.com/olzzon/tv2-sofie-portal/commit/2a7fade597711d90c7a49df85b1c731970729911))
+* user-administration ([99efeba](https://github.com/olzzon/tv2-sofie-portal/commit/99efeba41c92384d1ca754d3dcb9c9dfedf41083))
+
+
+### Bug Fixes
+
+* admin page - left over of removed saveUserfile function ([01fbdc8](https://github.com/olzzon/tv2-sofie-portal/commit/01fbdc83b8841c9d0cbd91cd36d7a2ae8c313b7d))
+* update users on server when saving from admin page ([a52dc17](https://github.com/olzzon/tv2-sofie-portal/commit/a52dc17bccbaa79ea9697af6fa63614881d47680))
+
 ### [0.1.6](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.5...v0.1.6) (2021-03-31)
 
 

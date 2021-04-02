@@ -13,7 +13,7 @@ const socket = io({ extraHeaders: { userurl: userUrlId } })
 import { IWebPage } from '../../model/settingsInterface'
 import { IUser, IUserAccessRights } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
-import { loadUserFile, saveUserFile } from '../utils/localStorage'
+import { loadUserFile } from '../utils/localStorage'
 
 const AdminPage = () => {
     const [selectedUser, setSelectedUser] = useState<number>(0)

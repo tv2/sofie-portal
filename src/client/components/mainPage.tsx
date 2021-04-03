@@ -9,50 +9,45 @@ const userUrlId =
 // @ts-ignore
 const socket = io({ extraHeaders: { userurl: userUrlId } })
 
-import { IWebPage } from '../../model/settingsInterface'
+import { IMachine } from '../../model/settingsInterface'
 import { IUser, IUserAccessRights } from '../../model/usersInterface'
-import {
-    THIS_USER,
-    WEBPAGES,
-    USERS_IN_ROOM,
-    JOIN_ROOM,
-} from '../../model/socketConstants'
+import * as IO from '../../model/socketConstants'
 
 const MainPage = () => {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
     const [thisUser, setThisUser] = useState<IUser>()
     const [activeRoomIndex, setRoomIndex] = useState<number>(-1)
-    const [webpages, setWebpages] = useState<IWebPage[]>()
+    const [machines, setMachines] = useState<IMachine[]>()
 
     useEffect(() => {
         if (socket) {
-            socket.on(THIS_USER, (payload: any) => {
+            socket.on(IO.THIS_USER, (payload: any) => {
                 setThisUser(payload)
             })
 
-            socket.on(USERS_IN_ROOM, (socketPayload: any) => {
+            socket.on(IO.USERS_IN_ROOM, (socketPayload: any) => {
                 setUsersInRoom(socketPayload)
             })
-            socket.on(WEBPAGES, (socketPayload: any) => {
-                setWebpages(socketPayload)
+            socket.on(IO.MACHINES, (socketPayload: any) => {
+                setMachines(socketPayload)
             })
         }
     }, [socket])
 
     const handleChangeRoom = (room: IUserAccessRights, index: number) => {
         setRoomIndex(index)
-        socket.emit(JOIN_ROOM, room.webpageId)
+        socket.emit(IO.JOIN_ROOM, room.machineId)
     }
 
-    const findWebpage = (id: string) => {
-        return webpages?.find((webpage) => {
-            return webpage.id === id
+    const findMachine = (id: string) => {
+        return machines?.find((machine) => {
+            return machine.id === id
         })
     }
 
     return (
         <div className={'container'}>
-            {thisUser?.accessRights?.[0].webpageId !== '-1' ? (
+            {thisUser?.accessRights?.[0].machineId !== '-1' ? (
                 <div className={'main'}>
                     <div className={'grid'}>
                         {thisUser?.accessRights?.map((accessRight, index) => {
@@ -69,9 +64,9 @@ const MainPage = () => {
                                     }}
                                 >
                                     {accessRight.label ||
-                                        findWebpage(
+                                        findMachine(
                                             thisUser?.accessRights[index]
-                                                .webpageId
+                                                .machineId
                                         )?.label}
                                 </button>
                             )
@@ -96,9 +91,9 @@ const MainPage = () => {
                             <iframe
                                 className={'iframeview'}
                                 src={
-                                    findWebpage(
+                                    findMachine(
                                         thisUser?.accessRights[activeRoomIndex]
-                                            .webpageId || '1'
+                                            .machineId || '1'
                                     )?.hostname +
                                     (thisUser?.accessRights[activeRoomIndex]
                                         .path || '')

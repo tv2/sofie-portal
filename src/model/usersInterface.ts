@@ -5,7 +5,7 @@ export interface IUser {
 }
 
 export interface IUserAccessRights {
-    webpageId: string
+    machineId: string
     path: string
     label: string
 }

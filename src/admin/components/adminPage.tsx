@@ -10,7 +10,7 @@ const userUrlId =
 // @ts-ignore
 const socket = io({ extraHeaders: { userurl: userUrlId } })
 
-import { IWebPage } from '../../model/settingsInterface'
+import { IMachine } from '../../model/settingsInterface'
 import { IUser, IUserAccessRights } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
 import { loadUserFile } from '../utils/localStorage'
@@ -18,25 +18,19 @@ import { loadUserFile } from '../utils/localStorage'
 const AdminPage = () => {
     const [selectedUser, setSelectedUser] = useState<number>(0)
     const [allUsers, setAllUsers] = useState<IUser[]>([])
-    const [webpages, setWebpages] = useState<IWebPage[]>([])
+    const [machines, setMachines] = useState<IMachine[]>([])
 
     useEffect(() => {
         if (socket) {
             socket.on(IO.ADMIN_ALL_USERS, (payload: any) => {
                 setAllUsers(payload)
             })
-            socket.on(IO.ADMIN_ALL_WEBPAGES, (payload: any) => {
-                setWebpages(payload)
+            socket.on(IO.ADMIN_ALL_MACHINES, (payload: any) => {
+                setMachines(payload)
             })
             socket.emit(IO.ADMIN_GET_DATA)
         }
     }, [socket])
-
-    const findWebpage = (id: string) => {
-        return webpages?.find((webpage) => {
-            return webpage.id === id
-        })
-    }
 
     const handleSelectUser = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedUser(parseInt(event.target.value))
@@ -62,7 +56,7 @@ const AdminPage = () => {
     ) => {
         let changed = allUsers
         if (changed[selectedUser].accessRights[index]) {
-            changed[selectedUser].accessRights[index].webpageId =
+            changed[selectedUser].accessRights[index].machineId =
                 event.target.value
             setAllUsers([...changed])
         }
@@ -83,15 +77,13 @@ const AdminPage = () => {
     }
 
     const handleAddWebPage = () => {
-        if (selectedUser) {
-            let addedAccess = allUsers
-            addedAccess[selectedUser].accessRights.push({
-                webpageId: '',
-                label: '',
-                path: '',
-            })
-            setAllUsers([...addedAccess])
-        }
+        let addedAccess = allUsers
+        addedAccess[selectedUser].accessRights.push({
+            machineId: '',
+            label: '',
+            path: '',
+        })
+        setAllUsers([...addedAccess])
     }
 
     const handleAddUser = () => {
@@ -175,7 +167,7 @@ const AdminPage = () => {
                 <React.Fragment></React.Fragment>
             )}
             <hr />
-            <div className={'pageslist'}>USER ACCESS RIGHTS :</div>
+            <div className={'pageslist'}>USER PAGES ACCESS RIGHTS :</div>
 
             {allUsers[selectedUser]?.accessRights.map(
                 (accessRight: IUserAccessRights, index: number) => {
@@ -183,23 +175,23 @@ const AdminPage = () => {
                         <div key={index} className={'pageslist'}>
                             <form>
                                 <label className={'inputlabel'}>
-                                    WebPage :
+                                    Machine :
                                     <select
                                         onChange={(event) =>
                                             handleAccessId(event, index)
                                         }
                                     >
-                                        {webpages.map((webpage: IWebPage) => {
+                                        {machines.map((machine: IMachine) => {
                                             return (
                                                 <option
                                                     selected={
-                                                        accessRight.webpageId ===
-                                                        webpage.id
+                                                        accessRight.machineId ===
+                                                        machine.id
                                                     }
                                                     key={index}
-                                                    value={webpage.id}
+                                                    value={machine.id}
                                                 >
-                                                    {webpage.label}
+                                                    {machine.label}
                                                 </option>
                                             )
                                         })}
@@ -293,7 +285,7 @@ const AdminPage = () => {
                     RESTART SERVER
                 </button>
             </div>
-            <hr/>
+            <hr />
         </div>
     )
 }

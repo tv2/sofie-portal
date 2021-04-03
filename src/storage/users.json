@@ -5,22 +5,22 @@
             "name": "Afv.D Lyd",
             "accessRights": [
                 {
-                    "webpageId": "1",
+                    "machineId": "1",
                     "label": "",
                     "path": ""
                 },
                 {
-                    "webpageId": "2",
+                    "machineId": "2",
                     "path": "/seneste",
                     "label": "2 -To Path"
                 },
                 {
-                    "webpageId": "2",
+                    "machineId": "2",
                     "label": "",
                     "path": ""
                 },
                 {
-                    "webpageId": "3",
+                    "machineId": "3",
                     "label": "",
                     "path": ""
                 }
@@ -31,12 +31,12 @@
             "name": "Nyhederne Lyd",
             "accessRights": [
                 {
-                    "webpageId": "1",
+                    "machineId": "1",
                     "label": "",
                     "path": ""
                 },
                 {
-                    "webpageId": "2",
+                    "machineId": "2",
                     "label": "THIS PAGE",
                     "path": ""
                 }
@@ -47,17 +47,17 @@
             "name": "MCR 1",
             "accessRights": [
                 {
-                    "webpageId": "1",
+                    "machineId": "1",
                     "label": "",
                     "path": ""
                 },
                 {
-                    "webpageId": "2",
+                    "machineId": "2",
                     "label": "",
                     "path": ""
                 },
                 {
-                    "webpageId": "3",
+                    "machineId": "3",
                     "label": "",
                     "path": ""
                 }
@@ -68,17 +68,17 @@
             "name": "CONT 1",
             "accessRights": [
                 {
-                    "webpageId": "1",
+                    "machineId": "1",
                     "label": "",
                     "path": ""
                 },
                 {
-                    "webpageId": "2",
+                    "machineId": "2",
                     "label": "MY SELF",
                     "path": ""
                 },
                 {
-                    "webpageId": "3",
+                    "machineId": "3",
                     "label": "",
                     "path": ""
                 }

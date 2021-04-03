@@ -1,9 +1,9 @@
-export interface IWebPage {
+export interface IMachine {
     id: string
     label: string
     description: string
     hostname: string
 }
 export interface ISettings {
-    webpages: IWebPage[]
+    machines: IMachine[]
 }

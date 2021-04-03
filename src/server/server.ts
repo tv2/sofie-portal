@@ -7,7 +7,7 @@ const path = require('path')
 import * as settingsJson from '../storage/settings.json'
 import * as usersJson from '../storage/users.json'
 
-import { ISettings, IWebPage } from '../model/settingsInterface'
+import { IMachine, ISettings } from '../model/settingsInterface'
 import { IUser } from '../model/usersInterface'
 import { ISocketClient } from '../model/socketClientInterface'
 import * as IO from '../model/socketConstants'
@@ -43,19 +43,19 @@ io.on('connection', (socket: any) => {
         logger.debug(`Number of active sockets: ${socketClients.length}`)
         socket.emit(IO.THIS_USER, thisUser)
 
-        const accessToPages: IWebPage[] = settings.webpages.filter(
-            (webpage: IWebPage) => {
+        const accessToPages: IMachine[] = settings.machines.filter(
+            (webpage: IMachine) => {
                 return thisUser.accessRights.find((access) => {
-                    return access.webpageId === webpage.id
+                    return access.machineId === webpage.id
                 })
             }
         )
-        socket.emit(IO.WEBPAGES, accessToPages)
+        socket.emit(IO.MACHINES, accessToPages)
     }
 
     socket.on(IO.ADMIN_GET_DATA, () => {
         socket.emit(IO.ADMIN_ALL_USERS, usersJson.users)
-        socket.emit(IO.ADMIN_ALL_WEBPAGES, settingsJson.webpages)
+        socket.emit(IO.ADMIN_ALL_MACHINES, settingsJson.machines)
     })
 
     socket.on(IO.ADMIN_STORE_USERS_JSON, (payload) => {
@@ -87,7 +87,7 @@ io.on('connection', (socket: any) => {
     })
 
     const updateClientsInRooms = () => {
-        settings.webpages.forEach((webpage) => {
+        settings.machines.forEach((webpage) => {
             let clientsInRoom = socketClients.filter((client) => {
                 return client.roomName === webpage.id.toString()
             })

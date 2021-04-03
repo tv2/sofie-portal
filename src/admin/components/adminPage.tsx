@@ -19,6 +19,7 @@ const AdminPage = () => {
     const [selectedUser, setSelectedUser] = useState<number>(0)
     const [allUsers, setAllUsers] = useState<IUser[]>([])
     const [machines, setMachines] = useState<IMachine[]>([])
+    const [accessRightsBuffer, setAccessRightsBuffer] = useState<IUserAccessRights[]>([])
 
     useEffect(() => {
         if (socket) {
@@ -96,6 +97,18 @@ const AdminPage = () => {
         setAllUsers([...addedUser])
     }
 
+    const handleCopyUserRights = () => {
+        setAccessRightsBuffer( [...allUsers[selectedUser].accessRights])
+    }
+
+    const handlePasteUserRights = () => {
+        if (accessRightsBuffer !== []) {
+            let changedUsers = allUsers
+            changedUsers[selectedUser].accessRights = accessRightsBuffer
+            setAllUsers([...changedUsers])
+        }
+    }
+
     const handleSaveUsers = () => {
         socket.emit(IO.ADMIN_STORE_USERS_JSON, allUsers)
     }
@@ -130,6 +143,22 @@ const AdminPage = () => {
                 </select>
             </div>
             <div className={'pageslist'}>
+                <button
+                    className={'adminbutton'}
+                    onClick={() => {
+                        handleCopyUserRights()
+                    }}
+                >
+                    Copy User Access
+                </button>
+                <button
+                    className={'adminbutton'}
+                    onClick={() => {
+                        handlePasteUserRights()
+                    }}
+                >
+                    Paste User Access
+                </button>
                 <button
                     className={'adminbutton'}
                     onClick={() => {

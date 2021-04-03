@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.7...v0.1.8) (2021-04-03)
+
+
+### Features
+
+* admin page restart server ([2376a33](https://github.com/olzzon/tv2-sofie-portal/commit/2376a337267bb7e84a885144adbe55970b280d56))
+* css - admin page show button pressed ([6c3264e](https://github.com/olzzon/tv2-sofie-portal/commit/6c3264e4cd30fd8495754f053e4c67e5002c70a8))
+
+
+### Bug Fixes
+
+* Admin page add Weblink did not work on first User ([d24cc11](https://github.com/olzzon/tv2-sofie-portal/commit/d24cc112bdc8167d6393688ca68c89e1cdb1c6d4))
+
 ### [0.1.7](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.6...v0.1.7) (2021-04-02)
 
 

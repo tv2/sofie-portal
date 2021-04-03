@@ -90,8 +90,8 @@ const AdminPage = () => {
     const handleAddUser = () => {
         let addedUser = allUsers
         addedUser?.push({
-            id: '',
-            name: '',
+            id: 'newuser',
+            name: 'newuser',
             accessRights: [],
         })
         setAllUsers([...addedUser])

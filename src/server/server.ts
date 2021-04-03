@@ -54,8 +54,8 @@ io.on('connection', (socket: any) => {
     }
 
     socket.on(IO.ADMIN_GET_DATA, () => {
-        socket.emit(IO.ADMIN_ALL_USERS, usersJson.users)
-        socket.emit(IO.ADMIN_ALL_MACHINES, settingsJson.machines)
+        socket.emit(IO.ADMIN_ALL_USERS, users)
+        socket.emit(IO.ADMIN_ALL_MACHINES, settings.machines)
     })
 
     socket.on(IO.ADMIN_STORE_USERS_JSON, (payload) => {

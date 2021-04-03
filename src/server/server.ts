@@ -63,6 +63,10 @@ io.on('connection', (socket: any) => {
         users = payload
     })
 
+    socket.on(IO.ADMIN_RESTART_SERVER, () => {
+        process.exit(0)
+    })
+
 
     socket.on('disconnecting', () => {
         socketClients = socketClients.filter((client) => {

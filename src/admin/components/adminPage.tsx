@@ -108,6 +108,10 @@ const AdminPage = () => {
         socket.emit(IO.ADMIN_STORE_USERS_JSON, allUsers)
     }
 
+    const handleRestartServer = () => {
+        socket.emit(IO.ADMIN_RESTART_SERVER)
+    }
+
     const handleUpload = (event: any) => {
         console.log('upload file : ', event[0])
         loadUserFile(event[0]).then((response: any) => {
@@ -270,7 +274,7 @@ const AdminPage = () => {
             </div>
             <hr />
 
-            <div className={'pageslist'}>UPDATE SERVER :</div>
+            <div className={'pageslist'}>SERVER HANDLING :</div>
             <div className={'pageslist'}>
                 <button
                     className={'adminbutton'}
@@ -279,6 +283,14 @@ const AdminPage = () => {
                     }}
                 >
                     SAVE DATA TO SERVER
+                </button>
+                <button
+                    className={'adminbutton'}
+                    onClick={() => {
+                        handleRestartServer()
+                    }}
+                >
+                    RESTART SERVER
                 </button>
             </div>
             <hr/>

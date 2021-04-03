@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.8...v1.0.0) (2021-04-03)
+
+
+### Features
+
+* admin page - copy paste user access ([855dcb7](https://github.com/olzzon/tv2-sofie-portal/commit/855dcb722d436d999d8183d5ddaf4d66b89bdfd2))
+
+
+### Bug Fixes
+
+* Admin - saved user list was only updates to clients not admin page ([130d245](https://github.com/olzzon/tv2-sofie-portal/commit/130d245cb9aac930a13b02baa52c1596781cb356))
+
 ### [0.1.8](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.7...v0.1.8) (2021-04-03)
 
 

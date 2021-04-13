@@ -103,6 +103,7 @@ const AdminPage = () => {
             accessRights: [],
         })
         setAllUsers([...addedUser])
+        setSelectedUser(allUsers.length - 1)
     }
 
     const handleCopyUserRights = () => {
@@ -140,7 +141,10 @@ const AdminPage = () => {
 
             <div className={'pageslist'}>
                 <div>SELECT USER :</div>
-                <select onChange={(event) => handleSelectUser(event)}>
+                <select
+                    value={selectedUser}
+                    onChange={(event) => handleSelectUser(event)}
+                >
                     {allUsers.map((user: IUser, index: number) => {
                         return (
                             <option key={index} value={index}>
@@ -262,15 +266,15 @@ const AdminPage = () => {
                                         }
                                     />
                                 </label>
-                                </form>
-                                <button
-                                    className={'remove-item-button'}
-                                    onClick={() => {
-                                        handleRemoveWebPage(index)
-                                    }}
-                                >
-                                    X
-                                </button>
+                            </form>
+                            <button
+                                className={'remove-item-button'}
+                                onClick={() => {
+                                    handleRemoveWebPage(index)
+                                }}
+                            >
+                                X
+                            </button>
                         </div>
                     )
                 }

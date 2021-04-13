@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.0.1...v1.1.0) (2021-04-13)
+
+
+### Features
+
+* admin page - remove webaccess line ([d331012](https://github.com/olzzon/tv2-sofie-portal/commit/d331012a904aeecc102aa9676011ecb25fbaabf3))
+
+
+### Bug Fixes
+
+* admin page - adding a new user should select new user ([3e47b43](https://github.com/olzzon/tv2-sofie-portal/commit/3e47b43a3fc70e668215fb42aa4b646a6377e701))
+
 ### [1.0.1](https://github.com/olzzon/tv2-sofie-portal/compare/v1.0.0...v1.0.1) (2021-04-12)
 
 ## [1.0.0](https://github.com/olzzon/tv2-sofie-portal/compare/v0.1.8...v1.0.0) (2021-04-03)

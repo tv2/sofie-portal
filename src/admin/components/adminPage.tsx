@@ -19,7 +19,9 @@ const AdminPage = () => {
     const [selectedUser, setSelectedUser] = useState<number>(0)
     const [allUsers, setAllUsers] = useState<IUser[]>([])
     const [machines, setMachines] = useState<IMachine[]>([])
-    const [accessRightsBuffer, setAccessRightsBuffer] = useState<IUserAccessRights[]>([])
+    const [accessRightsBuffer, setAccessRightsBuffer] = useState<
+        IUserAccessRights[]
+    >([])
 
     useEffect(() => {
         if (socket) {
@@ -87,6 +89,12 @@ const AdminPage = () => {
         setAllUsers([...addedAccess])
     }
 
+    const handleRemoveWebPage = (accessIndex: number) => {
+        let removedAccess = allUsers
+        removedAccess[selectedUser].accessRights.splice(accessIndex, 1)
+        setAllUsers([...removedAccess])
+    }
+
     const handleAddUser = () => {
         let addedUser = allUsers
         addedUser?.push({
@@ -98,7 +106,7 @@ const AdminPage = () => {
     }
 
     const handleCopyUserRights = () => {
-        setAccessRightsBuffer( [...allUsers[selectedUser].accessRights])
+        setAccessRightsBuffer([...allUsers[selectedUser].accessRights])
     }
 
     const handlePasteUserRights = () => {
@@ -254,7 +262,15 @@ const AdminPage = () => {
                                         }
                                     />
                                 </label>
-                            </form>
+                                </form>
+                                <button
+                                    className={'remove-item-button'}
+                                    onClick={() => {
+                                        handleRemoveWebPage(index)
+                                    }}
+                                >
+                                    X
+                                </button>
                         </div>
                     )
                 }

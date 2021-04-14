@@ -47,7 +47,7 @@ const MainPage = () => {
 
     return (
         <div className={'container'}>
-            {thisUser?.accessRights?.[0].machineId !== '-1' ? (
+            {thisUser?.name ? (
                 <div className={'main'}>
                     <div className={'grid'}>
                         {thisUser?.accessRights?.map((accessRight, index) => {
@@ -105,10 +105,17 @@ const MainPage = () => {
                     )}
                 </div>
             ) : (
-                <h1 className={'main'}>WRONG USER LOGIN</h1>
+                <WrongUser />
             )}
         </div>
     )
+}
+
+const WrongUser = () => {
+    return <div className={'main'}>
+        <h1>Sofie User Portal </h1>
+        <h2>Access portal with xxx.xxx.xxx/?username=your-user-id</h2>
+        </div>
 }
 
 export default MainPage

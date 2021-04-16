@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/olzzon/tv2-sofie-portal/compare/v1.1.1...v1.1.2) (2021-04-16)
+
+
+### Bug Fixes
+
+* Adminpage - machineId was empty when creating a new weblink ([03e67d5](https://github.com/olzzon/tv2-sofie-portal/commit/03e67d534df086aff3d5f08cff9a8ab25ef1f22f))
+
 ### [1.1.1](https://github.com/olzzon/tv2-sofie-portal/compare/v1.1.0...v1.1.1) (2021-04-14)
 
 

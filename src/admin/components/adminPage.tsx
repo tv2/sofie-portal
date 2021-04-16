@@ -82,7 +82,7 @@ const AdminPage = () => {
     const handleAddWebPage = () => {
         let addedAccess = allUsers
         addedAccess[selectedUser].accessRights.push({
-            machineId: '',
+            machineId: machines[0].id,
             label: '',
             path: '',
         })

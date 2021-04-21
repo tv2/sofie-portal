@@ -35,6 +35,26 @@ const AdminPage = () => {
         }
     }, [socket])
 
+    const findMachine = (id: string) => {
+        return machines?.find((machine) => {
+            return machine.id === id
+        })
+    }
+
+    const addMachineToAccess = (accessIndex: number, machineId: string) => {
+        let changed = allUsers
+        if (changed[selectedUser].accessRights[accessIndex]) {
+            changed[selectedUser].accessRights[
+                accessIndex
+            ].machineId = machineId
+            changed[selectedUser].accessRights[accessIndex].path =
+                findMachine(machineId)?.pathArgs || ''
+            changed[selectedUser].accessRights[accessIndex].label =
+                findMachine(machineId)?.label || ''
+            setAllUsers([...changed])
+        }
+    }
+
     const handleSelectUser = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedUser(parseInt(event.target.value))
     }
@@ -57,24 +77,39 @@ const AdminPage = () => {
         event: React.ChangeEvent<HTMLSelectElement>,
         index: number
     ) => {
+        addMachineToAccess(index, event.target.value)
+    }
+
+    const handleAccessLabelInput = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        index: number
+    ) => {
         let changed = allUsers
         if (changed[selectedUser].accessRights[index]) {
-            changed[selectedUser].accessRights[index].machineId =
-                event.target.value
+            changed[selectedUser].accessRights[index].label = event.target.value
             setAllUsers([...changed])
         }
     }
 
-    const handleAccessTextInput = (
+    const handleAccessPathInput = (
         event: React.ChangeEvent<HTMLInputElement>,
-        index: number,
-        property: string
+        index: number
     ) => {
         let changed = allUsers
         if (changed[selectedUser].accessRights[index]) {
-            changed[selectedUser].accessRights[index][
-                property as keyof IUserAccessRights
-            ] = event.target.value
+            changed[selectedUser].accessRights[index].path = event.target.value
+            setAllUsers([...changed])
+        }
+    }
+
+    const handleAnonymousAccess = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        index: number
+    ) => {
+        let changed = allUsers
+        if (changed[selectedUser].accessRights[index]) {
+            changed[selectedUser].accessRights[index].anonymousAccess =
+                event.target.checked
             setAllUsers([...changed])
         }
     }
@@ -87,6 +122,7 @@ const AdminPage = () => {
             path: '',
         })
         setAllUsers([...addedAccess])
+        addMachineToAccess(allUsers[selectedUser].accessRights.length-1, machines[0].id)
     }
 
     const handleRemoveWebPage = (accessIndex: number) => {
@@ -239,18 +275,27 @@ const AdminPage = () => {
                                     </select>
                                 </label>
                                 <label className={'inputlabel'}>
-                                    Special Label:
+                                    Label:
                                     <input
                                         type="text"
                                         value={accessRight.label}
                                         onChange={(event) =>
-                                            handleAccessTextInput(
-                                                event,
-                                                index,
-                                                'label'
-                                            )
+                                            handleAccessLabelInput(event, index)
                                         }
                                     />
+                                </label>
+                                <label className={'inputlabel'}>
+                                    Anonymous:
+                                    <input
+                                        type="checkbox"
+                                        className={'anonymous-item-button'}
+                                        checked={
+                                            accessRight.anonymousAccess || false
+                                        }
+                                        onChange={(event) => {
+                                            handleAnonymousAccess(event, index)
+                                        }}
+                                    ></input>
                                 </label>
                                 <label className={'inputlabel'}>
                                     Path and Args:
@@ -258,11 +303,7 @@ const AdminPage = () => {
                                         type="text"
                                         value={accessRight.path}
                                         onChange={(event) =>
-                                            handleAccessTextInput(
-                                                event,
-                                                index,
-                                                'path'
-                                            )
+                                            handleAccessPathInput(event, index)
                                         }
                                     />
                                 </label>
@@ -273,7 +314,7 @@ const AdminPage = () => {
                                     handleRemoveWebPage(index)
                                 }}
                             >
-                                X
+                                DELETE
                             </button>
                         </div>
                     )

@@ -10,7 +10,8 @@
             "id": "2",
             "label": "Q-BOX 02",
             "description": "",
-            "hostname": "http://nyheder.tv2.dk"
+            "hostname": "http://nyheder.tv2.dk",
+            "pathArgs": "/?settings=0"
         },
         {
             "id": "3",

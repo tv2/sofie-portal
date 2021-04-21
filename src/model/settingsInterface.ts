@@ -3,6 +3,7 @@ export interface IMachine {
     label: string
     description: string
     hostname: string
+    pathArgs?: string
 }
 export interface ISettings {
     machines: IMachine[]

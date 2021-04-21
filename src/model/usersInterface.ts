@@ -8,4 +8,5 @@ export interface IUserAccessRights {
     machineId: string
     path: string
     label: string
+    anonymousAccess?: boolean
 }

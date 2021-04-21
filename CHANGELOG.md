@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.1.2...v1.2.0) (2021-04-21)
+
+
+### Features
+
+* Admin page - pass default label and default path when selecting a machine in access rights ([325a573](https://github.com/olzzon/tv2-sofie-portal/commit/325a5735c6a1a685a559a69434c3f8f38cf01ee2))
+* anonymous client. Setting anonymousAccess = true for a webpage in admin page hides user on active users list ([0015e97](https://github.com/olzzon/tv2-sofie-portal/commit/0015e9706a6e7687a13a50dd5dd9118ca601cd11))
+
 ### [1.1.2](https://github.com/olzzon/tv2-sofie-portal/compare/v1.1.1...v1.1.2) (2021-04-16)
 
 

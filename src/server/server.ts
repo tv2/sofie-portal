@@ -8,7 +8,7 @@ import * as settingsJson from '../storage/settings.json'
 import * as usersJson from '../storage/users.json'
 
 import { IMachine, ISettings } from '../model/settingsInterface'
-import { IUser } from '../model/usersInterface'
+import { IUser, IUserAccessRights } from '../model/usersInterface'
 import { ISocketClient } from '../model/socketClientInterface'
 import * as IO from '../model/socketConstants'
 import { logger } from './utils/logger'
@@ -67,7 +67,6 @@ io.on('connection', (socket: any) => {
         process.exit(0)
     })
 
-
     socket.on('disconnecting', () => {
         socketClients = socketClients.filter((client) => {
             return client.id !== socket.id
@@ -87,13 +86,17 @@ io.on('connection', (socket: any) => {
     })
 
     const updateClientsInRooms = () => {
-        settings.machines.forEach((webpage) => {
+        settings.machines.forEach((machine: IMachine) => {
             let clientsInRoom = socketClients.filter((client) => {
-                return client.roomName === webpage.id.toString()
+                return client.roomName === machine.id.toString()
             })
             let usersUrlInRoom: IUser[] = clientsInRoom.map((client) => {
                 return users.find((user: IUser) => {
-                    return client.userUrlName === user.id
+                    return (
+                        client.userUrlName === user.id &&
+                        findAccessRights(user, machine.id).anonymousAccess !==
+                            true
+                    )
                 })
             })
             let usersInRoom: string[] = usersUrlInRoom.map((user: IUser) => {
@@ -101,31 +104,37 @@ io.on('connection', (socket: any) => {
                     return user.name
                 }
             })
-            io.to(webpage.id.toString()).emit(IO.USERS_IN_ROOM, usersInRoom)
+            io.to(machine.id.toString()).emit(IO.USERS_IN_ROOM, usersInRoom)
         })
     }
 
     const joinRoom = (room: string) => {
         logger.debug(`Socket with id: ${socket.id} joined room: ${room}`)
         socket.join(room)
-        socketClients[findIndex(socket.id)].roomName = room
+        socketClients[findSocketIndex(socket.id)].roomName = room
     }
 
     const leaveRoom = () => {
-        if (socketClients[findIndex(socket.id)].roomName !== '') {
+        if (socketClients[findSocketIndex(socket.id)].roomName !== '') {
             logger.debug(
                 `Socket with id: ${socket.id} left room: ${
-                    socketClients[findIndex(socket.id)].roomName
+                    socketClients[findSocketIndex(socket.id)].roomName
                 }`
             )
-            socket.leave(socketClients[findIndex(socket.id)].roomName)
+            socket.leave(socketClients[findSocketIndex(socket.id)].roomName)
         }
     }
 })
 
-const findIndex = (userId: string): number => {
+const findSocketIndex = (userId: string): number => {
     return socketClients.findIndex((client) => {
         return client.id === userId
+    })
+}
+
+const findAccessRights = (user: IUser, machineId): IUserAccessRights => {
+    return user.accessRights.find((access: IUserAccessRights) => {
+        return access.machineId === machineId
     })
 }
 

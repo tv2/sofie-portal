@@ -8,7 +8,7 @@ const userUrlId =
     new URLSearchParams(window.location.search).get('username') || ''
 const masterSlave = new URLSearchParams(window.location.search).get('master')
 // @ts-ignore
-const socket = io({ extraHeaders: { userurl: userUrlId } })
+const socket = io({ extraHeaders: { "userurl": userUrlId, "masterslave": masterSlave } })
 
 import { IMachine } from '../../model/settingsInterface'
 import { IUser, IUserAccessRights } from '../../model/usersInterface'
@@ -32,12 +32,15 @@ const MainPage = () => {
             socket.on(IO.MACHINES, (socketPayload: any) => {
                 setMachines(socketPayload)
             })
+            socket.on(IO.SLAVE_SET_ROOM, (buttonIndex: number) => {
+                handleChangeRoom(buttonIndex)
+            })
         }
     }, [socket])
 
-    const handleChangeRoom = (room: IUserAccessRights, index: number) => {
+    const handleChangeRoom = ( index: number) => {
         setRoomIndex(index)
-        socket.emit(IO.JOIN_ROOM, room.machineId, index)
+        socket.emit(IO.JOIN_ROOM, thisUser?.accessRights[index].machineId, index)
     }
 
     const findMachine = (id: string) => {
@@ -51,7 +54,7 @@ const MainPage = () => {
             {thisUser?.name ? (
                 <div className={'main'}>
                     {masterSlave ? (
-                        <React.Fragment>SLAVE OF {masterSlave} - This Page: {thisUser.accessRights[activeRoomIndex]?.label} </React.Fragment>
+                        <React.Fragment>SLAVE OF {masterSlave} - Active Page: {thisUser.accessRights[activeRoomIndex]?.label || 'SELECT PAGE ON MASTER'}  </React.Fragment>
                     ) : (
                         <div className={'grid'}>
                             {thisUser?.accessRights?.map(
@@ -66,7 +69,6 @@ const MainPage = () => {
                                             }
                                             onClick={() => {
                                                 handleChangeRoom(
-                                                    accessRight,
                                                     index
                                                 )
                                             }}

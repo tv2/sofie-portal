@@ -24,9 +24,11 @@ logger.debug('Settings', settings)
 
 // socket.io server
 io.on('connection', (socket: any) => {
+    let thisUser: IUser
     if (socket.handshake.headers.userurl) {
         const userUrlName = socket.handshake.headers.userurl
-        const thisUser: IUser = users.find(
+        const masterSlave = socket.handshake.headers.masterslave || ''
+        thisUser = users.find(
             (userId: IUser) => userId.id === userUrlName
         ) || {
             id: userUrlName,
@@ -38,7 +40,7 @@ io.on('connection', (socket: any) => {
             userUrlName: userUrlName,
             roomName: '-1',
             connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
-            buttonIndex: 0,
+            masterSlave: masterSlave,
         })
 
         logger.debug(`Number of active sockets: ${socketClients.length}`)
@@ -78,7 +80,8 @@ io.on('connection', (socket: any) => {
     socket.on(IO.JOIN_ROOM, (room: string, buttonIndex: number) => {
         logger.debug(`Socket.on('room') payload: ${room}`)
         leaveRoom()
-        joinRoom(room, buttonIndex)
+        joinRoom(room)
+        updateSlaves(buttonIndex)
         updateClientsInRooms()
     })
 
@@ -103,12 +106,18 @@ io.on('connection', (socket: any) => {
         })
     }
 
-    const joinRoom = (room: string, buttonIndex: number) => {
+    const joinRoom = (room: string) => {
         logger.debug(`Socket with id: ${socket.id} joined room: ${room}`)
         socket.join(room)
-        let socketIndex = findSocketIndex(socket.id)
-        socketClients[socketIndex].roomName = room
-        socketClients[socketIndex].buttonIndex = buttonIndex
+        socketClients[findSocketIndex(socket.id)].roomName = room
+    }
+
+    const updateSlaves = (buttonIndex: number) => {
+        socketClients.forEach((client) => {
+            if(client.masterSlave === thisUser.id) {
+                io.to(client.id).emit(IO.SLAVE_SET_ROOM, buttonIndex)
+            }
+        })
     }
 
     const leaveRoom = () => {

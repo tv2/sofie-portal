@@ -2,6 +2,7 @@
 export const MACHINES: string = 'machines'
 export const THIS_USER: string = 'this-user'
 export const USERS_IN_ROOM: string = 'users-in-room'
+export const SLAVE_SET_ROOM: string = 'slave-set-room'
 
 // CLIENT TO SERVER:
 export const JOIN_ROOM: string = 'join-room'

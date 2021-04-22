@@ -8,10 +8,12 @@ const userUrlId =
     new URLSearchParams(window.location.search).get('username') || ''
 const masterSlave = new URLSearchParams(window.location.search).get('master')
 // @ts-ignore
-const socket = io({ extraHeaders: { "userurl": userUrlId, "masterslave": masterSlave } })
+const socket = io({
+    extraHeaders: { userurl: userUrlId, masterslave: masterSlave },
+})
 
 import { IMachine } from '../../model/settingsInterface'
-import { IUser, IUserAccessRights } from '../../model/usersInterface'
+import { IUser } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
 
 const MainPage = () => {
@@ -38,9 +40,13 @@ const MainPage = () => {
         }
     }, [socket])
 
-    const handleChangeRoom = ( index: number) => {
+    const handleChangeRoom = (index: number) => {
         setRoomIndex(index)
-        socket.emit(IO.JOIN_ROOM, thisUser?.accessRights[index].machineId, index)
+        socket.emit(
+            IO.JOIN_ROOM,
+            thisUser?.accessRights[index].machineId,
+            index
+        )
     }
 
     const findMachine = (id: string) => {
@@ -54,7 +60,15 @@ const MainPage = () => {
             {thisUser?.name ? (
                 <div className={'main'}>
                     {masterSlave ? (
-                        <React.Fragment>SLAVE OF {masterSlave} - Active Page: {thisUser.accessRights[activeRoomIndex]?.label || 'SELECT PAGE ON MASTER'}  </React.Fragment>
+                        <div className={'grid'}>
+                            <div className={'clientbutton'}>
+                                {thisUser.accessRights[activeRoomIndex]
+                                    ?.label || 'SELECT PAGE ON MASTER'}
+                            </div>
+                            <React.Fragment>
+                                ( Slave of: {masterSlave} )
+                            </React.Fragment>
+                        </div>
                     ) : (
                         <div className={'grid'}>
                             {thisUser?.accessRights?.map(
@@ -68,9 +82,7 @@ const MainPage = () => {
                                                     : 'card'
                                             }
                                             onClick={() => {
-                                                handleChangeRoom(
-                                                    index
-                                                )
+                                                handleChangeRoom(index)
                                             }}
                                         >
                                             {accessRight.label ||

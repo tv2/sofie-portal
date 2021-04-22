@@ -93,13 +93,14 @@ io.on('connection', (socket: any) => {
         settings.machines.forEach((machine: IMachine) => {
             let usersInRoom: string[] = socketClients.map((client) => {
                 if (client.roomName === machine.id) {
-                    return users.find((user: IUser) => {
+                    let clientUser = users.find((user: IUser) => {
                         return (
                             client.userUrlName === user.id &&
                             findAccessRights(user, machine.id)
                                 .anonymousAccess !== true
                         )
-                    }).name
+                    })
+                    if (clientUser) return clientUser.name
                 }
             })
             io.to(machine.id.toString()).emit(IO.USERS_IN_ROOM, usersInRoom)

@@ -38,6 +38,7 @@ io.on('connection', (socket: any) => {
             userUrlName: userUrlName,
             roomName: '-1',
             connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
+            buttonIndex: 0,
         })
 
         logger.debug(`Number of active sockets: ${socketClients.length}`)
@@ -74,10 +75,10 @@ io.on('connection', (socket: any) => {
         updateClientsInRooms()
     })
 
-    socket.on(IO.JOIN_ROOM, (room: string) => {
+    socket.on(IO.JOIN_ROOM, (room: string, buttonIndex: number) => {
         logger.debug(`Socket.on('room') payload: ${room}`)
         leaveRoom()
-        joinRoom(room)
+        joinRoom(room, buttonIndex)
         updateClientsInRooms()
     })
 
@@ -87,31 +88,27 @@ io.on('connection', (socket: any) => {
 
     const updateClientsInRooms = () => {
         settings.machines.forEach((machine: IMachine) => {
-            let clientsInRoom = socketClients.filter((client) => {
-                return client.roomName === machine.id.toString()
-            })
-            let usersUrlInRoom: IUser[] = clientsInRoom.map((client) => {
-                return users.find((user: IUser) => {
-                    return (
-                        client.userUrlName === user.id &&
-                        findAccessRights(user, machine.id).anonymousAccess !==
-                            true
-                    )
-                })
-            })
-            let usersInRoom: string[] = usersUrlInRoom.map((user: IUser) => {
-                if (user) {
-                    return user.name
+            let usersInRoom: string[] = socketClients.map((client) => {
+                if (client.roomName === machine.id) {
+                    return users.find((user: IUser) => {
+                        return (
+                            client.userUrlName === user.id &&
+                            findAccessRights(user, machine.id)
+                                .anonymousAccess !== true
+                        )
+                    }).name
                 }
             })
             io.to(machine.id.toString()).emit(IO.USERS_IN_ROOM, usersInRoom)
         })
     }
 
-    const joinRoom = (room: string) => {
+    const joinRoom = (room: string, buttonIndex: number) => {
         logger.debug(`Socket with id: ${socket.id} joined room: ${room}`)
         socket.join(room)
-        socketClients[findSocketIndex(socket.id)].roomName = room
+        let socketIndex = findSocketIndex(socket.id)
+        socketClients[socketIndex].roomName = room
+        socketClients[socketIndex].buttonIndex = buttonIndex
     }
 
     const leaveRoom = () => {

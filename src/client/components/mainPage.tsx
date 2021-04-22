@@ -6,6 +6,7 @@ import { io } from 'socket.io-client'
 
 const userUrlId =
     new URLSearchParams(window.location.search).get('username') || ''
+const masterSlave = new URLSearchParams(window.location.search).get('master')
 // @ts-ignore
 const socket = io({ extraHeaders: { userurl: userUrlId } })
 
@@ -36,7 +37,7 @@ const MainPage = () => {
 
     const handleChangeRoom = (room: IUserAccessRights, index: number) => {
         setRoomIndex(index)
-        socket.emit(IO.JOIN_ROOM, room.machineId)
+        socket.emit(IO.JOIN_ROOM, room.machineId, index)
     }
 
     const findMachine = (id: string) => {
@@ -49,29 +50,39 @@ const MainPage = () => {
         <div className={'container'}>
             {thisUser?.name ? (
                 <div className={'main'}>
-                    <div className={'grid'}>
-                        {thisUser?.accessRights?.map((accessRight, index) => {
-                            return (
-                                <button
-                                    key={index.toString()}
-                                    className={
-                                        index === activeRoomIndex
-                                            ? 'cardselected'
-                                            : 'card'
-                                    }
-                                    onClick={() => {
-                                        handleChangeRoom(accessRight, index)
-                                    }}
-                                >
-                                    {accessRight.label ||
-                                        findMachine(
-                                            thisUser?.accessRights[index]
-                                                .machineId
-                                        )?.label}
-                                </button>
-                            )
-                        })}
-                    </div>
+                    {masterSlave ? (
+                        <React.Fragment>SLAVE OF {masterSlave} - This Page: {thisUser.accessRights[activeRoomIndex]?.label} </React.Fragment>
+                    ) : (
+                        <div className={'grid'}>
+                            {thisUser?.accessRights?.map(
+                                (accessRight, index) => {
+                                    return (
+                                        <button
+                                            key={index.toString()}
+                                            className={
+                                                index === activeRoomIndex
+                                                    ? 'cardselected'
+                                                    : 'card'
+                                            }
+                                            onClick={() => {
+                                                handleChangeRoom(
+                                                    accessRight,
+                                                    index
+                                                )
+                                            }}
+                                        >
+                                            {accessRight.label ||
+                                                findMachine(
+                                                    thisUser?.accessRights[
+                                                        index
+                                                    ].machineId
+                                                )?.label}
+                                        </button>
+                                    )
+                                }
+                            )}
+                        </div>
+                    )}
                     {activeRoomIndex >= 0 ? (
                         <React.Fragment>
                             <div className={'clientlist'}>
@@ -112,10 +123,12 @@ const MainPage = () => {
 }
 
 const WrongUser = () => {
-    return <div className={'main'}>
-        <h1>Sofie User Portal </h1>
-        <h2>Access portal with xxx.xxx.xxx/?username=your-user-id</h2>
+    return (
+        <div className={'main'}>
+            <h1>Sofie User Portal </h1>
+            <h2>Access portal with xxx.xxx.xxx/?username=your-user-id</h2>
         </div>
+    )
 }
 
 export default MainPage

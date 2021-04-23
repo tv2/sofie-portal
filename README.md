@@ -12,41 +12,37 @@ Run as docker:
 sudo docker run -p 3000:3000 -p 3000:3000/udp olzzon/tv2-sofie-portal:v0.1.5
 ```
 
-In storage folder there´s a settings.json and a users.json file where you define webpages and access:
+## Admin Page:
+
 ```
-users.json:
-    "users": [
-        {
-            "id": "afvdlyd",
-            "name": "Afv.D Lyd",
-            "accessRights": [
-                {
-                    "webpageId": "1"
-                },
-                {
-                    "webpageId": "2",
-                    "path": "/seneste",
-                    "label": "2 -To Path"
-                },
-                {
-                    "webpageId": "2"
-                },
-                {
-                    "webpageId": "3"
-                }
-            ]
-        },
+http://localhost:3000/admin
+```
+Adminsettings will be stored in build/storage/users.json (same place as the settings file)
+ 
+### Open webpage [http://localhost:3000] with username from /storage/user.json:
+```
+http://127.0.0.1:3000/?username=afvdlyd
+```
+
+### Open a webpage as a slave of another page:
+```
+http://127.0.0.1:3000/?username=mcr1&master=afvdlyd
+```
+
+
+### Storage files:
+
+In storage folder there´s a settings.json and a users.json file where you define machines:
+```
 
 settings.json:
 {
-   "webpages": [
+   "machines": [
         {
             "id": 1,
             "label": "Q-BOX 01",
             "description": "",
-            "hostname": "http://localhost:1176"
+            "hostname": "http://localhost:1176",
+            "pathArgs": "/?settings=0"
         },
 ```
-### Open webpage [http://localhost:3000] with username from /storage/user.json:
-http://127.0.0.1:3000/?username=afvdlyd
-

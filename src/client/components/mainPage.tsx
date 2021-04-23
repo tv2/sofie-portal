@@ -1,42 +1,48 @@
 import '../styles/MainPage.css'
 import '../styles/IframeView.css'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 
 const userUrlId =
     new URLSearchParams(window.location.search).get('username') || ''
+const masterSlave = new URLSearchParams(window.location.search).get('master')
 // @ts-ignore
-const socket = io({ extraHeaders: { userurl: userUrlId } })
+const socket = io({
+    extraHeaders: { userurl: userUrlId, masterslave: masterSlave },
+})
 
 import { IMachine } from '../../model/settingsInterface'
-import { IUser, IUserAccessRights } from '../../model/usersInterface'
+import { IUser } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
 
 const MainPage = () => {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
     const [thisUser, setThisUser] = useState<IUser>()
-    const [activeRoomIndex, setRoomIndex] = useState<number>(-1)
+    const [activeRoomIndex, setActiveRoomIndex] = useState<number>()
     const [machines, setMachines] = useState<IMachine[]>()
 
     useEffect(() => {
-        if (socket) {
-            socket.on(IO.THIS_USER, (payload: any) => {
-                setThisUser(payload)
-            })
+        socket.on(IO.THIS_USER, (payload: any) => {
+            setThisUser(payload)
+        })
 
-            socket.on(IO.USERS_IN_ROOM, (socketPayload: any) => {
-                setUsersInRoom(socketPayload)
-            })
-            socket.on(IO.MACHINES, (socketPayload: any) => {
-                setMachines(socketPayload)
-            })
-        }
-    }, [socket])
+        socket.on(IO.USERS_IN_ROOM, (socketPayload: any) => {
+            setUsersInRoom(socketPayload)
+        })
+        socket.on(IO.MACHINES, (socketPayload: any) => {
+            setMachines(socketPayload)
+        })
+        socket.on(IO.SLAVE_SET_ROOM, (buttonIndex: number) => {
+            if (buttonIndex !== activeRoomIndex) {
+                handleChangeRoom(buttonIndex)
+            }
+        })
+    }, [socket, activeRoomIndex])
 
-    const handleChangeRoom = (room: IUserAccessRights, index: number) => {
-        setRoomIndex(index)
-        socket.emit(IO.JOIN_ROOM, room.machineId)
+    const handleChangeRoom = (buttonIndex: number) => {
+        setActiveRoomIndex(buttonIndex)
+        socket.emit(IO.JOIN_ROOM, buttonIndex)
     }
 
     const findMachine = (id: string) => {
@@ -49,30 +55,45 @@ const MainPage = () => {
         <div className={'container'}>
             {thisUser?.name ? (
                 <div className={'main'}>
-                    <div className={'grid'}>
-                        {thisUser?.accessRights?.map((accessRight, index) => {
-                            return (
-                                <button
-                                    key={index.toString()}
-                                    className={
-                                        index === activeRoomIndex
-                                            ? 'cardselected'
-                                            : 'card'
-                                    }
-                                    onClick={() => {
-                                        handleChangeRoom(accessRight, index)
-                                    }}
-                                >
-                                    {accessRight.label ||
-                                        findMachine(
-                                            thisUser?.accessRights[index]
-                                                .machineId
-                                        )?.label}
-                                </button>
-                            )
-                        })}
-                    </div>
-                    {activeRoomIndex >= 0 ? (
+                    {masterSlave ? (
+                        <div className={'grid'}>
+                            <div className={'clientbutton'}>
+                                {thisUser.accessRights[activeRoomIndex || -1]
+                                    ?.label || 'SELECT PAGE ON MASTER'}
+                            </div>
+                            <React.Fragment>
+                                ( Slave of: {masterSlave} )
+                            </React.Fragment>
+                        </div>
+                    ) : (
+                        <div className={'grid'}>
+                            {thisUser?.accessRights?.map(
+                                (accessRight, index) => {
+                                    return (
+                                        <button
+                                            key={index.toString()}
+                                            className={
+                                                index === activeRoomIndex
+                                                    ? 'cardselected'
+                                                    : 'card'
+                                            }
+                                            onClick={() => {
+                                                handleChangeRoom(index)
+                                            }}
+                                        >
+                                            {accessRight.label ||
+                                                findMachine(
+                                                    thisUser?.accessRights[
+                                                        index
+                                                    ].machineId
+                                                )?.label}
+                                        </button>
+                                    )
+                                }
+                            )}
+                        </div>
+                    )}
+                    {activeRoomIndex !== undefined ? (
                         <React.Fragment>
                             <div className={'clientlist'}>
                                 USERS :
@@ -112,10 +133,12 @@ const MainPage = () => {
 }
 
 const WrongUser = () => {
-    return <div className={'main'}>
-        <h1>Sofie User Portal </h1>
-        <h2>Access portal with xxx.xxx.xxx/?username=your-user-id</h2>
+    return (
+        <div className={'main'}>
+            <h1>Sofie User Portal </h1>
+            <h2>Access portal with xxx.xxx.xxx/?username=your-user-id</h2>
         </div>
+    )
 }
 
 export default MainPage

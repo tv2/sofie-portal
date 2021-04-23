@@ -24,11 +24,11 @@ logger.debug('Settings', settings)
 
 // socket.io server
 io.on('connection', (socket: any) => {
+    let thisUser: IUser
     if (socket.handshake.headers.userurl) {
         const userUrlName = socket.handshake.headers.userurl
-        const thisUser: IUser = users.find(
-            (userId: IUser) => userId.id === userUrlName
-        ) || {
+        const masterSlave = socket.handshake.headers.masterslave || ''
+        thisUser = users.find((userId: IUser) => userId.id === userUrlName) || {
             id: userUrlName,
             name: '',
             accessRights: [],
@@ -38,6 +38,7 @@ io.on('connection', (socket: any) => {
             userUrlName: userUrlName,
             roomName: '-1',
             connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
+            masterSlave: masterSlave,
         })
 
         logger.debug(`Number of active sockets: ${socketClients.length}`)
@@ -74,10 +75,11 @@ io.on('connection', (socket: any) => {
         updateClientsInRooms()
     })
 
-    socket.on(IO.JOIN_ROOM, (room: string) => {
-        logger.debug(`Socket.on('room') payload: ${room}`)
+    socket.on(IO.JOIN_ROOM, (buttonIndex: number) => {
+        logger.debug(`Socket.on('room') payload: ${buttonIndex}`)
         leaveRoom()
-        joinRoom(room)
+        joinRoom(thisUser.accessRights[buttonIndex].machineId)
+        updateSlaves(buttonIndex)
         updateClientsInRooms()
     })
 
@@ -87,21 +89,16 @@ io.on('connection', (socket: any) => {
 
     const updateClientsInRooms = () => {
         settings.machines.forEach((machine: IMachine) => {
-            let clientsInRoom = socketClients.filter((client) => {
-                return client.roomName === machine.id.toString()
-            })
-            let usersUrlInRoom: IUser[] = clientsInRoom.map((client) => {
-                return users.find((user: IUser) => {
-                    return (
-                        client.userUrlName === user.id &&
-                        findAccessRights(user, machine.id).anonymousAccess !==
-                            true
-                    )
-                })
-            })
-            let usersInRoom: string[] = usersUrlInRoom.map((user: IUser) => {
-                if (user) {
-                    return user.name
+            let usersInRoom: string[] = socketClients.map((client) => {
+                if (client.roomName === machine.id) {
+                    let clientUser = users.find((user: IUser) => {
+                        return (
+                            client.userUrlName === user.id &&
+                            findAccessRights(user, machine.id)
+                                .anonymousAccess !== true
+                        )
+                    })
+                    if (clientUser) return clientUser.name
                 }
             })
             io.to(machine.id.toString()).emit(IO.USERS_IN_ROOM, usersInRoom)
@@ -112,6 +109,14 @@ io.on('connection', (socket: any) => {
         logger.debug(`Socket with id: ${socket.id} joined room: ${room}`)
         socket.join(room)
         socketClients[findSocketIndex(socket.id)].roomName = room
+    }
+
+    const updateSlaves = (buttonIndex: number) => {
+        socketClients.forEach((client) => {
+            if (client.masterSlave === thisUser.id) {
+                io.to(client.id).emit(IO.SLAVE_SET_ROOM, buttonIndex)
+            }
+        })
     }
 
     const leaveRoom = () => {

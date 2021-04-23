@@ -1,7 +1,7 @@
 import '../styles/MainPage.css'
 import '../styles/IframeView.css'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 
 const userUrlId =
@@ -19,34 +19,30 @@ import * as IO from '../../model/socketConstants'
 const MainPage = () => {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
     const [thisUser, setThisUser] = useState<IUser>()
-    const [activeRoomIndex, setRoomIndex] = useState<number>(-1)
+    const [activeRoomIndex, setActiveRoomIndex] = useState<number>()
     const [machines, setMachines] = useState<IMachine[]>()
 
     useEffect(() => {
-        if (socket) {
-            socket.on(IO.THIS_USER, (payload: any) => {
-                setThisUser(payload)
-            })
+        socket.on(IO.THIS_USER, (payload: any) => {
+            setThisUser(payload)
+        })
 
-            socket.on(IO.USERS_IN_ROOM, (socketPayload: any) => {
-                setUsersInRoom(socketPayload)
-            })
-            socket.on(IO.MACHINES, (socketPayload: any) => {
-                setMachines(socketPayload)
-            })
-            socket.on(IO.SLAVE_SET_ROOM, (buttonIndex: number) => {
+        socket.on(IO.USERS_IN_ROOM, (socketPayload: any) => {
+            setUsersInRoom(socketPayload)
+        })
+        socket.on(IO.MACHINES, (socketPayload: any) => {
+            setMachines(socketPayload)
+        })
+        socket.on(IO.SLAVE_SET_ROOM, (buttonIndex: number) => {
+            if (buttonIndex !== activeRoomIndex) {
                 handleChangeRoom(buttonIndex)
-            })
-        }
-    }, [socket])
+            }
+        })
+    }, [socket, activeRoomIndex])
 
-    const handleChangeRoom = (index: number) => {
-        setRoomIndex(index)
-        socket.emit(
-            IO.JOIN_ROOM,
-            thisUser?.accessRights[index].machineId,
-            index
-        )
+    const handleChangeRoom = (buttonIndex: number) => {
+        setActiveRoomIndex(buttonIndex)
+        socket.emit(IO.JOIN_ROOM, buttonIndex)
     }
 
     const findMachine = (id: string) => {
@@ -62,7 +58,7 @@ const MainPage = () => {
                     {masterSlave ? (
                         <div className={'grid'}>
                             <div className={'clientbutton'}>
-                                {thisUser.accessRights[activeRoomIndex]
+                                {thisUser.accessRights[activeRoomIndex || -1]
                                     ?.label || 'SELECT PAGE ON MASTER'}
                             </div>
                             <React.Fragment>
@@ -97,7 +93,7 @@ const MainPage = () => {
                             )}
                         </div>
                     )}
-                    {activeRoomIndex >= 0 ? (
+                    {activeRoomIndex !== undefined ? (
                         <React.Fragment>
                             <div className={'clientlist'}>
                                 USERS :

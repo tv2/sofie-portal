@@ -28,9 +28,7 @@ io.on('connection', (socket: any) => {
     if (socket.handshake.headers.userurl) {
         const userUrlName = socket.handshake.headers.userurl
         const masterSlave = socket.handshake.headers.masterslave || ''
-        thisUser = users.find(
-            (userId: IUser) => userId.id === userUrlName
-        ) || {
+        thisUser = users.find((userId: IUser) => userId.id === userUrlName) || {
             id: userUrlName,
             name: '',
             accessRights: [],
@@ -77,10 +75,10 @@ io.on('connection', (socket: any) => {
         updateClientsInRooms()
     })
 
-    socket.on(IO.JOIN_ROOM, (room: string, buttonIndex: number) => {
-        logger.debug(`Socket.on('room') payload: ${room}`)
+    socket.on(IO.JOIN_ROOM, (buttonIndex: number) => {
+        logger.debug(`Socket.on('room') payload: ${buttonIndex}`)
         leaveRoom()
-        joinRoom(room)
+        joinRoom(thisUser.accessRights[buttonIndex].machineId)
         updateSlaves(buttonIndex)
         updateClientsInRooms()
     })
@@ -115,7 +113,7 @@ io.on('connection', (socket: any) => {
 
     const updateSlaves = (buttonIndex: number) => {
         socketClients.forEach((client) => {
-            if(client.masterSlave === thisUser.id) {
+            if (client.masterSlave === thisUser.id) {
                 io.to(client.id).emit(IO.SLAVE_SET_ROOM, buttonIndex)
             }
         })

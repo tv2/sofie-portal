@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.2.0...v1.3.0) (2021-04-23)
+
+
+### Features
+
+* master-slave - engine works - ToDo GUI ([001f769](https://github.com/olzzon/tv2-sofie-portal/commit/001f7691c4f2d1ac2c9db6b32ecc3ae7b8a45aed))
+* master-slave clients prepare structure and GUI ([e1d0669](https://github.com/olzzon/tv2-sofie-portal/commit/e1d0669f1604e48dddc3fe879350a3989eb5bec4))
+* master-slave CSS and name update ToDo: Userlist on slaves ([fbd303b](https://github.com/olzzon/tv2-sofie-portal/commit/fbd303b78b5ad66d7fe3bc31ef478d92c334e91f))
+
+
+### Bug Fixes
+
+* master-slave an infinite loop on slave was cause by accessing innerscope activeRoomIndex from callabck in outerscope socket ([fa34fe3](https://github.com/olzzon/tv2-sofie-portal/commit/fa34fe35d2a9f6ba88e8f52f4df9f5896b31d5a6))
+
 ## [1.2.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.1.2...v1.2.0) (2021-04-21)
 
 

@@ -14,6 +14,10 @@ import * as IO from '../model/socketConstants'
 import { logger } from './utils/logger'
 import { saveUsersFile } from './utils/storage'
 
+import { emberMtx, setMatrixConnection } from './gateways/emberServer'
+emberMtx()
+
+
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const moment = require('moment')
 
@@ -21,6 +25,7 @@ let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
 let users: IUser[] = usersJson.users
 logger.debug('Settings', settings)
+
 
 // socket.io server
 io.on('connection', (socket: any) => {
@@ -54,6 +59,17 @@ io.on('connection', (socket: any) => {
         socket.emit(IO.MACHINES, accessToPages)
     }
 
+    socket.on('disconnecting', () => {
+        socketClients = socketClients.filter((client) => {
+            return client.id !== socket.id
+        })
+        updateClientsInRooms()
+    })
+
+    socket.once('disconnect', () => {
+        logger.debug(`Socket with id: ${socket.id} disconnected`)
+    })
+
     socket.on(IO.ADMIN_GET_DATA, () => {
         socket.emit(IO.ADMIN_ALL_USERS, users)
         socket.emit(IO.ADMIN_ALL_MACHINES, settings.machines)
@@ -68,23 +84,13 @@ io.on('connection', (socket: any) => {
         process.exit(0)
     })
 
-    socket.on('disconnecting', () => {
-        socketClients = socketClients.filter((client) => {
-            return client.id !== socket.id
-        })
-        updateClientsInRooms()
-    })
-
     socket.on(IO.JOIN_ROOM, (buttonIndex: number) => {
         logger.debug(`Socket.on('room') payload: ${buttonIndex}`)
         leaveRoom()
         joinRoom(thisUser.accessRights[buttonIndex].machineId)
+        setMatrixConnection(1,1)
         updateSlaves(buttonIndex)
         updateClientsInRooms()
-    })
-
-    socket.once('disconnect', () => {
-        logger.debug(`Socket with id: ${socket.id} disconnected`)
     })
 
     const updateClientsInRooms = () => {

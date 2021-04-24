@@ -88,7 +88,7 @@ io.on('connection', (socket: any) => {
         logger.debug(`Socket.on('room') payload: ${buttonIndex}`)
         leaveRoom()
         joinRoom(thisUser.accessRights[buttonIndex].machineId)
-        setMatrixConnection(1,1)
+        setMatrixConnection(1,buttonIndex)
         updateSlaves(buttonIndex)
         updateClientsInRooms()
     })

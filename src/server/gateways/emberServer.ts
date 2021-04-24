@@ -33,71 +33,75 @@ const tree = {
 */
 
 const tree = {
-	// create a tree for the provider
-	1: new NumberedTreeNodeImpl(1, new Model.EmberNodeImpl('Root', undefined, undefined, true), {
-		1: new NumberedTreeNodeImpl(1, new Model.EmberNodeImpl('Node', undefined, undefined, true), {
-			1: new NumberedTreeNodeImpl(
-				1,
-				new Model.ParameterImpl(
-					Model.ParameterType.Integer,
-					'Value1',
-					undefined,
-					2,
-					undefined,
-					undefined,
-					Model.ParameterAccess.ReadWrite
-				)
-			),
-			2: new NumberedTreeNodeImpl(
-				2,
-				new Model.ParameterImpl(
-					Model.ParameterType.Integer,
-					'Value2',
-					undefined,
-					2,
-					undefined,
-					undefined,
-					Model.ParameterAccess.ReadWrite
-				)
-			),
-			3: new NumberedTreeNodeImpl(
-				3,
-				new Model.ParameterImpl(
-					Model.ParameterType.Integer,
-					'Value3',
-					undefined,
-					2,
-					undefined,
-					undefined,
-					Model.ParameterAccess.ReadWrite
-				)
-			)
-		}),
-
-		2: new NumberedTreeNodeImpl(2, new Model.EmberNodeImpl('Functions', undefined, undefined, true), {
-			1: new NumberedTreeNodeImpl(
-				1,
-				new Model.EmberFunctionImpl(undefined, undefined) //, [{ type: ParameterType.Boolean, name: 'Test' }])
-			)
-		}),
-
-		3: new NumberedTreeNodeImpl(3, new Model.EmberNodeImpl('Matrices', undefined, undefined, true), {
-			1: new NumberedTreeNodeImpl(
-				1,
-				new Model.MatrixImpl(
-					'Test Matrix',
-					[1, 2, 3, 4, 5],
-					[1, 2, 3, 4, 5],
-					{},
-					undefined,
-					Model.MatrixType.NToN,
-					Model.MatrixAddressingMode.NonLinear,
-					5,
-					5
-				)
-			)
-		})
-	})
+    // create a tree for the provider
+    1: new NumberedTreeNodeImpl(
+        1,
+        new Model.EmberNodeImpl('Root', undefined, undefined, true),
+        {
+            1: new NumberedTreeNodeImpl(
+                1,
+                new Model.EmberNodeImpl('Node', undefined, undefined, true),
+                {
+                    1: new NumberedTreeNodeImpl(
+                        1,
+                        new Model.ParameterImpl(
+                            Model.ParameterType.Integer,
+                            'Value1',
+                            undefined,
+                            2,
+                            undefined,
+                            undefined,
+                            Model.ParameterAccess.ReadWrite
+                        )
+                    ),
+                    2: new NumberedTreeNodeImpl(
+                        2,
+                        new Model.ParameterImpl(
+                            Model.ParameterType.Integer,
+                            'Value2',
+                            undefined,
+                            2,
+                            undefined,
+                            undefined,
+                            Model.ParameterAccess.ReadWrite
+                        )
+                    ),
+                    3: new NumberedTreeNodeImpl(
+                        3,
+                        new Model.ParameterImpl(
+                            Model.ParameterType.Integer,
+                            'Value3',
+                            undefined,
+                            2,
+                            undefined,
+                            undefined,
+                            Model.ParameterAccess.ReadWrite
+                        )
+                    ),
+                }
+            ),
+            2: new NumberedTreeNodeImpl(
+                3,
+                new Model.EmberNodeImpl('Matrices', undefined, undefined, true),
+                {
+                    1: new NumberedTreeNodeImpl(
+                        1,
+                        new Model.MatrixImpl(
+                            'Test Matrix',
+                            [1, 2, 3, 4, 5],
+                            [1, 2, 3, 4, 5],
+                            {},
+                            undefined,
+                            Model.MatrixType.NToN,
+                            Model.MatrixAddressingMode.NonLinear,
+                            5,
+                            5
+                        )
+                    ),
+                }
+            ),
+        }
+    ),
 }
 
 const emberServer = new EmberServer(9000) // start server on port 9000
@@ -124,7 +128,7 @@ export const setMatrixConnection = (
 ) => {
     //tree[1].children[1].children[1].children[1].number[1]
     emberServer.updateMatrixConnection(
-        emberServer.tree["1"].children["3"].children["1"],
+        emberServer.tree['1'].children['2'].children['1'],
         {
             target: targetIndex,
             sources: [sourceIndex],
@@ -137,6 +141,4 @@ export const setMatrixConnection = (
 export const emberMtx = () => {
     emberServer.init(tree) // initiate the provider with the tree
     console.log(emberServer.getElementByPath('Root'))
-    setMatrixConnection(1, 1)
-    emberServer.update(emberServer.getElementByPath('1.1.1'), { value: '12' })
 }

@@ -73,6 +73,14 @@ const AdminPage = () => {
         setAllUsers([...changed])
     }
 
+    const handleEmberTargetInput = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        let changed = allUsers
+        changed[selectedUser].emberTarget = parseInt(event.target.value) || undefined
+        setAllUsers([...changed])
+    }
+
     const handleAccessId = (
         event: React.ChangeEvent<HTMLSelectElement>,
         index: number
@@ -236,6 +244,14 @@ const AdminPage = () => {
                                 type="text"
                                 value={allUsers[selectedUser].name}
                                 onChange={(event) => handleUserNameInput(event)}
+                            />
+                        </label>
+                        <label className={'inputlabel'}>
+                            Ember Target :
+                            <input
+                                type="text"
+                                value={allUsers[selectedUser].emberTarget || ''}
+                                onChange={(event) => handleEmberTargetInput(event)}
                             />
                         </label>
                     </form>

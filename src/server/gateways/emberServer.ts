@@ -68,7 +68,7 @@ export const setMatrixConnection = (
         }
     )
     logger.info(`EmberServer Mtx Source : ${sourceIndex} to Target : ${target}`)
-    logger.info(`Target State : ${emberServer.tree[1].children[1].children[1].contents['connections'][1]['sources']}`)
+    logger.info(`Target State : ${emberServer.tree[1].children[1].children[1].contents}`)
 }
 
 export const emberMtx = () => {

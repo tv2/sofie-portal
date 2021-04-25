@@ -9,7 +9,7 @@ It´s possible to see what other users are active on the webapge the user select
 
 Run as docker:
 ```
-sudo docker run -p 3000:3000 -p 3000:3000/udp olzzon/tv2-sofie-portal:v0.1.5
+sudo docker run -p 3000:3000 -p 3000:3000/udp olzzon/tv2-sofie-portal:v1.3.0
 ```
 
 ## Admin Page:

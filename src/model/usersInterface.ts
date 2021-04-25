@@ -1,6 +1,7 @@
 export interface IUser {
     id: string
     name: string
+    emberTarget?: number
     accessRights: IUserAccessRights[]
 }
 

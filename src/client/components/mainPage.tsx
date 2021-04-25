@@ -57,10 +57,18 @@ const MainPage = () => {
                 <div className={'main'}>
                     {masterSlave ? (
                         <div className={'grid'}>
-                            <div className={'clientbutton'}>
-                                {thisUser.accessRights[activeRoomIndex || -1]
-                                    ?.label || 'SELECT PAGE ON MASTER'}
-                            </div>
+                            {activeRoomIndex !== undefined ? (
+                                <div className={'clientbutton'}>
+                                    {
+                                        thisUser.accessRights[activeRoomIndex]
+                                            ?.label
+                                    }
+                                </div>
+                            ) : (
+                                <div className={'clientbutton'}>
+                                    SELECT PAGE ON MASTER
+                                </div>
+                            )}
                             <React.Fragment>
                                 ( Slave of: {masterSlave} )
                             </React.Fragment>

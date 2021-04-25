@@ -35,10 +35,12 @@ const MainPage = () => {
         })
         socket.on(IO.SLAVE_SET_ROOM, (buttonIndex: number) => {
             if (buttonIndex !== activeRoomIndex) {
-                handleChangeRoom(buttonIndex)
+                if (thisUser && buttonIndex < thisUser.accessRights.length) {
+                    handleChangeRoom(buttonIndex)
+                }
             }
         })
-    }, [socket, activeRoomIndex])
+    }, [activeRoomIndex, thisUser])
 
     const handleChangeRoom = (buttonIndex: number) => {
         setActiveRoomIndex(buttonIndex)

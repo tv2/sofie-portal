@@ -63,8 +63,7 @@ export const setMatrixConnection = (
         {
             target: target,
             sources: [sourceIndex + 1],
-            operation: ConnectionOperation.Connect,
-            disposition: ConnectionDisposition.Modified,
+            operation: ConnectionOperation.Absolute,
         }
     )
     logger.info(`EmberServer Mtx Source : ${sourceIndex} to Target : ${target}`)

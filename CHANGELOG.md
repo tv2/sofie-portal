@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.3.0...v1.4.0) (2021-04-25)
+
+
+### Features
+
+* ember integration - Adminpage set Embertarget for user ([ab1fb2d](https://github.com/olzzon/tv2-sofie-portal/commit/ab1fb2d9684514846ead962753bfe3f00dc80a88))
+* ember-integration change mtx when user select new room ([5a2ae6c](https://github.com/olzzon/tv2-sofie-portal/commit/5a2ae6cd0e43a2a8a00ef1c02889612690bbd111))
+* Portal-Emberserver initial Ember implementation ([112bb2d](https://github.com/olzzon/tv2-sofie-portal/commit/112bb2dccea0308780e9c5863d812a165851c480))
+
+
+### Bug Fixes
+
+* ember - loggin target state could be undefined ([deeaa7c](https://github.com/olzzon/tv2-sofie-portal/commit/deeaa7c4fcbc108e2dc44350eeb148ba3120a79b))
+* ember-implementation mtx offset +1  source instead ofg sourceIndex ([965076d](https://github.com/olzzon/tv2-sofie-portal/commit/965076d2f5725161ae817945401643d06b073f55))
+* only connect 1 source to target ([cc4dda1](https://github.com/olzzon/tv2-sofie-portal/commit/cc4dda1f08cbde772003129d8a887ba426c2517c))
+* slave mode - when index zero Label was rendered as "Select Page on Master" ([3a7f4b4](https://github.com/olzzon/tv2-sofie-portal/commit/3a7f4b40afdd6e8ca9c45e6b02f9c60daded9053))
+
 ## [1.3.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.2.0...v1.3.0) (2021-04-23)
 
 

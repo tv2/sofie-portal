@@ -55,19 +55,19 @@ emberServer.onMatrixOperation = async (matrix, connections) => {
 }
 
 export const setMatrixConnection = (
-    targetIndex: number,
+    target: number,
     sourceIndex: number
 ) => {
     emberServer.updateMatrixConnection(
         emberServer.tree['1'].children['1'].children['1'],
         {
-            target: targetIndex,
-            sources: [sourceIndex],
+            target: target,
+            sources: [sourceIndex + 1],
             operation: ConnectionOperation.Connect,
             disposition: ConnectionDisposition.Modified,
         }
     )
-    logger.info(`EmberServer Mtx Source : ${sourceIndex} to Target : ${targetIndex}`)
+    logger.info(`EmberServer Mtx Source : ${sourceIndex} to Target : ${target}`)
     logger.info(`Target State : ${emberServer.tree[1].children[1].children[1].contents['connections'][1]['sources']}`)
 }
 

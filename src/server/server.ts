@@ -17,7 +17,6 @@ import { saveUsersFile } from './utils/storage'
 import { emberMtx, setMatrixConnection } from './gateways/emberServer'
 emberMtx()
 
-
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const moment = require('moment')
 
@@ -25,7 +24,6 @@ let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
 let users: IUser[] = usersJson.users
 logger.debug('Settings', settings)
-
 
 // socket.io server
 io.on('connection', (socket: any) => {
@@ -88,7 +86,9 @@ io.on('connection', (socket: any) => {
         logger.debug(`Socket.on('room') payload: ${buttonIndex}`)
         leaveRoom()
         joinRoom(thisUser.accessRights[buttonIndex].machineId)
-        setMatrixConnection(1,buttonIndex)
+        if (thisUser.emberTarget) {
+            setMatrixConnection(thisUser.emberTarget, buttonIndex)
+        }
         updateSlaves(buttonIndex)
         updateClientsInRooms()
     })

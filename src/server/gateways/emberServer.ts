@@ -6,31 +6,7 @@ import {
 } from 'emberplus-connection/dist/model/Connection'
 import { logger } from '../utils/logger'
 
-/*
-const tree = {
-    // ToDo: Make tree as JSON
-    0: new NumberedTreeNodeImpl(
-        0,
-        new Model.EmberNodeImpl('Root', undefined, undefined, true),
-        {
-            0: new NumberedTreeNodeImpl(
-                0,
-                new Model.MatrixImpl(
-                    'PortalMatrix',
-                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                    {},
-                    undefined,
-                    Model.MatrixType.NToN,
-                    Model.MatrixAddressingMode.NonLinear,
-                    10,
-                    10
-                )
-            ),
-        }
-    ),
-}
-*/
+const emberServer = new EmberServer(9000) // start server on port 9000
 
 const tree = {
     // create a tree for the provider
@@ -40,62 +16,20 @@ const tree = {
         {
             1: new NumberedTreeNodeImpl(
                 1,
-                new Model.EmberNodeImpl('Node', undefined, undefined, true),
-                {
-                    1: new NumberedTreeNodeImpl(
-                        1,
-                        new Model.ParameterImpl(
-                            Model.ParameterType.Integer,
-                            'Value1',
-                            undefined,
-                            2,
-                            undefined,
-                            undefined,
-                            Model.ParameterAccess.ReadWrite
-                        )
-                    ),
-                    2: new NumberedTreeNodeImpl(
-                        2,
-                        new Model.ParameterImpl(
-                            Model.ParameterType.Integer,
-                            'Value2',
-                            undefined,
-                            2,
-                            undefined,
-                            undefined,
-                            Model.ParameterAccess.ReadWrite
-                        )
-                    ),
-                    3: new NumberedTreeNodeImpl(
-                        3,
-                        new Model.ParameterImpl(
-                            Model.ParameterType.Integer,
-                            'Value3',
-                            undefined,
-                            2,
-                            undefined,
-                            undefined,
-                            Model.ParameterAccess.ReadWrite
-                        )
-                    ),
-                }
-            ),
-            2: new NumberedTreeNodeImpl(
-                3,
                 new Model.EmberNodeImpl('Matrices', undefined, undefined, true),
                 {
                     1: new NumberedTreeNodeImpl(
                         1,
                         new Model.MatrixImpl(
                             'Test Matrix',
-                            [1, 2, 3, 4, 5],
-                            [1, 2, 3, 4, 5],
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                             {},
                             undefined,
-                            Model.MatrixType.NToN,
+                            Model.MatrixType.OneToN,
                             Model.MatrixAddressingMode.NonLinear,
-                            5,
-                            5
+                            50,
+                            50
                         )
                     ),
                 }
@@ -103,8 +37,6 @@ const tree = {
         }
     ),
 }
-
-const emberServer = new EmberServer(9000) // start server on port 9000
 
 // Callbacks:
 
@@ -126,9 +58,8 @@ export const setMatrixConnection = (
     targetIndex: number,
     sourceIndex: number
 ) => {
-    //tree[1].children[1].children[1].children[1].number[1]
     emberServer.updateMatrixConnection(
-        emberServer.tree['1'].children['2'].children['1'],
+        emberServer.tree['1'].children['1'].children['1'],
         {
             target: targetIndex,
             sources: [sourceIndex],
@@ -136,9 +67,11 @@ export const setMatrixConnection = (
             disposition: ConnectionDisposition.Modified,
         }
     )
+    logger.info(`EmberServer Mtx Source : ${sourceIndex} to Target : ${targetIndex}`)
+    logger.info(`Target State : ${emberServer.tree[1].children[1].children[1].contents['connections'][1]['sources']}`)
 }
 
 export const emberMtx = () => {
     emberServer.init(tree) // initiate the provider with the tree
-    console.log(emberServer.getElementByPath('Root'))
+    console.log('EmberServer Initialized on port 9000')
 }

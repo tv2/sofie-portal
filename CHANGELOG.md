@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/olzzon/tv2-sofie-portal/compare/v1.4.0...v1.4.1) (2021-04-25)
+
+
+### Bug Fixes
+
+* Slave - Client crash if master selects a button with index larger than number of pages in slave ([aa2918a](https://github.com/olzzon/tv2-sofie-portal/commit/aa2918a6044ed90b1f745220f8f826bf4a336b50))
+
 ## [1.4.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.3.0...v1.4.0) (2021-04-25)
 
 

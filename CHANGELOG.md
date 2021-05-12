@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.4.1...v1.5.0) (2021-05-12)
+
+
+### Features
+
+* ember integration rename matrix from "test matrix" to "PortalMatrix" ([abb97af](https://github.com/olzzon/tv2-sofie-portal/commit/abb97af30fd09273fbbd16cc011b7ccbf9f60027))
+
 ### [1.4.1](https://github.com/olzzon/tv2-sofie-portal/compare/v1.4.0...v1.4.1) (2021-04-25)
 
 

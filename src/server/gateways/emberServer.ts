@@ -21,7 +21,7 @@ const tree = {
                     1: new NumberedTreeNodeImpl(
                         1,
                         new Model.MatrixImpl(
-                            'Test Matrix',
+                            'PortalMatrix',
                             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                             [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                             {},

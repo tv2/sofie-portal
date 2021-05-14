@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/olzzon/tv2-sofie-portal/compare/v1.5.0...v1.5.1) (2021-05-14)
+
+
+### Bug Fixes
+
+* Moved from NRKNO ember-connection to EVS node-emberplus as there was performance issues with ember-connection ([39eb472](https://github.com/olzzon/tv2-sofie-portal/commit/39eb4727dd0a1fd40bd63e915b6c9de3fe5a254d))
+
 ## [1.5.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.4.1...v1.5.0) (2021-05-12)
 
 

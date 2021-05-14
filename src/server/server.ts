@@ -14,8 +14,10 @@ import * as IO from '../model/socketConstants'
 import { logger } from './utils/logger'
 import { saveUsersFile } from './utils/storage'
 
-import { emberMtx, setMatrixConnection } from './gateways/emberServer'
-emberMtx()
+import { emberMtxServer } from './gateways/emberServer'
+import { emberLocalClient, setMatrixConnection } from './gateways/emberLocalClient'
+emberMtxServer()
+emberLocalClient()
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 const moment = require('moment')
@@ -87,7 +89,7 @@ io.on('connection', (socket: any) => {
         leaveRoom()
         joinRoom(thisUser.accessRights[buttonIndex].machineId)
         if (thisUser.emberTarget) {
-            setMatrixConnection(thisUser.emberTarget, buttonIndex)
+            setMatrixConnection(thisUser.emberTarget - 1, buttonIndex) // (- 1) = convert EmberTarget to index
         }
         updateSlaves(buttonIndex)
         updateClientsInRooms()

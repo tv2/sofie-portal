@@ -1,76 +1,57 @@
-import { EmberServer, Model } from 'emberplus-connection'
-import { NumberedTreeNodeImpl } from 'emberplus-connection/dist/model'
-import {
-    ConnectionDisposition,
-    ConnectionOperation,
-} from 'emberplus-connection/dist/model/Connection'
 import { logger } from '../utils/logger'
+const fs = require('fs')
+const path = require('path')
 
-const emberServer = new EmberServer(9000) // start server on port 9000
+//@ts-ignore
+import { EmberServer } from 'node-emberplus'
+import { root } from './emberServerTree'
 
-const tree = {
-    // create a tree for the provider
-    1: new NumberedTreeNodeImpl(
-        1,
-        new Model.EmberNodeImpl('Root', undefined, undefined, true),
-        {
-            1: new NumberedTreeNodeImpl(
-                1,
-                new Model.EmberNodeImpl('Matrices', undefined, undefined, true),
-                {
-                    1: new NumberedTreeNodeImpl(
-                        1,
-                        new Model.MatrixImpl(
-                            'PortalMatrix',
-                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                            {},
-                            undefined,
-                            Model.MatrixType.OneToN,
-                            Model.MatrixAddressingMode.NonLinear,
-                            50,
-                            50
-                        )
-                    ),
-                }
-            ),
-        }
-    ),
+const emberServer = new EmberServer('0.0.0.0', 9000, root) // start server on port 9000
+
+export const emberMtxServer = () => {
+    logger.info('Setting up Ember Server')
+
+    emberServer
+        .on('event', (event: any) => {
+            console.log('Ember Server Event received : ', event)
+        })
+        .on('error', (error: any) => {
+            if (
+                (error.message + '').match(/econnrefused/i) ||
+                (error.message + '').match(/disconnected/i)
+            ) {
+                logger.error('Ember connection not establised')
+            } else {
+                logger.error('Ember connection unknown error' + error.message)
+            }
+        })
+        .on("matrix-change", info => {
+            console.log(`Client ${info.client} changed ${info.target} and ${info.sources}`);
+         })
+    logger.info('Setting up Ember Server')
+
+    emberServer
+        .listen()
+        .then(() => {
+            console.log('Ember Server is listening')
+        })
+        .catch((error: Error) => {
+            console.log(error.stack)
+        })
 }
 
-// Callbacks:
-
-emberServer.onSetValue = async (node, value) => {
-    // handle setting values
-    emberServer.update(node, { value })
-
-    return true
-}
-
-emberServer.onMatrixOperation = async (matrix, connections) => {
-    // handle matrix operations
-    for (const connection of Object.values(connections)) {
-        emberServer.updateMatrixConnection(matrix, connection)
-    }
-}
-
-export const setMatrixConnection = (
-    target: number,
-    sourceIndex: number
-) => {
-    emberServer.updateMatrixConnection(
-        emberServer.tree['1'].children['1'].children['1'],
-        {
-            target: target,
-            sources: [sourceIndex + 1],
-            operation: ConnectionOperation.Absolute,
+const emberStateToFile = () => {
+    let json = JSON.stringify(emberServer.toJSON())
+    logger.info('Updating emberstate in file')
+    fs.writeFile(
+        path.resolve('embertree.json'),
+        json,
+        'utf8',
+        (error: Error) => {
+            if (error) {
+                console.log(error)
+                logger.error('Error writing Ember-dump file')
+            }
         }
     )
-    logger.info(`EmberServer Mtx Source : ${sourceIndex} to Target : ${target}`)
-    logger.info(`Target State : ${emberServer.tree[1].children[1].children[1].contents}`)
-}
-
-export const emberMtx = () => {
-    emberServer.init(tree) // initiate the provider with the tree
-    console.log('EmberServer Initialized on port 9000')
 }

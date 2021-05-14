@@ -28,10 +28,10 @@
     "prepareChangelog": "standard-version --prerelease"
   },
   "dependencies": {
-    "emberplus-connection": "^0.0.4",
     "express": "4.17.1",
     "fs": "0.0.1-security",
     "moment": "2.29.1",
+    "node-emberplus": "^2.5.10",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-files": "^3.0.0-alpha.1",

@@ -87,9 +87,15 @@ io.on('connection', (socket: any) => {
     socket.on(IO.JOIN_ROOM, (buttonIndex: number) => {
         logger.debug(`Socket.on('room') payload: ${buttonIndex}`)
         leaveRoom()
-        joinRoom(thisUser.accessRights[buttonIndex].machineId)
+        if (buttonIndex >= 0) {
+            joinRoom(thisUser.accessRights[buttonIndex].machineId)
+        } else {
+            joinRoom('-1')
+        }
         if (thisUser.emberTarget) {
-            setMatrixConnection(thisUser.emberTarget - 1, buttonIndex) // (- 1) = convert EmberTarget to index
+            // Target : (- 1) = convert EmberTarget to index
+            // Source: (buttonIndex + 1 as -1 is "offline" index 1 )
+            setMatrixConnection(thisUser.emberTarget - 1, buttonIndex + 1)
         }
         updateSlaves(buttonIndex)
         updateClientsInRooms()

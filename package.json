@@ -17,6 +17,7 @@
     "watch-server": "tsc -p src/server -watch",
     "watch-client": "cross-env NODE_ENV=development TS_NODE_PROJECT=\"src/client/tsconfig.json\" webpack --watch",
     "watch-admin": "cross-env NODE_ENV=development TS_NODE_PROJECT=\"src/admin/tsconfig.json\" webpack --watch --config webpack.admin.config.js",
+    "build-watch": "yarn watch-server & watch-client & build-admin",
     "build": "yarn build-client && yarn build-server && yarn build-admin",
     "build-server": "tsc -p ./src/server",
     "build-client": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"./src/client/tsconfig.json\" webpack && cp ./src/client/index.html ./build/client/index.html",

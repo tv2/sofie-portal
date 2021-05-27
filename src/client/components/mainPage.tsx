@@ -77,6 +77,19 @@ const MainPage = () => {
                         </div>
                     ) : (
                         <div className={'grid'}>
+                            <button
+                                key={'-1'}
+                                className={
+                                    activeRoomIndex === -1
+                                        ? 'cardselected'
+                                        : 'card'
+                                }
+                                onClick={() => {
+                                    handleChangeRoom(-1)
+                                }}
+                            >
+                                OFFLINE
+                            </button>
                             {thisUser?.accessRights?.map(
                                 (accessRight, index) => {
                                     return (
@@ -103,7 +116,7 @@ const MainPage = () => {
                             )}
                         </div>
                     )}
-                    {activeRoomIndex !== undefined ? (
+                    {(activeRoomIndex !== undefined && activeRoomIndex >=0) ? (
                         <React.Fragment>
                             <div className={'clientlist'}>
                                 USERS :

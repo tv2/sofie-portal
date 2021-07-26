@@ -51,7 +51,7 @@ jobs:
           at: .
       - run:
           name: Build Docker Image
-          command: docker build -f Dockerfile . -t olzzon/tv2-sofie-portal:$CIRCLE_TAG
+          command: docker build -f Dockerfile . -t tv2/sofie-portal:$CIRCLE_TAG
       - run:
            name: Publish Docker Image to Docker Hub
            command: |
@@ -59,7 +59,7 @@ jobs:
                echo "Skipping"
              else
                echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-               docker tag olzzon/tv2-sofie-portal:$CIRCLE_TAG $DOCKERHUB_IMAGE:$CIRCLE_TAG
+               docker tag tv2/sofie-portal:$CIRCLE_TAG $DOCKERHUB_IMAGE:$CIRCLE_TAG
                docker push $DOCKERHUB_IMAGE:$CIRCLE_TAG
              fi
       - run:
@@ -69,7 +69,7 @@ jobs:
                echo "Skipping"
              else
                echo "$GITHUB_PASS" | docker login docker.pkg.github.com -u "$GITHUB_USERNAME" --password-stdin
-               docker tag olzzon/tv2-sofie-portal:$CIRCLE_TAG docker.pkg.github.com/$GITHUB_IMAGE:$CIRCLE_TAG
+               docker tag tv2/sofie-portal:$CIRCLE_TAG docker.pkg.github.com/$GITHUB_IMAGE:$CIRCLE_TAG
                docker push docker.pkg.github.com/$GITHUB_IMAGE:$CIRCLE_TAG
              fi
   publish-branch:
@@ -83,7 +83,7 @@ jobs:
           at: .
       - run:
           name: Build Docker Image
-          command: docker build -f Dockerfile . -t olzzon/tv2-sofie-portal:$CIRCLE_BRANCH
+          command: docker build -f Dockerfile . -t tv2/sofie-portal:$CIRCLE_BRANCH
       - run:
            name: Publish Docker Image to Docker Hub
            command: |
@@ -91,7 +91,7 @@ jobs:
                echo "Skipping"
              else
                echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-               docker tag olzzon/tv2-sofie-portal:$CIRCLE_BRANCH $DOCKERHUB_IMAGE:$CIRCLE_BRANCH
+               docker tag tv2/sofie-portal:$CIRCLE_BRANCH $DOCKERHUB_IMAGE:$CIRCLE_BRANCH
                docker push $DOCKERHUB_IMAGE:$CIRCLE_BRANCH
              fi
       - run:
@@ -101,7 +101,7 @@ jobs:
                echo "Skipping"
              else
                echo "$GITHUB_PASS" | docker login docker.pkg.github.com -u "$GITHUB_USERNAME" --password-stdin
-               docker tag olzzon/tv2-sofie-portal:$CIRCLE_BRANCH docker.pkg.github.com/$GITHUB_IMAGE:$CIRCLE_BRANCH
+               docker tag tv2/sofie-portal:$CIRCLE_BRANCH docker.pkg.github.com/$GITHUB_IMAGE:$CIRCLE_BRANCH
                docker push docker.pkg.github.com/$GITHUB_IMAGE:$CIRCLE_BRANCH
              fi
 

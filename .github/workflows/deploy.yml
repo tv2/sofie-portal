@@ -130,7 +130,7 @@ jobs:
         if: ${{ steps.image-tags.outputs.images }}
         with:
           context: .
-          file: Dockerfile.circle
+          file: Dockerfile
           push: true
           tags: ${{ steps.image-tags.outputs.images }}
 

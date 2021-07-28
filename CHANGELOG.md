@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.4](https://github.com/tv2/sofie-portal/compare/v1.6.3...v1.6.4) (2021-07-28)
+
+
+### Bug Fixes
+
+* removed Dockerfile.circle = Dockerfile ([091ffa0](https://github.com/tv2/sofie-portal/commit/091ffa0ac86cbb0596a791d87101275ea5b8ac2b))
+
 ### [1.6.3](https://github.com/tv2/sofie-portal/compare/v1.6.2...v1.6.3) (2021-07-28)
 
 ### [1.6.2](https://github.com/tv2/sofie-portal/compare/v1.6.1...v1.6.2) (2021-07-28)

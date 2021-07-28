@@ -41,36 +41,36 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Lint and test
-        run: yarn test
+    #   - name: Lint and test
+    #     run: yarn test
 
-  validate-prod-dependencies:
-    name: Validate production dependencies
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    timeout-minutes: 15
+#   validate-prod-dependencies:
+#     name: Validate production dependencies
+#     runs-on: ubuntu-latest
+#     continue-on-error: true
+#     timeout-minutes: 15
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16.x
-      - name: Install Omniorb 4
-        run: sudo apt-get install libomniorb4-dev
-      - name: Prepare Environment
-        run: yarn
-        env:
-          CI: true
-      - name: Validate production dependencies
-        run: |
-          if ! git log --format=oneline -n 1 | grep -q "\[ignore-audit\]"; then
-            yarn validate:dependencies
-          else
-            echo "Skipping audit"
-          fi
-        env:
-          CI: true
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js 16.x
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 16.x
+#       - name: Install Omniorb 4
+#         run: sudo apt-get install libomniorb4-dev
+#       - name: Prepare Environment
+#         run: yarn
+#         env:
+#           CI: true
+#       - name: Validate production dependencies
+#         run: |
+#           if ! git log --format=oneline -n 1 | grep -q "\[ignore-audit\]"; then
+#             yarn validate:dependencies
+#           else
+#             echo "Skipping audit"
+#           fi
+#         env:
+#           CI: true
 
   dockerhub-release:
     name: Make dockerhub release

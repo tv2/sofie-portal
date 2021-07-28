@@ -136,7 +136,7 @@ jobs:
 
   deploy-new-image:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: [build-and-test, dockerhub-release]
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Deploy

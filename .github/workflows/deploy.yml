@@ -75,7 +75,7 @@ jobs:
   dockerhub-release:
     name: Make dockerhub release
     runs-on: ubuntu-latest
-    needs: [ build-and-test, validate-prod-dependencies ]
+    needs: [ build-and-test ]
     timeout-minutes: 30
 
     steps:

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/tv2/sofie-portal/compare/v1.6.4...v1.7.0) (2021-08-16)
+
+
+### Features
+
+* pipeline improvements ([858039b](https://github.com/tv2/sofie-portal/commit/858039b76b7ec6d8d420a4250a870c8516c1fa57))
+
 ### [1.6.4](https://github.com/tv2/sofie-portal/compare/v1.6.3...v1.6.4) (2021-07-28)
 
 

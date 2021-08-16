@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.1](https://github.com/tv2/sofie-portal/compare/v1.7.0...v1.7.1) (2021-08-16)
+
+
+### Bug Fixes
+
+* pipeline ([7f1832f](https://github.com/tv2/sofie-portal/commit/7f1832ffa3610ab90c64398d334d7bafdc1b3cb6))
+* pipeline missing args for pushing to dockerhub ([7068b59](https://github.com/tv2/sofie-portal/commit/7068b59b315fef158cd8b498f015cdd2e6cf6352))
+
 ## [1.7.0](https://github.com/tv2/sofie-portal/compare/v1.6.4...v1.7.0) (2021-08-16)
 
 

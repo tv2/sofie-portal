@@ -60,7 +60,10 @@ jobs:
       - name: Build and push docker image tags
         uses: docker/build-push-action@v2
         with:
+          context: .
           push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
   deploy-new-image:
     runs-on: ubuntu-latest

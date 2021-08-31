@@ -1,6 +1,6 @@
 ## Sofie Portal 
 
-[![Node CI](https://github.com/tv2/sofie-portal/actions/workflows/deploy-image.yaml/badge.svg)](https://github.com/tv2/sofie-portal/actions/workflows/deploy-image.yaml)
+[![Node CI](https://github.com/tv2/sofie-portal/actions/workflows/deploy-image.yml/badge.svg)](https://github.com/tv2/sofie-portal/actions/workflows/deploy-image.yml)
 
 This is a userportal for accessing Sofie and Sisyfosclients, but can be user for any webpage.
 It´s possible to see what other users are active on the webapge the user selects. And if used together with nginx it´s possible to access multiple ppages with only one port open. 

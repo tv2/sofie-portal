@@ -117,7 +117,7 @@ const MainPage = () => {
     const RenderActiveUsers = () => {
         return (
             <div className={'clientlist'}>
-                USERS :KASPER
+                USERS :
                 {usersInRoom?.map((userInRoom, index) => {
                     return (
                         <button

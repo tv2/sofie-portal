@@ -1,5 +1,4 @@
 import '../styles/MainPage.css'
-import '../styles/IframeView.css'
 
 import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
@@ -15,6 +14,7 @@ const socket = io({
 import { IMachine } from '../../model/settingsInterface'
 import { IUser } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
+import RenderIFrame from './RenderIFrame'
 
 const MainPage = () => {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
@@ -53,13 +53,18 @@ const MainPage = () => {
         })
     }
 
-    const renderHeaderButtons = (userLabel: string) => {
+    const RenderHeaderButtons = () => {
         return (
             <React.Fragment>
                 {masterSlave ? (
                     <div className={'grid'}>
                         {activeRoomIndex !== undefined ? (
-                            <div className={'clientbutton'}>{userLabel}</div>
+                            <div className={'clientbutton'}>
+                                {
+                                    thisUser?.accessRights[activeRoomIndex || 0]
+                                        ?.label || ''
+                                }
+                            </div>
                         ) : (
                             <div className={'clientbutton'}>
                                 SELECT PAGE ON MASTER
@@ -112,7 +117,7 @@ const MainPage = () => {
     const RenderActiveUsers = () => {
         return (
             <div className={'clientlist'}>
-                USERS :
+                USERS :KASPER
                 {usersInRoom?.map((userInRoom, index) => {
                     return (
                         <button
@@ -127,31 +132,24 @@ const MainPage = () => {
         )
     }
 
-    const renderIFrame = (index: number) => {
-        return (
-            <iframe
-                className={'iframeview'}
-                src={
-                    findMachine(thisUser?.accessRights[index].machineId || '1')
-                        ?.hostname + (thisUser?.accessRights[index].path || '')
-                }
-            ></iframe>
-        )
-    }
     return (
         <div className={'container'}>
             {thisUser?.name ? (
                 <div className={'main'}>
+                    <RenderHeaderButtons />
                     {activeRoomIndex !== undefined && activeRoomIndex >= 0 ? (
                         <React.Fragment>
-                            {() =>
-                                renderHeaderButtons(
-                                    thisUser.accessRights[activeRoomIndex]
-                                        ?.label
-                                )
-                            }
                             <RenderActiveUsers />
-                            {() => renderIFrame(activeRoomIndex)}
+                            <RenderIFrame
+                                src={
+                                    findMachine(
+                                        thisUser?.accessRights[activeRoomIndex]
+                                            .machineId || '1'
+                                    )?.hostname +
+                                    (thisUser?.accessRights[activeRoomIndex]
+                                        .path || '')
+                                }
+                            />
                         </React.Fragment>
                     ) : (
                         <React.Fragment></React.Fragment>

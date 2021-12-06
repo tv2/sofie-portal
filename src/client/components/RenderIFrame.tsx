@@ -18,6 +18,8 @@ const RenderIFrame = (props: IRenderIFrameProps) => {
             setScale(scaleX)
             if (scaleY < scaleX) {
                 setScale(scaleY)
+            } else {
+                setScale(scaleX)
             }
         }
         // Add event listener

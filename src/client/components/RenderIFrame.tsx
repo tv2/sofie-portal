@@ -15,7 +15,6 @@ const RenderIFrame = (props: IRenderIFrameProps) => {
             let scaleY = window.innerHeight / 1200
 
             // Scale to the smallest part of view
-            setScale(scaleX)
             if (scaleY < scaleX) {
                 setScale(scaleY)
             } else {

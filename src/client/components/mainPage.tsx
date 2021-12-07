@@ -1,5 +1,4 @@
 import '../styles/MainPage.css'
-import '../styles/IframeView.css'
 
 import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
@@ -15,6 +14,7 @@ const socket = io({
 import { IMachine } from '../../model/settingsInterface'
 import { IUser } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
+import RenderIFrame from './RenderIFrame'
 
 const MainPage = () => {
     const [usersInRoom, setUsersInRoom] = useState<Array<string>>([])
@@ -53,87 +53,94 @@ const MainPage = () => {
         })
     }
 
+    const RenderHeaderButtons = () => {
+        return (
+            <React.Fragment>
+                {masterSlave ? (
+                    <div className={'grid'}>
+                        {activeRoomIndex !== undefined ? (
+                            <div className={'clientbutton'}>
+                                {
+                                    thisUser?.accessRights[activeRoomIndex || 0]
+                                        ?.label || ''
+                                }
+                            </div>
+                        ) : (
+                            <div className={'clientbutton'}>
+                                SELECT PAGE ON MASTER
+                            </div>
+                        )}
+                        <React.Fragment>
+                            ( Slave of: {masterSlave} )
+                        </React.Fragment>
+                    </div>
+                ) : (
+                    <div className={'grid'}>
+                        <button
+                            key={'-1'}
+                            className={
+                                activeRoomIndex === -1 ? 'cardselected' : 'card'
+                            }
+                            onClick={() => {
+                                handleChangeRoom(-1)
+                            }}
+                        >
+                            OFFLINE
+                        </button>
+                        {thisUser?.accessRights?.map((accessRight, index) => {
+                            return (
+                                <button
+                                    key={index.toString()}
+                                    className={
+                                        index === activeRoomIndex
+                                            ? 'cardselected'
+                                            : 'card'
+                                    }
+                                    onClick={() => {
+                                        handleChangeRoom(index)
+                                    }}
+                                >
+                                    {accessRight.label ||
+                                        findMachine(
+                                            thisUser?.accessRights[index]
+                                                .machineId
+                                        )?.label}
+                                </button>
+                            )
+                        })}
+                    </div>
+                )}
+            </React.Fragment>
+        )
+    }
+
+    const RenderActiveUsers = () => {
+        return (
+            <div className={'clientlist'}>
+                USERS :
+                {usersInRoom?.map((userInRoom, index) => {
+                    return (
+                        <button
+                            key={index.toString()}
+                            className={'clientbutton'}
+                        >
+                            {userInRoom}
+                        </button>
+                    )
+                })}
+            </div>
+        )
+    }
+
     return (
         <div className={'container'}>
             {thisUser?.name ? (
                 <div className={'main'}>
-                    {masterSlave ? (
-                        <div className={'grid'}>
-                            {activeRoomIndex !== undefined ? (
-                                <div className={'clientbutton'}>
-                                    {
-                                        thisUser.accessRights[activeRoomIndex]
-                                            ?.label
-                                    }
-                                </div>
-                            ) : (
-                                <div className={'clientbutton'}>
-                                    SELECT PAGE ON MASTER
-                                </div>
-                            )}
-                            <React.Fragment>
-                                ( Slave of: {masterSlave} )
-                            </React.Fragment>
-                        </div>
-                    ) : (
-                        <div className={'grid'}>
-                            <button
-                                key={'-1'}
-                                className={
-                                    activeRoomIndex === -1
-                                        ? 'cardselected'
-                                        : 'card'
-                                }
-                                onClick={() => {
-                                    handleChangeRoom(-1)
-                                }}
-                            >
-                                OFFLINE
-                            </button>
-                            {thisUser?.accessRights?.map(
-                                (accessRight, index) => {
-                                    return (
-                                        <button
-                                            key={index.toString()}
-                                            className={
-                                                index === activeRoomIndex
-                                                    ? 'cardselected'
-                                                    : 'card'
-                                            }
-                                            onClick={() => {
-                                                handleChangeRoom(index)
-                                            }}
-                                        >
-                                            {accessRight.label ||
-                                                findMachine(
-                                                    thisUser?.accessRights[
-                                                        index
-                                                    ].machineId
-                                                )?.label}
-                                        </button>
-                                    )
-                                }
-                            )}
-                        </div>
-                    )}
-                    {(activeRoomIndex !== undefined && activeRoomIndex >=0) ? (
+                    <RenderHeaderButtons />
+                    {activeRoomIndex !== undefined && activeRoomIndex >= 0 ? (
                         <React.Fragment>
-                            <div className={'clientlist'}>
-                                USERS :
-                                {usersInRoom?.map((userInRoom, index) => {
-                                    return (
-                                        <button
-                                            key={index.toString()}
-                                            className={'clientbutton'}
-                                        >
-                                            {userInRoom}
-                                        </button>
-                                    )
-                                })}
-                            </div>
-
-                            <iframe
-                                className={'iframeview'}
+                            <RenderActiveUsers />
+                            <RenderIFrame
                                 src={
                                     findMachine(
                                         thisUser?.accessRights[activeRoomIndex]
@@ -142,7 +149,7 @@ const MainPage = () => {
                                     (thisUser?.accessRights[activeRoomIndex]
                                         .path || '')
                                 }
-                            ></iframe>
+                            />
                         </React.Fragment>
                     ) : (
                         <React.Fragment></React.Fragment>

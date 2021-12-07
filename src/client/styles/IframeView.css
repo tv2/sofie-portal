@@ -1,5 +1,8 @@
-.iframeview {
-  height: 85vh;
-  width: 100vw;
-  scale: 0.75%;
+.iframe-view {
+    -webkit-transform-origin: 0 0;
+}
+
+.iframe-container {
+    height: 85vh;
+    width: 100vw;
 }

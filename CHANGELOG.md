@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/olzzon/tv2-sofie-portal/compare/v1.7.2...v1.8.0) (2021-12-09)
+
+
+### Features
+
+* Scaling - GUI is now responsive, and will scale content, button and text to the browser window/resolution ([f2b2537](https://github.com/olzzon/tv2-sofie-portal/commit/f2b25373c9ed6f98ff1791ed86604a53e0db8407))
+
+
+### Bug Fixes
+
+* deploy version tags ([06ecc17](https://github.com/olzzon/tv2-sofie-portal/commit/06ecc17617fd414e848d44f3da185389df7a2efd))
+* double setScale(scaleX) ([549466f](https://github.com/olzzon/tv2-sofie-portal/commit/549466f8e5099f070a1e9057e85cf5fc25371d78))
+* Typo - forgot to remove "KASPER" in a label test ([b7e7de2](https://github.com/olzzon/tv2-sofie-portal/commit/b7e7de2df8505965eef742238f5b39dec624c619))
+
 ### [1.7.2](https://github.com/tv2/sofie-portal/compare/v1.7.1...v1.7.2) (2021-08-16)
 
 

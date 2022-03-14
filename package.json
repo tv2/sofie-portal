@@ -9,7 +9,11 @@
   },
   "contributors": [
     {
-      "name": "Jesper Leerberg (TV2 Denmark",
+      "name": "Anders Frederik Jørgensen (TV2 Denmark)",
+      "email": "afjo@tv2.dk"
+    },
+    {
+      "name": "Jesper Leerberg (TV2 Denmark)",
       "email": "leerberg@github.com"
     }
   ],

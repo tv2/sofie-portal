@@ -1,8 +1,10 @@
 import express from 'express'
+import { Server as HTTPServer } from 'http'
+import { Server as SocketServer } from 'socket.io'
+import path from 'path'
 const app = express()
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
-const path = require('path')
+const server = new HTTPServer(app)
+const io = new SocketServer(server)
 
 import * as settingsJson from '../storage/settings.json'
 import * as usersJson from '../storage/users.json'
@@ -20,8 +22,7 @@ emberMtxServer()
 emberLocalClient()
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
-const moment = require('moment')
-
+import moment from 'moment'
 let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
 let users: IUser[] = usersJson.users
@@ -42,7 +43,7 @@ io.on('connection', (socket: any) => {
       id: socket.id,
       userUrlName: userUrlName,
       roomName: '-1',
-      connectionTime: new moment().format('YYYY-MM-DD HH:mm:ss'),
+      connectionTime: moment().format('YYYY-MM-DD HH:mm:ss'),
       masterSlave: masterSlave,
     })
 

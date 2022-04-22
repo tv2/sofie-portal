@@ -2,6 +2,6 @@ export interface ISocketClient {
   id: string
   userUrlName: string
   roomName: string
-  connectionTime: Date
+  connectionTime: string
   masterSlave: string
 }

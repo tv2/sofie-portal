@@ -1,24 +1,23 @@
 {
-   "machines": [
-        {
-            "id": "1",
-            "label": "Q-BOX 01",
-            "description": "",
-            "hostname": "http://sport.tv2.dk/"
-        },
-        {
-            "id": "2",
-            "label": "Q-BOX 02",
-            "description": "",
-            "hostname": "http://nyheder.tv2.dk",
-            "pathArgs": "/?settings=0"
-        },
-        {
-            "id": "3",
-            "label": "Q-BOX 03",
-            "description": "",
-            "hostname": "http://tv2.dk"
-        }
-    ]
-
+  "machines": [
+    {
+      "id": "1",
+      "label": "Q-BOX 01",
+      "description": "",
+      "hostname": "http://sport.tv2.dk/"
+    },
+    {
+      "id": "2",
+      "label": "Q-BOX 02",
+      "description": "",
+      "hostname": "http://nyheder.tv2.dk",
+      "pathArgs": "/?settings=0"
+    },
+    {
+      "id": "3",
+      "label": "Q-BOX 03",
+      "description": "",
+      "hostname": "http://tv2.dk"
+    }
+  ]
 }

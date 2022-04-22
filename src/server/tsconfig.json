@@ -1,33 +1,26 @@
 {
-    "compilerOptions": {
-      "allowJs": true,
-      "allowSyntheticDefaultImports": true,
-      "jsx": "preserve",
-      "lib": [
-        "dom",
-        "es2017"
-      ],
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "noUnusedLocals": false,
-      "noUnusedParameters": false,
-      "preserveConstEnums": true,
-      "removeComments": false,
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "strict": false,
-      "target": "esnext",
-      "forceConsistentCasingInFileNames": true,
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "outDir": "../../dist",
-      "noEmit": false
-    },
-    "exclude": [
-      "node_modules"
-    ],
-    "include": [
-      "**/*.ts",
-    ]
-  }
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "preserve",
+    "lib": ["dom", "esnext"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "strict": true,
+    "target": "esnext",
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "outDir": "../../dist",
+    "noEmit": false
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts"]
+}

@@ -26,14 +26,15 @@
     "build-server": "tsc -p ./src/server",
     "build-client": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"./src/client/tsconfig.json\" webpack && cp ./src/client/index.html ./dist/client/index.html",
     "build-admin": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"./src/admin/tsconfig.json\" webpack --config webpack.admin.config.js && cp ./src/admin/index.html ./dist/admin/index.html",
-    "start": "node ./dist/server/server.js",
-    "start-dev": "node --inspect ./dist/server/server.js",
-    "start-break": "node --inspect-brk ./dist/server/server.js",
+    "start": "cross-env NODE_ENV=production node dist/server/server.js",
+    "start:dev": "cross-env NODE_ENV=development node --inspect dist/server/server.js",
+    "start:local": "cross-env NODE_ENV=local node --inspect dist/server/server.js",
     "test": "echo \"Everything is just fine.\"",
     "release": "standard-version",
     "prepareChangelog": "standard-version --prerelease"
   },
   "dependencies": {
+    "@tv2media/logger": "^1.2.2",
     "express": "4.17.1",
     "fs": "0.0.1-security",
     "moment": "2.29.1",
@@ -43,8 +44,7 @@
     "react-files": "^3.0.0-alpha.1",
     "reactstrap": "8.9.0",
     "socket.io": "4.1.1",
-    "socket.io-client": "4.1.1",
-    "winston": "3.3.3"
+    "socket.io-client": "4.1.1"
   },
   "resolutions": {
     "engine.io": "^5.2.1"

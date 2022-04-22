@@ -1,8 +1,8 @@
 import { IUser } from '../../model/usersInterface'
 import { logger } from './logger'
 
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
 
 export const saveUsersFile = (users: IUser) => {
@@ -11,7 +11,7 @@ export const saveUsersFile = (users: IUser) => {
         JSON.stringify({users: users}),
         'utf8',
         (error: any) => {
-            logger.error('Error writing users.json file: ', error)
+            logger.data(error).error('Error writing users.json file:')
         }
     )
 }

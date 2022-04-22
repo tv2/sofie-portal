@@ -9,7 +9,7 @@ export const emberLocalClient = () => {
         .then(() => client.getDirectory())
         .then(() => client.getElementByPath('0.1.0'))
         .then((matrix) => {
-            console.log('Local Matrix Connected :', matrix)
+            logger.data(matrix).debug('Local Matrix Connected:')
         })
 }
 
@@ -17,11 +17,11 @@ export const setMatrixConnection = (target: number, sourceIndex: number) => {
         client.getElementByPath('0.1.0')
         .then((matrix: any) => {
             client.matrixConnect(matrix, target, [sourceIndex])
-            console.log('Matrix Connection changed')
+            logger.debug('Matrix Connection changed')
         })
         .catch((error)=> {
-            console.log(error)
+            logger.error(error)
         })
 
-    logger.info(`EmberServer Mtx Source : ${sourceIndex} to Target : ${target}`)
+    logger.info(`EmberServer Mtx (Source: ${sourceIndex}) to (Target: ${target})`)
 }

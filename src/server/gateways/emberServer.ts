@@ -1,6 +1,4 @@
 import { logger } from '../utils/logger'
-const fs = require('fs')
-const path = require('path')
 
 //@ts-ignore
 import { EmberServer } from 'node-emberplus'
@@ -13,7 +11,7 @@ export const emberMtxServer = () => {
 
     emberServer
         .on('event', (event: any) => {
-            console.log('Ember Server Event received : ', event)
+            logger.data(event).debug('Ember Server Event received:')
         })
         .on('error', (error: any) => {
             if (
@@ -22,36 +20,16 @@ export const emberMtxServer = () => {
             ) {
                 logger.error('Ember connection not establised')
             } else {
-                logger.error('Ember connection unknown error' + error.message)
+                logger.data(error).error('Ember connection unknown error:')
             }
         })
         .on("matrix-change", info => {
-            console.log(`Client ${info.client} changed ${info.target} and ${info.sources}`);
+            logger.info(`Client ${info.client} changed ${info.target} and ${info.sources}`);
          })
     logger.info('Setting up Ember Server')
 
     emberServer
         .listen()
-        .then(() => {
-            console.log('Ember Server is listening')
-        })
-        .catch((error: Error) => {
-            console.log(error.stack)
-        })
-}
-
-const emberStateToFile = () => {
-    let json = JSON.stringify(emberServer.toJSON())
-    logger.info('Updating emberstate in file')
-    fs.writeFile(
-        path.resolve('embertree.json'),
-        json,
-        'utf8',
-        (error: Error) => {
-            if (error) {
-                console.log(error)
-                logger.error('Error writing Ember-dump file')
-            }
-        }
-    )
+        .then(() => logger.info('Ember Server is listening'))
+        .catch((error: Error) => logger.error(error))
 }

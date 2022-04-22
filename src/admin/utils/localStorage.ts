@@ -1,7 +1,5 @@
-import { IUser } from '../../model/usersInterface'
-
 export const loadUserFile = (file: any): Promise<any> => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         let fileReader = new FileReader()
 
         fileReader.readAsText(file)

@@ -1,5 +1,4 @@
 const EmberServer = require('node-emberplus').EmberServer
-const { ParameterType, FunctionArgument } = require('node-emberplus').EmberLib
 
 const targets = [
     'tgt1',

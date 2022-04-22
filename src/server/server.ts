@@ -25,7 +25,7 @@ const moment = require('moment')
 let socketClients: ISocketClient[] = []
 let settings: ISettings = settingsJson
 let users: IUser[] = usersJson.users
-logger.debug('Settings', settings)
+logger.data(settings).debug('Settings')
 
 // socket.io server
 io.on('connection', (socket: any) => {
@@ -163,10 +163,10 @@ server.listen(port)
 logger.info(`Server started at http://localhost:${port}`)
 
 server.on('connection', () => {
-    app.get('/', (req: any, res: any) => {
+    app.get('/', (_req: any, res: any) => {
         res.sendFile(path.resolve('index.html'))
     })
-    app.get('/admin', (req: any, res: any) => {
+    app.get('/admin', (_req: any, res: any) => {
         res.sendFile(path.resolve('index.html'))
     })
 })

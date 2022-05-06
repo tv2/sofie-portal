@@ -13,13 +13,15 @@ import { IMachine, ISettings } from '../model/settingsInterface'
 import { IUser, IUserAccessRights } from '../model/usersInterface'
 import { ISocketClient } from '../model/socketClientInterface'
 import * as IO from '../model/socketConstants'
-import { logger } from './utils/logger'
+import { logger as baseLogger } from './utils/logger'
 import { saveUsersFile } from './utils/storage'
 
 import { emberMtxServer } from './gateways/emberServer'
 import { emberLocalClient, setMatrixConnection } from './gateways/emberLocalClient'
 emberMtxServer()
 emberLocalClient()
+
+const logger = baseLogger.tag('server')
 
 const port: number = parseInt(process.env.PORT || '3000', 10) || 3000
 import moment from 'moment'

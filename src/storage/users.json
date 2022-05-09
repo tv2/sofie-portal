@@ -1,88 +1,88 @@
 {
-    "users": [
+  "users": [
+    {
+      "id": "afvdlyd",
+      "name": "Afv.D Lyd",
+      "accessRights": [
         {
-            "id": "afvdlyd",
-            "name": "Afv.D Lyd",
-            "accessRights": [
-                {
-                    "machineId": "1",
-                    "label": "",
-                    "path": ""
-                },
-                {
-                    "machineId": "2",
-                    "path": "/seneste",
-                    "label": "2 -To Path"
-                },
-                {
-                    "machineId": "2",
-                    "label": "",
-                    "path": ""
-                },
-                {
-                    "machineId": "3",
-                    "label": "",
-                    "path": ""
-                }
-            ]
+          "machineId": "1",
+          "label": "",
+          "path": ""
         },
         {
-            "id": "nyhedlyd",
-            "name": "Nyhederne Lyd",
-            "accessRights": [
-                {
-                    "machineId": "1",
-                    "label": "",
-                    "path": ""
-                },
-                {
-                    "machineId": "2",
-                    "label": "THIS PAGE",
-                    "path": ""
-                }
-            ]
+          "machineId": "2",
+          "path": "/seneste",
+          "label": "2 -To Path"
         },
         {
-            "id": "mcr1",
-            "name": "MCR 1",
-            "accessRights": [
-                {
-                    "machineId": "1",
-                    "label": "",
-                    "path": ""
-                },
-                {
-                    "machineId": "2",
-                    "label": "",
-                    "path": ""
-                },
-                {
-                    "machineId": "3",
-                    "label": "",
-                    "path": ""
-                }
-            ]
+          "machineId": "2",
+          "label": "",
+          "path": ""
         },
         {
-            "id": "cont1",
-            "name": "CONT 1",
-            "accessRights": [
-                {
-                    "machineId": "1",
-                    "label": "",
-                    "path": ""
-                },
-                {
-                    "machineId": "2",
-                    "label": "MY SELF",
-                    "path": ""
-                },
-                {
-                    "machineId": "3",
-                    "label": "",
-                    "path": ""
-                }
-            ]
+          "machineId": "3",
+          "label": "",
+          "path": ""
         }
-    ]
+      ]
+    },
+    {
+      "id": "nyhedlyd",
+      "name": "Nyhederne Lyd",
+      "accessRights": [
+        {
+          "machineId": "1",
+          "label": "",
+          "path": ""
+        },
+        {
+          "machineId": "2",
+          "label": "THIS PAGE",
+          "path": ""
+        }
+      ]
+    },
+    {
+      "id": "mcr1",
+      "name": "MCR 1",
+      "accessRights": [
+        {
+          "machineId": "1",
+          "label": "",
+          "path": ""
+        },
+        {
+          "machineId": "2",
+          "label": "",
+          "path": ""
+        },
+        {
+          "machineId": "3",
+          "label": "",
+          "path": ""
+        }
+      ]
+    },
+    {
+      "id": "cont1",
+      "name": "CONT 1",
+      "accessRights": [
+        {
+          "machineId": "1",
+          "label": "",
+          "path": ""
+        },
+        {
+          "machineId": "2",
+          "label": "MY SELF",
+          "path": ""
+        },
+        {
+          "machineId": "3",
+          "label": "",
+          "path": ""
+        }
+      ]
+    }
+  ]
 }

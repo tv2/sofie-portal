@@ -1,17 +1,12 @@
 import { IUser } from '../../model/usersInterface'
-import { logger } from './logger'
+import { logger as baseLogger } from './logger'
 
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
-
-export const saveUsersFile = (users: IUser) => {
-    fs.writeFile(
-        path.resolve('dist/storage', 'users.json'),
-        JSON.stringify({users: users}),
-        'utf8',
-        (error: any) => {
-            logger.error('Error writing users.json file: ', error)
-        }
-    )
+const logger = baseLogger.tag('emberServer')
+export const saveUsersFile = (users: IUser[]) => {
+  fs.writeFile(path.resolve('dist/storage', 'users.json'), JSON.stringify({ users: users }), 'utf8', (error: any) => 
+    logger.data(error).error('Error writing users.json file:')
+  )
 }

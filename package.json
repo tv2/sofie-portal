@@ -1,6 +1,6 @@
 {
   "name": "tv2-sofie-portal",
-  "version": "1.6.0",
+  "version": "1.6.0-1",
   "private": false,
   "license": "MIT",
   "author": {
@@ -22,7 +22,7 @@
     "build-server": "tsc -p ./src/server",
     "build-client": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"./src/client/tsconfig.json\" webpack && cp ./src/client/index.html ./dist/client/index.html",
     "build-admin": "cross-env NODE_ENV=production TS_NODE_PROJECT=\"./src/admin/tsconfig.json\" webpack --config webpack.admin.config.js && cp ./src/admin/index.html ./dist/admin/index.html",
-    "start": "node ./build/server/server.js",
+    "start": "node ./dist/server/server.js",
     "start-dev": "node --inspect ./dist/server/server.js",
     "start-break": "node --inspect-brk ./dist/server/server.js",
     "release": "standard-version",

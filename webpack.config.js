@@ -19,6 +19,6 @@ module.exports = {
     },
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'build/client'),
+        path: path.resolve(__dirname, 'dist/client'),
     },
 }

@@ -1,5 +1,19 @@
 body {
   background-color: black;
+  height: 100vh;
+  max-height: 100vh;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#root,
+.main,
+.container {
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 .container {
@@ -16,8 +30,11 @@ body {
 .main {
   flex: 1;
   display: flex;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
   align-items: center;
 }
 

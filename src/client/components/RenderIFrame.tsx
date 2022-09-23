@@ -6,9 +6,9 @@ interface IRenderIFrameProps {
   src: string
 }
 
-const content_size = {
+const contentSize = {
   width: 1920,
-  height: 1200,
+  height: 1080,
 }
 
 const RenderIFrame = (props: IRenderIFrameProps) => {
@@ -22,16 +22,17 @@ const RenderIFrame = (props: IRenderIFrameProps) => {
       const size = containerRef.current?.getBoundingClientRect()
       const maxWidth = size?.width || window.innerWidth
       const maxHeight = size?.height || window.innerHeight
-      const scaleX = maxWidth / content_size.width
-      const scaleY = maxHeight / content_size.height
-      const ratio = content_size.width / content_size.height
+      const scaleX = Math.min(1, maxWidth / contentSize.width)
+      const scaleY = Math.min(1, maxHeight / contentSize.height)
+      const contentRatio = contentSize.width / contentSize.height
+      const containerRatio = maxWidth / maxHeight
       if (scaleX < scaleY) {
         setScale(scaleX)
         setWidth(maxWidth / scaleX)
-        setHeight(maxWidth / (ratio * scaleX))
+        setHeight(containerRatio < contentRatio ? maxHeight / scaleX : maxWidth / (contentRatio * scaleX))
       } else {
         setScale(scaleY)
-        setWidth(maxHeight * ratio / scaleY)
+        setWidth(containerRatio > contentRatio ? maxWidth / scaleY : maxHeight * contentRatio / scaleY)
         setHeight(maxHeight / scaleY)
       }
     }

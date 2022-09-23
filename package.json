@@ -46,7 +46,8 @@
     "react-files": "^3.0.0-alpha.1",
     "reactstrap": "8.9.0",
     "socket.io": "4.1.1",
-    "socket.io-client": "4.1.1"
+    "socket.io-client": "4.1.1",
+    "cross-env": "^7.0.3"
   },
   "resolutions": {
     "engine.io": "^5.2.1",
@@ -61,7 +62,6 @@
     "@types/source-map": "0.5.2",
     "@types/webpack": "^4.41.26",
     "@types/webpack-dev-server": "^3.11.1",
-    "cross-env": "^7.0.3",
     "css-loader": "^5.2.4",
     "html-webpack-plugin": "^5.3.1",
     "nodemon": "^2.0.7",

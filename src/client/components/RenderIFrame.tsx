@@ -29,10 +29,10 @@ const RenderIFrame = (props: IRenderIFrameProps) => {
       if (scaleX < scaleY) {
         setScale(scaleX)
         setWidth(maxWidth / scaleX)
-        setHeight(containerRatio < contentRatio ? maxHeight / scaleX : maxWidth / (contentRatio * scaleX))
+        setHeight((containerRatio < contentRatio ? maxHeight : maxWidth / contentRatio) / scaleX)
       } else {
         setScale(scaleY)
-        setWidth(containerRatio > contentRatio ? maxWidth / scaleY : maxHeight * contentRatio / scaleY)
+        setWidth((containerRatio > contentRatio ? maxWidth : maxHeight * contentRatio) / scaleY)
         setHeight(maxHeight / scaleY)
       }
     }

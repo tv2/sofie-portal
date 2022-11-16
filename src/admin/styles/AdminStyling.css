@@ -1,0 +1,126 @@
+#root {
+    display: flex;
+}
+body {
+    background-color: #171717;
+}
+
+.h2 {
+    font-size: 32px;
+}
+
+/*Styling for the user navigation*/
+.usernavigation-container, .userdetails-container {
+    color: white;
+    padding: 0;
+    margin: 80px 135px 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: calc(100vh - 80px);
+}
+
+.usernavigation-container > .header-container, .userdetails-container > .header-container  {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.usernavigation-container > .header-container > button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.usernavigation-container > .button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.usernavigation-container > .button-container > .user-buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+.usernavigation-container > .button-container > .user-buttons > button, .userdetails-container > .header-container > button{
+    height: 48px;
+    border: solid 1px #ffffff;
+    border-radius: 5px;
+    background-color: transparent;
+    margin-bottom: 32px;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.usernavigation-container > .button-container > .user-buttons > button:active, .userdetails-container > .header-container > button:active{
+    background-color: #ffffff;
+    color: #171717;
+    stroke: #171717;
+}
+
+.usernavigation-container > .button-container > .restart-button{
+    height: 48px;
+    border-radius: 5px;
+    border: none;
+    background-color: #DC3545;
+    margin-bottom: 80px;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*Styling for the user navigation*/
+.userdetails-container {
+    width: 80%;
+    margin: 80px 135px 0 0;
+}
+.userdetails-container > .header-container > button > svg{
+    padding-right: 8px;
+}
+
+.userdetails-container > .user-information {
+    background-color: #2F3138;
+    border-radius: 16px;
+    padding: 24px;
+}
+.userdetails-container > .user-information > h3 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.userdetails-container > .user-information > .information-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.userdetails-container > .user-information > .information-container > .id-container > label, .label-container > label, .target-container > label {
+    font-size: 24px;
+    padding-right: 16px;
+}
+
+.userdetails-container > .user-information > .information-container > .id-container > input[type="text"], .label-container > input[type="text"], .target-container > input[type="text"] {
+    height: 40px;
+    max-width: 220px;
+    font-size: 24px;
+    border: solid 1px #ffffff;
+    border-radius: 5px;
+    background-color: transparent;
+    color: #ffffff;
+}
+.userdetails-container > .user-information > .information-container > .id-container > input[type="text"]:focus, .label-container > input[type="text"]:focus, .target-container > input[type="text"]:focus {
+    border: solid 1px #ffffff;
+    background-color: #171717;
+    outline-width: 0;
+}

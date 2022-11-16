@@ -251,7 +251,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* refactor interface models fix index.ts ([29eec77](https://github.com/olzzon/tv2-sofie-portal/commit/29eec7700fcc141e40448987c05dcfddb696f149))
+* refactor interface models fix index.tsx ([29eec77](https://github.com/olzzon/tv2-sofie-portal/commit/29eec7700fcc141e40448987c05dcfddb696f149))
 * server.ts leaveRoom only left if it was empty ([a113e9e](https://github.com/olzzon/tv2-sofie-portal/commit/a113e9ebc7ff3d120ec0472b47fb9b42e120c61b))
 * use settings webpages to iterate over rooms. As socket.rooms er return some id instead of roomname ([019a0eb](https://github.com/olzzon/tv2-sofie-portal/commit/019a0eb2c3cd39b0778967437fb2554b3f219f0f))
 * use webpage.id.toString() as room ([5a2a58c](https://github.com/olzzon/tv2-sofie-portal/commit/5a2a58cd7e8a3ef9261c8c62209253488169e5a0))

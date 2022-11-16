@@ -1,10 +1,12 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import AdminPage from './components/adminPage'
+import UserNavigation from './components/userNavigation'
+import UserDetails from './components/userDetails'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <AdminPage />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <UserNavigation />
+        <UserDetails />
+    </React.StrictMode>,
+    document.getElementById('root')
 )

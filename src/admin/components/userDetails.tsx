@@ -17,8 +17,8 @@ import { Button } from 'reactstrap'
 
 const UserDetails = () => {
     return (
-        <div className={'userdetails-container'}>
-            <div className='header-container'>
+        <section className={'userdetails-container'}>
+            <section className='header-container'>
                 <h2>User details</h2>
                 <button>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19.262" height="22.303" viewBox="0 0 19.262 22.303">
@@ -26,8 +26,8 @@ const UserDetails = () => {
                     </svg>
                     Clone user access
                 </button>
-            </div>
-            <div className='user-information'>
+            </section>
+            <section className='user-information'>
                 <h3>User Information</h3>
                 <div className='information-container'>
                     <div className='id-container'>
@@ -43,8 +43,8 @@ const UserDetails = () => {
                         <input type={'text'}/>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </section>
     )
 
 }

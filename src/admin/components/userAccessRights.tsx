@@ -12,25 +12,39 @@ const socket = io({ extraHeaders: { userurl: userUrlId } })
 import { IMachine } from '../../model/settingsInterface'
 import { IUser, IUserAccessRights } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
-import { loadUserFile } from '../utils/localStorage'
 import { Button } from 'reactstrap'
 
 const UserAccessRights = () => {
 
-    const [showGroup, setShowGroup] = useState<boolean>(false);
-
-    const createGroup = () => {
-        setShowGroup(!showGroup);
-        console.log('ny gruppe');
+    const [isActive, setActive] = useState(false);
+    const ToggleClass = () => {
+        setActive(!isActive);
     };
+
+    type RowData = {
+        message: string;
+    }
+
+    interface IState {
+        rows: RowData[];
+    }
+
+    const [state, setState] = useState<IState>({rows: []});
+
+    const addRow = () => {
+        setState({
+            rows: [...state.rows, { message: "Q1" }]
+        })
+    }
+
+    const { rows } = state;
 
     return (
         <section className={'useraccessrights-container'}>
             <section className='header-container'>
                 <h3>Access rights</h3>
                 <button
-                    className={showGroup ? "active" : undefined}
-                    onClick={(): void => createGroup()}
+                    onClick={ToggleClass}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
                         <g id="Group_73" data-name="Group 73" transform="translate(1 1)">
@@ -41,7 +55,7 @@ const UserAccessRights = () => {
                     Create group
                 </button>
             </section>
-            <table>
+            <table className={isActive ? "active" : undefined} >
                 <tr>
                     <th>
                         <div className='group-name'>
@@ -53,7 +67,9 @@ const UserAccessRights = () => {
                     <th><h4>Anonymous</h4></th>
                     <th><h4>Path and Args</h4></th>
                     <th>
-                        <button>
+                        <button
+                            onClick={addRow}
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
                                 <g id="Group_73" data-name="Group 73" transform="translate(1 1)">
                                     <path id="Path_7" data-name="Path 7" d="M0,0V8" transform="translate(4)" fill="#fff" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
@@ -64,6 +80,7 @@ const UserAccessRights = () => {
                         </button>
                     </th>
                 </tr>
+                { rows.map(element => (
                 <tr>
                     <td>
                         <select name="machine" id="machine">
@@ -78,6 +95,8 @@ const UserAccessRights = () => {
                     <td><input type={'text'} /></td>
                     <td></td>
                 </tr>
+                ))
+                }
             </table>
         </section>
     )

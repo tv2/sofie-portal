@@ -12,7 +12,6 @@ const socket = io({ extraHeaders: { userurl: userUrlId } })
 import { IMachine } from '../../model/settingsInterface'
 import { IUser, IUserAccessRights } from '../../model/usersInterface'
 import * as IO from '../../model/socketConstants'
-import { loadUserFile } from '../utils/localStorage'
 import { Button } from 'reactstrap'
 
 const UserDetails = () => {

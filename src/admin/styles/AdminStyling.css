@@ -1,3 +1,5 @@
+@import "../styles/typography.scss";
+@import "../styles/colors.scss";
 #root {
     display: flex;
     color: white;
@@ -150,6 +152,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     margin-top: 40px;
+    width: 100%;
 }
 .userdetails-container > .user-information > .information-container > *{
     display: flex;
@@ -159,16 +162,14 @@ body {
 
 .userdetails-container > .user-information > .information-container > .id-container > label,
 .label-container > label, .target-container > label {
-    font-size: 16px;
+    font-size: 24px;
     padding-right: 16px;
-    font-weight: bold;
 }
 
 .userdetails-container > .user-information > .information-container > .id-container > input[type="text"],
 .label-container > input[type="text"],
 .target-container > input[type="text"] {
     height: 40px;
-    max-width: 80%;
     font-size: 16px;
     border: solid 1px #171717;
     border-radius: 5px;
@@ -200,7 +201,8 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 24px;
+    padding: 40px;
+    margin: 0;
 }
 
 .useraccessrights-container > .header-container > button {
@@ -223,6 +225,10 @@ body {
 }
 
 .useraccessrights-container > table {
+    display: none;
+}
+
+.useraccessrights-container > .active {
     display: flex;
     flex-direction: column;
     background-color: #44464D;
@@ -234,6 +240,10 @@ body {
     flex-direction: row;
     align-items: center;
     padding: 24px;
+}
+
+.useraccessrights-container > table > :nth-child(odd) {
+   background-color: #212121;
 }
 
 .useraccessrights-container > table > :first-child  {
@@ -282,7 +292,7 @@ body {
     border-radius: 5px;
     font-size: 16px;
     color: #ffffff;
-    padding: 8px 24px;
+    padding: 20px 24px;
     display: flex;
     justify-content: center;
     align-items: center;

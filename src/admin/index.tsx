@@ -7,10 +7,10 @@ import UserAccessRights from './components/userAccessRights'
 ReactDOM.render(
     <React.StrictMode>
         <UserNavigation />
-        <section className='user-container'>
+        <main>
             <UserDetails />
             <UserAccessRights />
-        </section>
+        </main>
     </React.StrictMode>,
     document.getElementById('root')
 )

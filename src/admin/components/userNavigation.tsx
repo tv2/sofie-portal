@@ -1,4 +1,4 @@
-import '../styles/AdminStyling.css'
+import '../styles/AdminStyling.scss'
 import Menu from "./Menu";
 
 import React, { useState, useEffect } from 'react'
@@ -12,41 +12,24 @@ const socket = io({ extraHeaders: { userurl: userUrlId } })
 
 const UserNavigation = () => {
     return (
-        <section className={'usernavigation-container'}>
-            <section className='header-container'>
+        <section className={'usernavigation'}>
+            <section className='usernavigation__header'>
                 <h2>Users</h2>
                 <Menu />
             </section>
-            <section className='button-container'>
-                <div className='user-buttons'>
-                <button
-                    key={1}
-                    onClick={() => {
-                        console.log("test")
-                    }}
+            <section className='usernavigation__buttons'>
+                <div className='usernavigation__userbuttons'>
+                    <button
+                        className={'usernavigation__button'}
                     >
                     name on user
-                </button>
-
-                <button
-                    key={1}
-                    onClick={() => {
-                        console.log("test")
-                    }}
-                >
-                    name on user
-                </button>
-
-                <button
-                    key={1}
-                    onClick={() => {
-                        console.log("test")
-                    }}
-                >
-                    name on user
-                </button>
+                    </button>
                 </div>
-                <button className={'restart-button'}> Restart server</button>
+                <button
+                    className={'usernavigation__button--restart'}
+                >
+                    Restart server
+                </button>
             </section>
         </section>
     )

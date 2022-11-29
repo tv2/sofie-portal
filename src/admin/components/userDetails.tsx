@@ -1,4 +1,4 @@
-import '../styles/AdminStyling.css'
+import '../styles/AdminStyling.scss'
 
 import React, { useState, useEffect } from 'react'
 //@ts-ignore

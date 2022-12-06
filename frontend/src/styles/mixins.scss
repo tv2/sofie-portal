@@ -1,0 +1,14 @@
+@mixin standard_button {
+  height: 50px;
+  background: transparent;
+  border-radius: 8px;
+  border: 1px solid $contrast-color;
+  color: $contrast-color;
+  margin-top: 24px;
+  cursor: pointer;
+  font-size: 1rem;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}

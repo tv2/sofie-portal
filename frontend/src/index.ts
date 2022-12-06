@@ -8,6 +8,6 @@ function main() {
     return
   }
   const application = ReactDOM.createRoot(mountPoint)
-  application.render (React.createElement(Application))
+  application.render(React.createElement(Application))
 }
 main()

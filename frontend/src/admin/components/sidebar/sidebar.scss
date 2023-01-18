@@ -1,0 +1,9 @@
+@import "src/styles/main.scss";
+@import "src/styles/mixins.scss";
+
+section {
+  grid-area: 1 / 1 / 6 / 2;
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+}

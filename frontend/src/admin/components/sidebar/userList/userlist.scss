@@ -1,18 +1,16 @@
-@import "src/styles/main.scss";
-@import "src/styles/mixins.scss";
+@import "src/styles/main";
+@import "src/styles/mixins";
 
-.userlist {
+.c-userlist {
   display: flex;
   flex-direction: column;
-  width: 20%;
-  height: 90%;
 
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    &__button {
+    button {
       background: none;
       border: none;
       cursor: pointer;
@@ -21,29 +19,16 @@
 
   &__buttons {
     padding: 5px;
-    height: 80vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
-    &__userbutton {
-      display: flex;
-      flex-direction: column;
 
       button {
         @include standard_button;
       }
 
-      .true {
+      .active {
         background-color: $contrast-color;
         color: $background-color;
       }
-    }
-
-    &--restart {
-      @include standard_button;
-      background-color: $alert-color;
-      border: 1px solid $alert-color;
-    }
   }
 }

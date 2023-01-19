@@ -10,7 +10,7 @@ interface UserListItemProps {
 export default function UserListItem(props: UserListItemProps) {
     return (
         <button
-            className={`${props.isSelected  && 'active'}`}
+            className={`${props.isSelected  && 'selected'}`}
             onClick={() => props.onClick()}
         >
             {props.user.name}

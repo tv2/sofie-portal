@@ -26,7 +26,7 @@
         @include standard_button;
       }
 
-      .active {
+      .selected {
         background-color: $contrast-color;
         color: $background-color;
       }

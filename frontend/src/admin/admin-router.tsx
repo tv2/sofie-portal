@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
 import AdminPage from "./adminPage";
 
 enum AdminRoute {
@@ -6,6 +6,7 @@ enum AdminRoute {
   HOME = "/",
   PAGE_NOT_FOUND = "/*",
 }
+
 export function AdminRouter() {
   return (
      <Routes>

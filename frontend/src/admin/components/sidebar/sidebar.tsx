@@ -1,13 +1,13 @@
 import React from "react";
 import UserList from "./userList/userList";
-import ResetButton from "./resetButton/resetButton";
-import './sidebar.scss'
+import Restart from "./restart/restart";
+import './sidebar.scss';
 
 export default function Sidebar() {
     return (
         <section>
             <UserList/>
-            <ResetButton/>
+            <Restart/>
         </section>
     )
 }

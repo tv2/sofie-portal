@@ -1,7 +1,7 @@
 @import "src/styles/main";
 @import "src/styles/mixins";
 
-.c-restart-button {
+.c-restart {
   @include standard_button;
   background-color: $alert-color;
   border: 1px solid $alert-color;

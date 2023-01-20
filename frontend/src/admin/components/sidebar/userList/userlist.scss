@@ -1,7 +1,6 @@
-@import "src/styles/main";
-@import "src/styles/mixins";
+@import "src/styles/main.scss";
 
-.c-userlist {
+.c-user-list {
   display: flex;
   flex-direction: column;
 
@@ -9,22 +8,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    button {
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
   }
 
-  &__buttons {
-    padding: 5px;
+  &__items {
     display: flex;
     flex-direction: column;
-
-      button {
-        @include standard_button;
-      }
 
       .selected {
         background-color: $contrast-color;

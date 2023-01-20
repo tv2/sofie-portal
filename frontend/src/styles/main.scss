@@ -7,17 +7,11 @@ $alert-color: #DC3545;
 $success-color: #28A745;
 
 html {
-  background-color: $background-color;
-  color: $contrast-color;
-  font-family: Helvetica Neue, sans-serif;
-  font-size: 16px;
   height: 100%;
-  position: relative;
+  margin: 0;
 
   body {
-    height: 100%;
-    position: relative;
-    margin: 40px;
+    margin: 0;
 
     .app {
       display: grid;
@@ -25,7 +19,14 @@ html {
       grid-template-rows: repeat(5, 1fr);
       grid-column-gap: 24px;
       grid-row-gap: 24px;
-      height: 100%;
+      padding: 40px;
+      background-color: $background-color;
+      color: $contrast-color;
+      font-family: Helvetica Neue, sans-serif;
+      font-size: 16px;
+      height: 100vh;
+      position: relative;
+      box-sizing: border-box;
     }
   }
 }
@@ -48,4 +49,25 @@ h3 {
 p {
   font-size: 1rem;
   margin: 0;
+}
+
+button {
+  height: 50px;
+  width: 100%;
+  background: transparent;
+  border-radius: 8px;
+  border: 2px solid $contrast-color;
+  color: $contrast-color;
+  margin-top: 24px;
+  cursor: pointer;
+  font-size: 1.125rem;
+  transition: 0.3s;
+}
+
+.c-icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: auto;
 }

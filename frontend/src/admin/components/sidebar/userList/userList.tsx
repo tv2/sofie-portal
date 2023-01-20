@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import Users from "../../../users.json";
 import {User} from "../../../models/user";
-import MenuIcon from "./menuIcon";
 import UserListItem from "./userListItem";
+import DropdownMenu from "../dropdown/dropdownMenu";
 import './userlist.scss';
 
 export default function UserList() {
@@ -11,9 +11,7 @@ export default function UserList() {
         <section className={"c-userlist"}>
             <div className="c-userlist__header">
                 <h2>Users</h2>
-                <button>
-                    <MenuIcon/>
-                </button>
+                <DropdownMenu/>
             </div>
             <div className="c-userlist__buttons">
                 {Users.users.map((user) => (

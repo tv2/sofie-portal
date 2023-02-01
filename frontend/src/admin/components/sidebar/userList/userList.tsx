@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import Users from "../../../users.json";
 import {User} from "../../../models/user";
-import MenuIcon from "./menuIcon";
 import UserListItem from "./userListItem";
-import './userlist.scss';
+import IconButton from "./IconButton";
+import "./userlist.scss";
 
 export default function UserList() {
     const [selectedUser, setSelectedUser] = useState<User>();
@@ -11,9 +11,7 @@ export default function UserList() {
         <section className="c-user-list">
             <div className="c-user-list__header">
                 <h2>Users</h2>
-                <button className="c-icon-button">
-                    <MenuIcon/>
-                </button>
+                <IconButton/>
             </div>
             <div className="c-user-list__items">
                 {Users.users.map((user) => (

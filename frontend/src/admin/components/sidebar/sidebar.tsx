@@ -1,13 +1,13 @@
 import React from "react";
 import UserList from "./userList/userList";
-import RestartServer from "./restart/restartServer";
-import './sidebar.scss';
+import RestartServerButton from "./restart/restartServerButton";
+import "./sidebar.scss";
 
 export default function Sidebar() {
     return (
-        <section className={'c-sidebar'}>
+        <section className={"c-sidebar"}>
             <UserList/>
-            <RestartServer/>
+            <RestartServerButton/>
         </section>
     )
 }

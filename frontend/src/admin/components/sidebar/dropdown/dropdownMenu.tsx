@@ -1,13 +1,10 @@
 import React, {useState} from "react";
 import MenuIcon from "./menuIcon";
-import './dropdownMenu.scss';
 import Dropdown from "./dropdown";
+import "./dropdownMenu.scss";
 
 export default function DropdownMenu() {
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
-    const actions = () => {
-        return ["Download user", "Upload user", "Add user"];
-    };
 
     const toggleDropDown = () => {
         setShowDropDown(!showDropDown);
@@ -20,19 +17,15 @@ export default function DropdownMenu() {
     };
 
     return (
-        <div className={'c-menu'}>
+        <div className="c-menu">
             <button
-                className={showDropDown ?"c-menu__item--active" : 'c-menu__item'}
+                className={showDropDown ?"c-menu__button--active" : "c-menu__button"}
                 onClick={(): void => toggleDropDown()}
                 onBlur={(e: React.FocusEvent<HTMLButtonElement>): void => dismissHandler(e)}
             >
                 <MenuIcon/>
                 {showDropDown && (
-                    <Dropdown
-                        actions={actions()}
-                        showDropDown={false}
-                        toggleDropDown={(): void => toggleDropDown()}
-                    />
+                    <Dropdown/>
                 )}
             </button>
         </div>

@@ -1,36 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from "react";
+import Actions from "../../../actions.json";
+import DropdownItem from "./dropdownItem";
 
-interface DropDownProps {
-    actions: string[],
-    showDropDown: boolean,
-    toggleDropDown: Function
-}
-
-export default function Dropdown(props: DropDownProps) {
-    const [showDropDown, setShowDropDown] = useState<boolean>(false);
-
-    const onClickHandler = () => {
-        //Needs action
-    };
-
-    useEffect(() => {
-        setShowDropDown(showDropDown);
-    }, [showDropDown]);
-
+export default function Dropdown() {
     return (
-        <div>
-            {props.actions.map(
-                (action: string, index: number) => {
-                    return (
-                        <p
-                            key={index}
-                            onClick={onClickHandler}
-                        >
-                            {action}
-                        </p>
-                    );
-                }
-            )}
+        <div className="c-dropdown">
+            {Actions.actions.map((action) => (
+                <DropdownItem
+                    action={action}
+                    key={action.id}
+                />
+            ))}
         </div>
     );
 }

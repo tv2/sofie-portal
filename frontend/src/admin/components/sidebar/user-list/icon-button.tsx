@@ -1,6 +1,6 @@
 import React from "react";
-import MenuIcon from "./menuIcon";
-import "./iconbutton.scss";
+import MenuIcon from "./menu-icon";
+import "./icon-button.scss";
 
 export default function IconButton() {
     return (

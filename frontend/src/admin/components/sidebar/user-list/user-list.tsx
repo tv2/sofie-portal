@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import Users from "../../../users.json";
 import {User} from "../../../models/user";
-import UserListItem from "./userListItem";
-import IconButton from "./IconButton";
-import "./userlist.scss";
+import UserListItem from "./user-list-item";
+import IconButton from "./icon-button";
+import "./user-list.scss";
 
 export default function UserList() {
     const [selectedUser, setSelectedUser] = useState<User>();
@@ -20,6 +20,7 @@ export default function UserList() {
                         key={user.id}
                         onClick={() => setSelectedUser(user)}
                         isSelected={user === selectedUser}
+                        label={user.name}
                     />
                 ))}
             </div>

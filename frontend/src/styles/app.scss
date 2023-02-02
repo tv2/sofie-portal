@@ -1,0 +1,17 @@
+@import "src/styles/main.scss";
+
+.app {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+  padding: 40px;
+  background-color: $background-color;
+  color: $contrast-color;
+  font-family: Helvetica Neue, sans-serif;
+  font-size: 16px;
+  height: 100vh;
+  position: relative;
+  box-sizing: border-box;
+}

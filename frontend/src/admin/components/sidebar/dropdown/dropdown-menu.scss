@@ -1,0 +1,22 @@
+@import "src/styles/main";
+
+.c-dropdown-menu {
+
+  &__button{
+    .c-dropdown-menu-items {
+      display: none;
+    }
+
+    &--active {
+      .c-dropdown-menu-items {
+        position: absolute;
+        visibility: visible;
+        background-color: $card-color;
+        border-radius: 5px;
+        min-width: 150px;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+      }
+    }
+  }
+}

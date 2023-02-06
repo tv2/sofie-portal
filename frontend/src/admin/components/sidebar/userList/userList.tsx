@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Users from "../../../users.json";
 import {User} from "../../../models/user";
 import UserListItem from "./userListItem";
-import DropdownMenu from "../dropdown/dropdownMenu";
+import DropdownMenu from "../dropdown/dropdown-menu";
 import './userlist.scss';
 
 export default function UserList() {

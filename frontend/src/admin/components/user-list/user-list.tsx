@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Users from "../../../users.json";
-import {User} from "../../../models/user";
+import Users from "../../users.json";
+import {User} from "../../models/user";
 import UserListItem from "./user-list-item";
 import IconButton from "./icon-button";
 import "./user-list.scss";
@@ -16,11 +16,10 @@ export default function UserList() {
             <div className="c-user-list__items">
                 {Users.users.map((user) => (
                     <UserListItem
-                        user={user}
                         key={user.id}
+                        user={user}
                         onClick={() => setSelectedUser(user)}
                         isSelected={user === selectedUser}
-                        label={user.name}
                     />
                 ))}
             </div>

@@ -1,8 +1,13 @@
 import React from "react";
-import Sidebar from "./components/sidebar/sidebar";
+import UserList from "./components/user-list/user-list";
+import RestartServerButton from "./components/restart/restart-server-button";
+import "./admin-page.scss";
 
 export default function AdminPage() {
     return (
-        <Sidebar/>
+        <div className="c-admin-page">
+            <UserList/>
+            <RestartServerButton/>
+        </div>
     )
 }

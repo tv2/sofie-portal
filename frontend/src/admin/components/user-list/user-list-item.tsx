@@ -1,8 +1,9 @@
 import React from "react";
 import "./user-list-item.scss";
+import {User} from "../../models/user";
 
 interface UserListItemProps {
-    label: string,
+    user: User,
     onClick: () => void,
     isSelected: boolean
 }
@@ -13,7 +14,7 @@ export default function UserListItem(props: UserListItemProps) {
             className={`c-user-list-item ${ props.isSelected ? "selected" : ""}`}
             onClick={() => props.onClick()}
         >
-            {props.label}
+            {props.user.name}
         </button>
     )
 }

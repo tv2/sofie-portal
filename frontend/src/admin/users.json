@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "test",
+      "name": "Test - Afv.D Lyd"
+    },
+    {
+      "id": "test2",
+      "name": "Test 2 - Afv.D Lyd"
+    },
+    {
+      "id": "test3",
+      "name": "Test 3 - Afv.D Lyd"
+    },
+    {
+      "id": "test4",
+      "name": "Test 4 - Afv.D Lyd"
+    }
+  ]
+}

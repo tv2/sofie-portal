@@ -1,4 +1,49 @@
-body, html {
-  background-color: deeppink;
+$background-color: #171717;
+$card-color: #2F3138;
+$table-color: #212121;
+$border-color: #737784;
+$contrast-color: #FFFFFF;
+$alert-color: #DC3545;
+$success-color: #28A745;
+
+html {
   height: 100%;
+  margin: 0;
+
+  body {
+    margin: 0;
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin: 0;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    button {
+      height: 50px;
+      width: 100%;
+      background: transparent;
+      border-radius: 8px;
+      border: 2px solid $contrast-color;
+      color: $contrast-color;
+      margin-top: 24px;
+      cursor: pointer;
+      font-size: 1.125rem;
+      transition: 0.3s;
+    }
+  }
 }

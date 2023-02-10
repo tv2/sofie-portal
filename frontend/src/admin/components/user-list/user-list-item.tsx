@@ -1,5 +1,6 @@
 import React from "react";
-import {User} from "../../../models/user";
+import "./user-list-item.scss";
+import {User} from "../../models/user";
 
 interface UserListItemProps {
     user: User,
@@ -10,7 +11,7 @@ interface UserListItemProps {
 export default function UserListItem(props: UserListItemProps) {
     return (
         <button
-            className={`${props.isSelected  && 'selected'}`}
+            className={`c-user-list-item ${ props.isSelected ? "selected" : ""}`}
             onClick={() => props.onClick()}
         >
             {props.user.name}

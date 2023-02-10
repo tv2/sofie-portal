@@ -1,0 +1,8 @@
+@import "../../../styles/main";
+
+.c-restart-server-button {
+  background-color: $alert-color;
+  border: 1px solid $alert-color;
+  margin: 0;
+  grid-area: 5 / 1 / 6 / 2;
+}

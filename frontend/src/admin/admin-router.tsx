@@ -1,5 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
-import AdminPage from "./adminPage";
+import { Route, Routes } from "react-router-dom";
+import AdminPage from "./admin-page";
 
 enum AdminRoute {
   EDIT = "/edit",

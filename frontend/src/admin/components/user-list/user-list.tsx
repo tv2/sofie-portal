@@ -1,10 +1,14 @@
 import {useState} from "react";
 import {User} from "../../models/user";
-import DropdownMenu from "../sidebar/dropdown/dropdown-menu";
-import UserListItem from "./user-list-item";
+import DropdownMenu from "../dropdown-menu/dropdown-menu";
+import UserListItem from "../user-list-item/user-list-item";
+import "./user-list.scss";
 
+interface UserListProps {
+    users: User[]
+}
 
-export default function UserList() {
+export default function UserList(props: UserListProps) {
     const [selectedUser, setSelectedUser] = useState<User>();
     return (
         <section className="c-user-list">
@@ -13,7 +17,7 @@ export default function UserList() {
                 <DropdownMenu/>
             </div>
             <div className="c-user-list__items">
-                {Users.users.map((user) => (
+                {props.users.map((user) => (
                     <UserListItem
                         key={user.id}
                         user={user}

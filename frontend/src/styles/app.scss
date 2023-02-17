@@ -1,6 +1,7 @@
 @import "src/styles/main.scss";
 
 .app {
-  height: 100%;
+  max-height: 100%;
   margin: 0;
+  overflow: hidden;
 }

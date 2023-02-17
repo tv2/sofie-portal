@@ -14,10 +14,15 @@ export default function UserList(props: UserListProps) {
         <section className="c-user-list">
             <div className="c-user-list__header">
                 <h2>Users</h2>
-                <DropdownMenu/>
+                <DropdownMenu
+                    items={["Download user", "Upload user", "Add user"]}
+                    onClick={(item: string) => {
+                        console.log(item);
+                    }}
+                />
             </div>
             <div className="c-user-list__items">
-                {props.users.map((user) => (
+                {props.users.map((user: User) => (
                     <UserListItem
                         key={user.id}
                         user={user}

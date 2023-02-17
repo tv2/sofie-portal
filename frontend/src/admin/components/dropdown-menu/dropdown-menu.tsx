@@ -1,9 +1,14 @@
 import React, {useState} from "react";
 import DropdownMenuIcon from "../dropdown-menu-icon/dropdown-menu-icon";
-import DropdownMenuItem from "../dropdown-menu-item/dropdown-menu-item";
 import "./dropdown-menu.scss";
 
-export default function DropdownMenu() {
+interface DropdownMenuProps{
+    items: string[]
+    onClick: (value: string) => void
+}
+
+export default function DropdownMenu( {items, onClick}: DropdownMenuProps) {
+
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
     const toggleDropdown = () => {
@@ -25,9 +30,11 @@ export default function DropdownMenu() {
                 <DropdownMenuIcon/>
             </button>
             <div className="c-dropdown-menu-items">
-                <DropdownMenuItem id="download" name="Download user"/>
-                <DropdownMenuItem id="upload" name="Upload user"/>
-                <DropdownMenuItem id="add" name="Add user"/>
+                {items.map((item, index) => {
+                    return(
+                        <span key={index} onClick={() => onClick(item)}>{item}</span>
+                    )
+                })}
             </div>
         </div>
     )

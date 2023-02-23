@@ -2,39 +2,35 @@ import React, {useState} from "react";
 import DropdownMenuIcon from "../dropdown-menu-icon/dropdown-menu-icon";
 import "./dropdown-menu.scss";
 
-interface DropdownMenuProps{
-    items: string[]
-    onClick: (value: string) => void
+interface DropdownMenuProps {
+    children: React.ReactNode
 }
 
-export default function DropdownMenu( {items, onClick}: DropdownMenuProps) {
+export default function DropdownMenu( {children}: DropdownMenuProps) {
+    const [showDropdown, setShowDropdown] = useState(false);
 
-    const [showDropdown, setShowDropdown] = useState<boolean>(false);
-
-    const toggleDropdown = () => {
+    function toggleDropdown() {
         setShowDropdown(!showDropdown);
-    };
+    }
 
-    const hideDropdown = (event: React.FocusEvent<HTMLButtonElement>): void => {
+    function hideDropdown(event: React.FocusEvent<HTMLButtonElement>): void {
         if (event.currentTarget === event.target) {
             setShowDropdown(false);
         }
-    };
+    }
 
     return (
-        <div className={showDropdown ?"c-dropdown-menu--active" : "c-dropdown-menu"}>
+        <div className={showDropdown
+            ? "c-dropdown-menu--active"
+            : "c-dropdown-menu"}>
             <button
-                onClick={() => toggleDropdown()}
+                onClick={toggleDropdown}
                 onBlur={(e: React.FocusEvent<HTMLButtonElement>): void => hideDropdown(e)}
             >
                 <DropdownMenuIcon/>
             </button>
             <div className="c-dropdown-menu-items">
-                {items.map((item, index) => {
-                    return(
-                        <span key={index} onClick={() => onClick(item)}>{item}</span>
-                    )
-                })}
+                {children}
             </div>
         </div>
     )

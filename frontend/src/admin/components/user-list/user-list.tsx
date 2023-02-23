@@ -10,16 +10,27 @@ interface UserListProps {
 
 export default function UserList(props: UserListProps) {
     const [selectedUser, setSelectedUser] = useState<User>();
+
+    function downloadUser() {
+        alert("Download");
+    }
+    function updateUser() {
+        alert("Update");
+    }
+
+    function addUser() {
+        alert("Add");
+    }
+
     return (
         <section className="c-user-list">
             <div className="c-user-list__header">
                 <h2>Users</h2>
-                <DropdownMenu
-                    items={["Download user", "Upload user", "Add user"]}
-                    onClick={(item: string) => {
-                        console.log(item);
-                    }}
-                />
+                <DropdownMenu>
+                    <button onClick={downloadUser}>Download user</button>
+                    <button onClick={updateUser}>Update user</button>
+                    <button onClick={addUser}>Add user</button>
+                </DropdownMenu>
             </div>
             <div className="c-user-list__items">
                 {props.users.map((user: User) => (

@@ -24,42 +24,21 @@
 
     .c-dropdown-menu-items {
       position: absolute;
-      display: flex;
-      flex-direction: column;
       background-color: $card-color;
       border-radius: 5px;
-      min-width: 150px;
+      min-width: 180px;
       box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
       overflow-y: auto;
       max-height: 300px;
 
-      span {
+      button {
         cursor: pointer;
+        text-align: left;
         padding: 1rem;
-        border-top: lighten($card-color, 30%) solid 1px;
-        border-bottom: lighten($card-color, 30%) solid 1px;
-
-        &:first-child {
-          border-top: 0;
-        }
-
-        &:last-child {
-          border-bottom: 0;
-        }
 
         &:hover {
           background: lighten($card-color, 30%);
           transition: 300ms ease-in-out;
-        }
-
-        &:first-child:hover {
-          background: lighten($card-color, 30%);
-          border-radius: 5px 5px 0 0;
-        }
-
-        &:last-child:hover {
-          background: lighten($card-color, 30%);
-          border-radius: 0 0  5px 5px;
         }
       }
     }

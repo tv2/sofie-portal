@@ -5,11 +5,12 @@ import UserListItem from "../user-list-item/user-list-item";
 import "./user-list.scss";
 
 interface UserListProps {
-    users: User[]
+    users: User[],
+    onClick: (user: User) => (void),
 }
 
-export default function UserList(props: UserListProps) {
-    const [selectedUser, setSelectedUser] = useState<User>();
+export default function UserList({ users, onClick }: UserListProps) {
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
     function downloadUser() {
         alert("Download");
@@ -33,11 +34,14 @@ export default function UserList(props: UserListProps) {
                 </DropdownMenu>
             </div>
             <div className="c-user-list__items">
-                {props.users.map((user: User) => (
+                {users.map((user: User) => (
                     <UserListItem
                         key={user.id}
                         user={user}
-                        onClick={() => setSelectedUser(user)}
+                        onClick={() => {
+                            setSelectedUser(user);
+                            onClick(user);
+                        }}
                         isSelected={user === selectedUser}
                     />
                 ))}

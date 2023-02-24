@@ -8,13 +8,13 @@ interface UserListItemProps {
     isSelected: boolean
 }
 
-export default function UserListItem(props: UserListItemProps) {
+export default function UserListItem({user, onClick, isSelected}: UserListItemProps) {
     return (
         <button
-            className={`c-user-list-item ${ props.isSelected ? "selected" : ""}`}
-            onClick={() => props.onClick()}
+            className={`c-user-list-item ${ isSelected ? "selected" : ""}`}
+            onClick={() => onClick()}
         >
-            {props.user.name}
+            {user.name}
         </button>
     )
 }

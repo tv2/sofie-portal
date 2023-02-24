@@ -2,19 +2,23 @@
   "users": [
     {
       "id": "test",
-      "name": "Test - Afv.D Lyd"
+      "name": "Test - Afv.D Lyd",
+      "target": "/test"
     },
     {
       "id": "test2",
-      "name": "Test 2 - Afv.D Lyd"
+      "name": "Test 2 - Afv.D Lyd",
+      "target": "/test2"
     },
     {
       "id": "test3",
-      "name": "Test 3 - Afv.D Lyd"
+      "name": "Test 3 - Afv.D Lyd",
+      "target": "/test3"
     },
     {
       "id": "test4",
-      "name": "Test 4 - Afv.D Lyd"
+      "name": "Test 4 - Afv.D Lyd",
+      "target": "/test4"
     }
   ]
 }

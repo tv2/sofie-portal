@@ -1,0 +1,26 @@
+@import "../../../styles/main";
+
+.c-user-information {
+  background-color: $card-color;
+  margin-top: 24px;
+  padding: 40px;
+  border-radius: 16px;
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+
+    label {
+      font-size: 1rem;
+      margin-right: 16px;
+    }
+    input {
+      background-color: $background-color;
+      border: none;
+      font-size: 1rem;
+      color: $contrast-color;
+      padding: 8px;
+    }
+  }
+}

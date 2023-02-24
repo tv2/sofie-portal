@@ -1,0 +1,64 @@
+@import "../../../styles/main";
+
+.c-editable-table {
+  background-color: $background-color;
+  padding: 24px;
+  border-radius: 14px;
+  margin-top: 2.5rem;
+
+  button {
+    max-width: 200px;
+  }
+
+  table {
+    width: 100%;
+    margin: 0;
+    thead {
+      tr {
+        th {
+          padding: 1.5rem;
+          text-align: left;
+
+          &:last-child {
+            text-align: right;
+          }
+
+          button {
+            margin: 0;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        &:nth-child(odd) {
+          background-color: $table-color-odd;
+        }
+
+        &:nth-child(even) {
+          background-color: $table-color;
+        }
+
+        td {
+          padding: 1.5rem;
+
+          input {
+            background-color: transparent;
+            border: 2px solid $border-color ;
+          }
+
+          button {
+            margin:0 0 0 2rem;
+            max-width: 4rem;
+            font-size: 1rem;
+          }
+
+          &:last-child {
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+}

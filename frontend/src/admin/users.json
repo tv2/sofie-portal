@@ -3,17 +3,36 @@
     {
       "id": "test",
       "name": "Test - Afv.D Lyd",
-      "target": "/test"
+      "emberTarget": "/test",
+      "accessRightGroups": [
+        {
+          "name": "sofie",
+          "accessRights": [
+            {
+              "machineId": "1",
+              "label": "",
+              "path": "",
+              "anonymous": true
+            },
+            {
+              "machineId": "2",
+              "path": "/seneste",
+              "label": "2 -To Path",
+              "anonymous": false
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "test2",
       "name": "Test 2 - Afv.D Lyd",
-      "target": "/test2"
+      "emberTarget": "/test2"
     },
     {
       "id": "test3",
       "name": "Test 3 - Afv.D Lyd",
-      "target": "/test3"
+      "emberTarget": "/test3"
     },
     {
       "id": "test4",

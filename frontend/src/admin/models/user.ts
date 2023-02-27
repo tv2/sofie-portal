@@ -1,5 +1,8 @@
+import {AccessRightGroup} from "./access-right-group";
+
 export interface User {
     id: string,
     name: string,
-    target: String,
+    emberTarget: string
+    accessRightGroups: AccessRightGroup[]
 }

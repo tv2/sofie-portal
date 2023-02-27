@@ -2,7 +2,6 @@
 
 .c-user-information {
   background-color: $card-color;
-  margin-top: 24px;
   padding: 40px;
   border-radius: 16px;
 
@@ -15,8 +14,18 @@
       font-size: 1rem;
       margin-right: 16px;
     }
-    input {
+  }
+}
+@media only screen and (max-width: 848px) {
+  .c-user-information  {
+    &__items  {
+      flex-direction: column;
+    }
 
+    &__item {
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
     }
   }
 }

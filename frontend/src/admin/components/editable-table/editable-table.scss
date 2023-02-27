@@ -13,10 +13,13 @@
   table {
     width: 100%;
     margin: 0;
+
     thead {
       tr {
+        height: 0.5rem;
+
         th {
-          padding: 1.5rem;
+          padding: 1rem;
           text-align: left;
 
           &:last-child {
@@ -29,8 +32,12 @@
         }
       }
     }
+
     tbody {
+
       tr {
+        height: 0.5rem;
+
         &:nth-child(odd) {
           background-color: $table-color-odd;
         }
@@ -40,7 +47,7 @@
         }
 
         td {
-          padding: 1.5rem;
+          padding: 1rem;
 
           input {
             background-color: transparent;
@@ -49,13 +56,96 @@
 
           button {
             margin:0 0 0 2rem;
-            max-width: 4rem;
-            font-size: 1rem;
+            width: 3.5rem;
           }
 
           &:last-child {
             display: flex;
             justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1261px) {
+  table {
+    display: flex;
+    flex-direction: column;
+
+    thead {
+      height: 6rem;
+      display: flex;
+      justify-content: flex-end;
+
+      tr {
+        display: flex;
+        justify-content: flex-end;
+
+        th {
+          display: none;
+        }
+
+        th:last-child {
+          display: inline;
+          width: 200px;
+        }
+      }
+    }
+
+    tbody {
+      display: flex;
+      flex-direction: column;
+
+      tr {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 0.5rem;
+        min-height: 200px;
+
+        td {
+          display: block;
+          width: 200px;
+
+          &:nth-of-type(1):before {
+            content: "ID";
+          }
+
+          &:nth-of-type(2):before {
+            content: "Name";
+          }
+
+          &:nth-of-type(3):before {
+            content: "Target";
+          }
+
+          &:last-child {
+            justify-content: flex-start !important;
+
+            button {
+              margin: 0 20px 0 0 ;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 848px) {
+  table {
+    tbody {
+      tr {
+        min-height: 350px;
+        flex-wrap: nowrap;
+
+        td {
+          width: 100%;
+
+          input {
+            width: 400px;
           }
         }
       }

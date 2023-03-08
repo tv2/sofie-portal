@@ -14,15 +14,14 @@ export default function DropdownMenu( {children}: DropdownMenuProps) {
     }
 
     function hideDropdown(event: React.FocusEvent<HTMLButtonElement>): void {
-        if (event.currentTarget === event.target) {
-            setShowDropdown(false);
+        if (event.currentTarget !== event.target) {
+            return
         }
+        setShowDropdown(false);
     }
 
     return (
-        <div className={showDropdown
-            ? "c-dropdown-menu--active"
-            : "c-dropdown-menu"}>
+        <div className={`c-dropdown-menu${showDropdown ? '--active' : ''}`}>
             <button
                 onClick={toggleDropdown}
                 onBlur={(e: React.FocusEvent<HTMLButtonElement>): void => hideDropdown(e)}

@@ -29,19 +29,28 @@ export default function EditableTable() {
 
     return (
         <div className="c-editable-table">
+            {data &&                           
+                data.map((row, index) => (
             <table>
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Target</th>
+                    <th >Group <input type="text" value={row.name}/></th>
+                    <th>Label</th>
+                    <th>Anonymous</th>
+                    <th>Path and Args</th>
                     <th><button onClick={handleAddRow}>Add machine</button></th>
                 </tr>
                 </thead>
                 <tbody>
-                {data &&
-                    data.map((row, index) => (
                         <tr key={index}>
+                            <td>
+                                <input
+                                    key={index}
+                                    type="text"
+                                    value={row.id}
+                                    onChange={(e) => handleInputChange(e)}
+                                />
+                            </td>
                             <td>
                                 <input
                                     type="text"
@@ -51,7 +60,7 @@ export default function EditableTable() {
                             </td>
                             <td>
                                 <input
-                                    type="text"
+                                    type="checkbox"
                                     value={row.name}
                                     onChange={(e) => handleInputChange(e)}
                                 />
@@ -59,7 +68,7 @@ export default function EditableTable() {
                             <td>
                                 <input
                                     type="text"
-                                    value={row.emberTarget}
+                                    value={row.name}
                                     onChange={(e) => handleInputChange(e)}
                                 />
                             </td>
@@ -72,9 +81,9 @@ export default function EditableTable() {
                                 </button>
                             </td>
                         </tr>
-                    ))}
                 </tbody>
             </table>
+         ))}
         </div>
     );
 }

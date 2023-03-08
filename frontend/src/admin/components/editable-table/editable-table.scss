@@ -1,9 +1,7 @@
 @import "../../../styles/main";
 
 .c-editable-table {
-  background-color: $background-color;
-  padding: 24px;
-  border-radius: 14px;
+  background-color: $card-color;
   margin-top: 2.5rem;
 
   button {
@@ -12,12 +10,13 @@
 
   table {
     width: 100%;
-    margin: 0;
+    margin: 0 0 4rem 0;
 
     thead {
-      tr {
-        height: 0.5rem;
+      padding: 1rem;
+      background-color: $background-color;
 
+      tr {
         th {
           padding: 1rem;
           text-align: left;
@@ -34,9 +33,10 @@
     }
 
     tbody {
+      padding: 1rem;
 
       tr {
-        height: 0.5rem;
+        height: 1rem;
 
         &:nth-child(odd) {
           background-color: $table-color-odd;
@@ -54,6 +54,12 @@
             border: 2px solid $border-color ;
           }
 
+          input[type='checkbox'] {
+            content: "";
+            width: 1rem;
+            height: 1rem;
+          }
+
           button {
             margin:0 0 0 2rem;
             width: 3.5rem;
@@ -69,13 +75,14 @@
   }
 }
 
-@media only screen and (max-width: 1261px) {
+@media only screen and (max-width: 1400px) {
   table {
     display: flex;
     flex-direction: column;
 
     thead {
-      height: 6rem;
+      padding: 0 !important;
+      height: 100%;
       display: flex;
       justify-content: flex-end;
 
@@ -95,6 +102,7 @@
     }
 
     tbody {
+      padding: 0 !important;
       display: flex;
       flex-direction: column;
 
@@ -107,18 +115,24 @@
 
         td {
           display: block;
-          width: 200px;
 
           &:nth-of-type(1):before {
-            content: "ID";
+            content: "Group:";
           }
 
           &:nth-of-type(2):before {
-            content: "Name";
+            content: "Label:";
           }
 
           &:nth-of-type(3):before {
-            content: "Target";
+            content: "Anonymous:";
+          }
+          &:nth-of-type(4):before {
+            content: "Path and Args:";
+          }
+
+          &:before {
+            margin-right: 1rem;
           }
 
           &:last-child {
@@ -134,18 +148,24 @@
   }
 }
 
-@media only screen and (max-width: 848px) {
+@media only screen and (max-width: 964px) {
   table {
     tbody {
+      width: 100%;
       tr {
-        min-height: 350px;
-        flex-wrap: nowrap;
+        min-height: 450px;
 
         td {
-          width: 100%;
+          display: flex;
+          flex-direction: column;
+          max-width: 100%;
 
-          input {
-            width: 400px;
+          &:before {
+            margin-bottom: 0.5rem;
+          }
+
+          &:last-child {
+            flex-direction: row;
           }
         }
       }

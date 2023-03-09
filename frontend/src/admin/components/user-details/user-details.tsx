@@ -9,21 +9,21 @@ interface UserDetailsProps {
     selectedUser: User;
 }
 export default function UserDetails({ users, selectedUser }: UserDetailsProps) {
-    const user = users.find(u => u.id === selectedUser.id)
-    return (
-        <section className="c-user-details">
-            <div className="c-user-details__header">
-                <h2>User details</h2>
-                <CloneUserAccess />
-            </div>
-            <div>
-                {user &&
-                    <>
-                        <UserInformation user={user} key={user.id} />
-                        <AccessRights selectedUser={selectedUser} />
-                    </>
-                }
-            </div>
-        </section>
-    )
+  const user = users.find(u => u.id === selectedUser.id)
+  return (
+    <section className="c-user-details">
+      <div className="c-user-details__header">
+        <h2>User details</h2>
+        <CloneUserAccess />
+      </div>
+      <div>
+        {user &&
+            <>
+              <UserInformation user={user} key={user.id} />
+              <AccessRights selectedUser={selectedUser} />
+            </>
+        }
+      </div>
+    </section>
+  )
 }

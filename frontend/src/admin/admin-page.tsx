@@ -18,7 +18,7 @@ export default function AdminPage() {
       <UserList users={Users.users} onClick={handleSelectedUser}/>
       <RestartServerButton />
       {selectedUser &&
-                <UserDetails users={Users.users} selectedUser={selectedUser}  />
+          <UserDetails users={Users.users} selectedUser={selectedUser} />
       }
     </div>
   )

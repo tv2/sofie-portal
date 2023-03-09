@@ -1,89 +1,103 @@
-import React, { useState, useEffect } from "react";
-import { User } from "../../models/user";
-import "./editable-table.scss";
 import EditRowIcon from "../edit-row-icon/edit-row-icon";
 import DeleteRowIcon from "../delete-row-icon/delete-row-icon";
+import {AccessRight} from "../../models/access-right";
+import {AccessRightGroup} from "../../models/access-right-group";
+import './editable-table.scss'
 
-export default function EditableTable() {
-    const [data, setData] = useState<User[]>([]);
+export default function EditableTable({ accessRights }: { accessRights: AccessRightGroup[] }) {
+  function handleAddRow() {
+    accessRights.forEach((group) => {
+      group.accessRights.push({
+        machineId: '',
+        label: '',
+        anonymous: false,
+        path: '',
+      })
+    })
+  }
 
-    useEffect(() => {
-        fetch("./src/admin/users.json")
-            .then((response) => response.json())
-            .then((data) => setData(data.users));
-    }, []);
+  function handleDeleteRow(groupId: number, accessRightId: number) {
+    const newAccessRights = [...accessRights]
+    newAccessRights[groupId].accessRights.splice(accessRightId, 1)
+  }
 
-    function handleAddRow() {
-        setData([...data, { id: "", name: "", emberTarget: "", accessRightGroups: [] }]);
-    }
+  function handleInputChange(
+      groupId: number,
+      accessRightId: number,
+      field: keyof AccessRight,
+      value: string | boolean
+  ) {
+    const newAccessRights = [...accessRights]
+    newAccessRights[groupId].accessRights[accessRightId][field] = value
+  }
 
-    function handleDeleteRow(index: number) {
-        const newData = [...data];
-        newData.splice(index, 1);
-        setData(newData);
-    }
-
-    function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-        console.log(event.target.value)
-    }
-
-    return (
-        <div className="c-editable-table">
-            {data &&                           
-                data.map((row, index) => (
-            <table>
-                <thead>
-                <tr>
-                    <th >Group <input type="text" value={row.name}/></th>
-                    <th>Label</th>
-                    <th>Anonymous</th>
-                    <th>Path and Args</th>
-                    <th><button onClick={handleAddRow}>Add machine</button></th>
-                </tr>
-                </thead>
-                <tbody>
-                        <tr key={index}>
-                            <td>
-                                <input
-                                    key={index}
-                                    type="text"
-                                    value={row.id}
-                                    onChange={(e) => handleInputChange(e)}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    value={row.id}
-                                    onChange={(e) => handleInputChange(e)}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="checkbox"
-                                    value={row.name}
-                                    onChange={(e) => handleInputChange(e)}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    value={row.name}
-                                    onChange={(e) => handleInputChange(e)}
-                                />
-                            </td>
-                            <td>
-                                <button onClick={() => handleDeleteRow(index)}>
-                                    <DeleteRowIcon/>
-                                </button>
-                                <button>
-                                    <EditRowIcon/>
-                                </button>
-                            </td>
-                        </tr>
-                </tbody>
+  return (
+      <div className="c-editable-table">
+        {accessRights.map((group, groupId) => (
+            <table key={groupId}>
+              <thead>
+              <tr>
+                <th>Group: {group.name}</th>
+                <th>Label</th>
+                <th>Anonymous</th>
+                <th>Path and Args</th>
+                <th>
+                  <button onClick={handleAddRow}>Add machine</button>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              {group.accessRights.map((accessRight, accessRightId) => (
+                  <tr key={accessRightId}>
+                    <td>
+                      <input
+                          type="text"
+                          value={accessRight.machineId}
+                          onChange={(e) =>
+                              handleInputChange(groupId, accessRightId, 'machineId', e.target.value)
+                          }
+                      />
+                    </td>
+                    <td>
+                      <input
+                          type="text"
+                          value={accessRight.label}
+                          onChange={(e) =>
+                              handleInputChange(groupId, accessRightId, 'label', e.target.value)
+                          }
+                      />
+                    </td>
+                    <td>
+                      <input
+                          type="checkbox"
+                          checked={accessRight.anonymous}
+                          onChange={(e) =>
+                              handleInputChange(groupId, accessRightId, 'anonymous', e.target.checked)
+                          }
+                      />
+                    </td>
+                    <td>
+                      <input
+                          type="text"
+                          value={accessRight.path}
+                          onChange={(e) =>
+                              handleInputChange(groupId, accessRightId, 'path', e.target.value)
+                          }
+                      />
+                    </td>
+                    <td>
+                      <button onClick={() => handleDeleteRow(groupId, accessRightId)}>
+                        <DeleteRowIcon />
+                      </button>
+                      <button>
+                        <EditRowIcon />
+                      </button>
+                    </td>
+                  </tr>
+              ))}
+              </tbody>
             </table>
-         ))}
-        </div>
-    );
+        ))}
+      </div>
+  )
 }

@@ -1,4 +1,4 @@
-import {AccessRightGroup} from "./access-right-group";
+import {AccessRightGroup} from './access-right-group'
 
 export interface User {
     id: string,

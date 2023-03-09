@@ -11,11 +11,11 @@
   table {
     width: 100%;
     margin: 0 0 4rem 0;
+    border-spacing: 0;
 
     thead {
       padding: 1rem;
       background-color: $background-color;
-
       tr {
         th {
           padding: 1rem;
@@ -88,10 +88,16 @@
 
       tr {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
 
         th {
           display: none;
+        }
+        th:first-child {
+          display: block;
         }
 
         th:last-child {
@@ -117,7 +123,7 @@
           display: block;
 
           &:nth-of-type(1):before {
-            content: "Group:";
+            content: "Machine Id:";
           }
 
           &:nth-of-type(2):before {

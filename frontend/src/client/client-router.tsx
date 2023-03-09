@@ -1,8 +1,8 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom'
 
 enum ClientRoute {
-  HOME = "/",
-  PAGE_NOT_FOUND = "/*",
+  HOME = '/',
+  PAGE_NOT_FOUND = '/*',
 }
 export function ClientRouter() {
   return (

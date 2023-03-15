@@ -13,21 +13,19 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
     groupId: number;
     accessRightId: number;
   } | null>(null)
+  const newAccessRights = [...accessRightGroups]
+  const newAccessRightGroup = [...accessRightGroups]
 
-  function addNewAccessRight() {
-    accessRightGroups.forEach((group) => {
-      group.accessRights.push({
-        machineId: '',
-        label: '',
-        anonymous: false,
-        path: '',
-      })
-    })
-  }
-
-  function deleteAccessRight(groupId: number, accessRightId: number) {
-    const newAccessRights = [...accessRightGroups]
-    newAccessRights[groupId].accessRights.splice(accessRightId, 1)
+  function addNewAccessRight(groupId: number) {
+    const newAccessRight = {
+      machineId: '',
+      label: '',
+      anonymous: false,
+      path: '',
+    }
+    newAccessRightGroup[groupId].accessRights.push(newAccessRight)
+    setSelectedRow({groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length - 1})
+    setEditMode(true)
   }
 
   function handleAccessRightFieldChange(
@@ -39,9 +37,9 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
     setSelectedRow({ groupId, accessRightId })
   }
 
-  function cancelAccessRightChanges() {
-    setSelectedRow(null)
-    setEditMode(false)
+  function deleteAccessRight(groupId: number, accessRightId: number) {
+    newAccessRights[groupId].accessRights.splice(accessRightId, 1)
+    setSelectedRow({groupId, accessRightId: newAccessRights[groupId].accessRights.length + 1})
   }
 
   function editAccessRight(groupId: number, accessRightId: number) {
@@ -49,8 +47,12 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
     setEditMode(true)
   }
 
-  function saveAccessRightChanges(groupId: number, accessRightId: number) {
-    const newAccessRights = [...accessRightGroups]
+  function cancelAccessRightChange() {
+    setSelectedRow(null)
+    setEditMode(false)
+  }
+
+  function saveAccessRightChange(groupId: number, accessRightId: number) {
     const accessRight = newAccessRights[groupId].accessRights[accessRightId]
     setSelectedRow(null)
     setEditMode(false)
@@ -67,7 +69,7 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
               <th>Anonymous</th>
               <th>Path and Args</th>
               <th>
-                <button onClick={addNewAccessRight}>Add machine</button>
+                <button onClick={() => addNewAccessRight(groupId)}>Add machine</button>
               </th>
             </tr>
           </thead>
@@ -153,10 +155,10 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
                 <td>
                   {editMode && selectedRow?.groupId === groupId && selectedRow?.accessRightId === accessRightId ? (
                     <>
-                      <button onClick={() => saveAccessRightChanges(groupId, accessRightId)}>
+                      <button onClick={() => saveAccessRightChange(groupId, accessRightId)}>
                         <SaveEditIcon />
                       </button>
-                      <button onClick={cancelAccessRightChanges}>
+                      <button onClick={cancelAccessRightChange}>
                         <CancelEditIcon />
                       </button>
                     </>

@@ -8,6 +8,7 @@ import './user-details.scss'
 interface UserDetailsProps {
     selectedUser: User;
 }
+
 export default function UserDetails({ users, selectedUser }: UserDetailsProps) {
   const user = users.find(u => u.id === selectedUser.id)
   return (

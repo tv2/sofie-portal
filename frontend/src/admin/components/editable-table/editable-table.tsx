@@ -13,7 +13,7 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
     groupId: number;
     accessRightId: number;
   } | null>(null)
-  const newAccessRights = [...accessRightGroups]
+
   const newAccessRightGroup = [...accessRightGroups]
 
   function addNewAccessRight(groupId: number) {
@@ -25,37 +25,38 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
     }
     newAccessRightGroup[groupId].accessRights.push(newAccessRight)
     setSelectedRow({groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length - 1})
-    setEditMode(true)
+    setEditMode(!editMode)
   }
 
   function handleAccessRightFieldChange(
     groupId: number,
     accessRightId: number,
     field: keyof AccessRight,
-    value: string | boolean
+    value: string | boolean,
   ) {
     setSelectedRow({ groupId, accessRightId })
+    const accessRight = newAccessRightGroup[groupId].accessRights[accessRightId]
+    accessRight[field] = value
   }
 
   function deleteAccessRight(groupId: number, accessRightId: number) {
-    newAccessRights[groupId].accessRights.splice(accessRightId, 1)
-    setSelectedRow({groupId, accessRightId: newAccessRights[groupId].accessRights.length + 1})
+    newAccessRightGroup[groupId].accessRights.splice(accessRightId, 1)
+    setSelectedRow({groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length + 1})
   }
 
   function editAccessRight(groupId: number, accessRightId: number) {
     setSelectedRow({ groupId, accessRightId })
-    setEditMode(true)
+    setEditMode(!editMode)
   }
 
   function cancelAccessRightChange() {
     setSelectedRow(null)
-    setEditMode(false)
+    setEditMode(editMode)
   }
 
-  function saveAccessRightChange(groupId: number, accessRightId: number) {
-    const accessRight = newAccessRights[groupId].accessRights[accessRightId]
+  function saveAccessRightChange() {
     setSelectedRow(null)
-    setEditMode(false)
+    setEditMode(editMode)
   }
 
   return (
@@ -80,6 +81,7 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
                   {selectedRow?.groupId === groupId &&
                       selectedRow?.accessRightId === accessRightId ? (
                       <input
+                        name="machineId"
                         type="text"
                         value={accessRight.machineId}
                         onChange={(e) =>
@@ -99,6 +101,7 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
                   {selectedRow?.groupId === groupId &&
                       selectedRow?.accessRightId === accessRightId ? (
                       <input
+                        name="label"
                         type="text"
                         value={accessRight.label}
                         onChange={(e) =>
@@ -118,6 +121,7 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
                   {selectedRow?.groupId === groupId &&
                       selectedRow?.accessRightId === accessRightId ? (
                       <input
+                        name="anonymous"
                         type="checkbox"
                         checked={accessRight.anonymous}
                         onChange={(e) =>
@@ -130,13 +134,14 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
                         }
                       />
                     ) : (
-                      editMode ? accessRight.anonymous.toString() : accessRight.anonymous ? 'True' : 'False'
+                      editMode ? accessRight.anonymous.toString() : accessRight.anonymous ? 'true' : 'false'
                     )}
                 </td>
                 <td>
                   {selectedRow?.groupId === groupId &&
                       selectedRow?.accessRightId === accessRightId ? (
                       <input
+                        name="path"
                         type="text"
                         value={accessRight.path}
                         onChange={(e) =>
@@ -155,7 +160,7 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
                 <td>
                   {editMode && selectedRow?.groupId === groupId && selectedRow?.accessRightId === accessRightId ? (
                     <>
-                      <button onClick={() => saveAccessRightChange(groupId, accessRightId)}>
+                      <button onClick={saveAccessRightChange}>
                         <SaveEditIcon />
                       </button>
                       <button onClick={cancelAccessRightChange}>

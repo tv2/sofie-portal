@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import Users from './users.json'
 import {User} from './models/user'
 import UserList from './components/user-list/user-list'

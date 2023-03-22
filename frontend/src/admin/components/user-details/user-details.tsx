@@ -10,7 +10,7 @@ interface UserDetailsProps {
 }
 
 export default function UserDetails({ users, selectedUser }: UserDetailsProps) {
-  const user = users.find(u => u.id === selectedUser.id)
+  const user = users.find(user => user.id === selectedUser.id)
   return (
     <section className="c-user-details">
       <div className="c-user-details__header">

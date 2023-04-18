@@ -9,6 +9,7 @@ import './editable-table.scss'
 
 export default function EditableTable({ accessRightGroups }: { accessRightGroups: AccessRightGroup[] }) {
   const [editMode, setEditMode] = useState(false)
+
   const [selectedRow, setSelectedRow] = useState<{
     groupId: number;
     accessRightId: number;
@@ -25,13 +26,13 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
     }
     newAccessRightGroup[groupId].accessRights.push(newAccessRight)
     setSelectedRow({groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length - 1})
-    setEditMode(!editMode)
+    setEditMode(true)
   }
 
   function handleAccessRightFieldChange(
     groupId: number,
     accessRightId: number,
-    field: keyof AccessRight,
+    field: keyof AccessRight | string,
     value: string | boolean,
   ) {
     setSelectedRow({ groupId, accessRightId })
@@ -41,22 +42,22 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
 
   function deleteAccessRight(groupId: number, accessRightId: number) {
     newAccessRightGroup[groupId].accessRights.splice(accessRightId, 1)
-    setSelectedRow({groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length + 1})
+    setSelectedRow({groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length - 1})
   }
 
   function editAccessRight(groupId: number, accessRightId: number) {
     setSelectedRow({ groupId, accessRightId })
-    setEditMode(!editMode)
+    setEditMode(true)
   }
 
   function cancelAccessRightChange() {
     setSelectedRow(null)
-    setEditMode(editMode)
+    setEditMode(false)
   }
 
   function saveAccessRightChange() {
     setSelectedRow(null)
-    setEditMode(editMode)
+    setEditMode(false)
   }
 
   return (
@@ -169,7 +170,7 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
                     </>
                   ) : (
                     <>
-                      <button onClick={() => deleteAccessRight(groupId, accessRightId)}>
+                      <button onClick={() => deleteAccessRight(groupId, accessRightId)} aria-label="Delete access right">
                         <DeleteRowIcon />
                       </button>
                       <button onClick={() => editAccessRight(groupId, accessRightId)}>

@@ -1,4 +1,3 @@
-import React from 'react'
 import './clone-user-access.scss'
 
 export default function CloneUserAccess() {

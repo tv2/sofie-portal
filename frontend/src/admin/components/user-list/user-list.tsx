@@ -15,6 +15,7 @@ export default function UserList({ users, onClick }: UserListProps) {
   function downloadUser() {
     alert('Download')
   }
+
   function updateUser() {
     alert('Update')
   }

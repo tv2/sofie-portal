@@ -1,8 +1,13 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import EditableTable from '../editable-table/editable-table'
 import './access-rights.scss'
+import {User} from "../../models/user";
 
-export default function AccessRights({ selectedUser }) {
+interface AccessRightsProps {
+  selectedUser: User;
+}
+
+export default function AccessRights({ selectedUser }: AccessRightsProps) {
   const [accessRightGroups, setAccessRightGroups] = useState(selectedUser.accessRightGroups || [])
 
   const handleCreateGroup = () => {
@@ -15,14 +20,14 @@ export default function AccessRights({ selectedUser }) {
   }
 
   return (
-    <div className="c-access-rights">
-      <div className="c-access-rights__header">
-        <h3>Access rights</h3>
-        <button onClick={handleCreateGroup}>Create group</button>
+      <div className="c-access-rights">
+        <div className="c-access-rights__header">
+          <h3>Access rights</h3>
+          <button onClick={handleCreateGroup}>Create group</button>
+        </div>
+        {selectedUser && (
+            <EditableTable accessRightGroups={selectedUser.accessRightGroups} />
+        )}
       </div>
-      {selectedUser && (
-        <EditableTable accessRightGroups={selectedUser.accessRightGroups} />
-      )}
-    </div>
   )
 }

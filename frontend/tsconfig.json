@@ -28,5 +28,6 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   }
 }

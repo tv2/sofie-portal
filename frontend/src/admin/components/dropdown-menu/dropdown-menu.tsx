@@ -26,6 +26,7 @@ export default function DropdownMenu( {children}: DropdownMenuProps) {
       <button
         onClick={toggleDropdown}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void => hideDropdown(e)}
+        tabIndex={0}
       >
         <DropdownMenuIcon/>
       </button>

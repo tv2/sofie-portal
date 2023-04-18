@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.0",
     "@jest/globals": "^29.5.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@types/eslint": "^8.4.10",
     "@types/node": "^18.15.5",
@@ -37,6 +38,7 @@
     "vite": "^3.2.4"
   },
   "dependencies": {
+    "identity-obj-proxy": "^3.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3"

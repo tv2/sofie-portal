@@ -1,4 +1,3 @@
-import React from 'react'
 import {User} from '../../models/user'
 import CloneUserAccess from '../clone-user-access/clone-user-access'
 import UserInformation from '../user-information/user-information'
@@ -7,6 +6,7 @@ import './user-details.scss'
 
 interface UserDetailsProps {
     selectedUser: User;
+    users: User[]
 }
 
 export default function UserDetails({ users, selectedUser }: UserDetailsProps) {

@@ -1,6 +1,7 @@
 @import "../../../styles/main";
 
 .c-access-rights {
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: $card-color;
@@ -18,6 +19,51 @@
       background-color: $contrast-color;
       color: $background-color;
       margin: 0;
+
+      &:disabled {
+        visibility: hidden;
+      }
+    }
+  }
+
+  &__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-content {
+      max-width: 400px;
+      width: 100%;
+      padding: 40px;
+      background-color: $table-color-odd;
+      border-radius: 0.5rem;
+
+      h4 {
+        margin-top: 0;
+      }
+
+      form {
+        label {
+          margin-right: 1rem;
+        }
+
+        .form__buttons {
+          display: flex;
+          margin-top: 5rem;
+
+          :last-child {
+            background-color: $success-color;
+            border-color: $success-color;
+            margin-left: 1rem;
+          }
+        }
+      }
     }
   }
 }

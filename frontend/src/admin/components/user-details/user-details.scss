@@ -8,10 +8,22 @@
 
   &__header {
     display: flex;
-    justify-content: space-between;
 
-    &:last-child {
-      margin: 0;
+    &-edit {
+      margin-left: auto;
+      max-width: 200px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        margin: 0 16px 0 0;
+      }
+
+      &--save {
+        background-color: $success-color;
+        border-color: $success-color;
+      }
     }
   }
 }

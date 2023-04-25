@@ -10,6 +10,12 @@
     justify-content: space-between;
     margin-top: 40px;
 
+    input {
+      &:disabled {
+        border-color: transparent;
+      }
+    }
+
     label {
       font-size: 1rem;
       margin-right: 16px;

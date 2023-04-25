@@ -2,7 +2,7 @@ import {it} from '@jest/globals'
 import DropdownMenu from '../components/dropdown-menu/dropdown-menu'
 import {fireEvent, render, RenderResult, waitFor} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import {act} from "react-dom/test-utils";
+import {act} from 'react-dom/test-utils'
 
 describe('DropdownMenu', () => {
   let wrapper: RenderResult
@@ -32,18 +32,18 @@ describe('DropdownMenu', () => {
   })
 
   it('should hide dropdown when focus is lost', async () => {
-    const button = wrapper.getByRole('button');
+    const button = wrapper.getByRole('button')
     act(() => {
       button.click()
     })
     await waitFor(() => {
-      expect(wrapper.container.querySelector('.c-dropdown-menu--active')).toBeInTheDocument();
+      expect(wrapper.container.querySelector('.c-dropdown-menu--active')).toBeInTheDocument()
     })
     act(() => {
       fireEvent.blur(button)
     })
     await waitFor(() => {
-      expect(wrapper.container.querySelector('.c-dropdown-menu')).toBeInTheDocument();
+      expect(wrapper.container.querySelector('.c-dropdown-menu')).toBeInTheDocument()
     })
   })
 

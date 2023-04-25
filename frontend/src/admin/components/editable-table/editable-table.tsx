@@ -1,14 +1,10 @@
 import {useState} from 'react'
-import EditRowIcon from '../edit-row-icon/edit-row-icon'
 import DeleteRowIcon from '../delete-row-icon/delete-row-icon'
-import SaveEditIcon from '../save-edit-icon/save-edit-icon'
-import CancelEditIcon from '../cancel-edit-icon/cancel-edit-icon'
 import {AccessRight} from '../../models/access-right'
 import {AccessRightGroup} from '../../models/access-right-group'
 import './editable-table.scss'
 
-export default function EditableTable({ accessRightGroups }: { accessRightGroups: AccessRightGroup[] }) {
-  const [editMode, setEditMode] = useState(false)
+export default function EditableTable({ accessRightGroups, disabled }: { accessRightGroups: AccessRightGroup[], disabled:boolean }) {
 
   const [selectedRow, setSelectedRow] = useState<{
     groupId: number;
@@ -26,38 +22,26 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
     }
     newAccessRightGroup[groupId].accessRights.push(newAccessRight)
     setSelectedRow({groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length - 1})
-    setEditMode(true)
   }
 
   function handleAccessRightFieldChange(
     groupId: number,
     accessRightId: number,
     field: keyof AccessRight | string,
-    value: string | boolean,
+    value: string | boolean
   ) {
-    setSelectedRow({ groupId, accessRightId })
-    const accessRight = newAccessRightGroup[groupId].accessRights[accessRightId]
-    accessRight[field] = value
+    if (!disabled) {
+      setSelectedRow({ groupId, accessRightId })
+      const accessRight = newAccessRightGroup[groupId].accessRights[accessRightId]
+      accessRight[field] = value
+    }
   }
 
   function deleteAccessRight(groupId: number, accessRightId: number) {
-    newAccessRightGroup[groupId].accessRights.splice(accessRightId, 1)
-    setSelectedRow({groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length - 1})
-  }
-
-  function editAccessRight(groupId: number, accessRightId: number) {
-    setSelectedRow({ groupId, accessRightId })
-    setEditMode(true)
-  }
-
-  function cancelAccessRightChange() {
-    setSelectedRow(null)
-    setEditMode(false)
-  }
-
-  function saveAccessRightChange() {
-    setSelectedRow(null)
-    setEditMode(false)
+    if (!disabled) {
+      newAccessRightGroup[groupId].accessRights.splice(accessRightId, 1)
+      setSelectedRow({ groupId, accessRightId: newAccessRightGroup[groupId].accessRights.length - 1 })
+    }
   }
 
   return (
@@ -71,7 +55,7 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
               <th>Anonymous</th>
               <th>Path and Args</th>
               <th>
-                <button onClick={() => addNewAccessRight(groupId)}>Add machine</button>
+                <button disabled={disabled} onClick={() => addNewAccessRight(groupId)}>Add machine</button>
               </th>
             </tr>
           </thead>
@@ -79,105 +63,73 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
             {group.accessRights.map((accessRight, accessRightId) => (
               <tr key={accessRightId}>
                 <td>
-                  {selectedRow?.groupId === groupId &&
-                      selectedRow?.accessRightId === accessRightId ? (
-                      <input
-                        name="machineId"
-                        type="text"
-                        value={accessRight.machineId}
-                        onChange={(e) =>
-                          handleAccessRightFieldChange(
-                            groupId,
-                            accessRightId,
-                            'machineId',
-                            e.target.value
-                          )
-                        }
-                      />
-                    ) : (
-                      accessRight.machineId
-                    )}
+                  <input
+                    disabled={disabled}
+                    name="machineId"
+                    type="text"
+                    value={accessRight.machineId}
+                    onChange={(e) =>
+                      handleAccessRightFieldChange(
+                        groupId,
+                        accessRightId,
+                        'machineId',
+                        e.target.value
+                      )
+                    }
+                  />
                 </td>
                 <td>
-                  {selectedRow?.groupId === groupId &&
-                      selectedRow?.accessRightId === accessRightId ? (
-                      <input
-                        name="label"
-                        type="text"
-                        value={accessRight.label}
-                        onChange={(e) =>
-                          handleAccessRightFieldChange(
-                            groupId,
-                            accessRightId,
-                            'label',
-                            e.target.value
-                          )
-                        }
-                      />
-                    ) : (
-                      accessRight.label
-                    )}
+                  <input
+                    disabled={disabled}
+                    name="label"
+                    type="text"
+                    value={accessRight.label}
+                    onChange={(e) =>
+                      handleAccessRightFieldChange(
+                        groupId,
+                        accessRightId,
+                        'label',
+                        e.target.value
+                      )
+                    }
+                  />
                 </td>
                 <td>
-                  {selectedRow?.groupId === groupId &&
-                      selectedRow?.accessRightId === accessRightId ? (
-                      <input
-                        name="anonymous"
-                        type="checkbox"
-                        checked={accessRight.anonymous}
-                        onChange={(e) =>
-                          handleAccessRightFieldChange(
-                            groupId,
-                            accessRightId,
-                            'anonymous',
-                            e.target.checked
-                          )
-                        }
-                      />
-                    ) : (
-                      editMode ? accessRight.anonymous.toString() : accessRight.anonymous ? 'true' : 'false'
-                    )}
+                  <input
+                    disabled={disabled}
+                    name="anonymous"
+                    type="checkbox"
+                    checked={accessRight.anonymous}
+                    onChange={(e) =>
+                      handleAccessRightFieldChange(
+                        groupId,
+                        accessRightId,
+                        'anonymous',
+                        e.target.checked
+                      )
+                    }
+                  />
                 </td>
                 <td>
-                  {selectedRow?.groupId === groupId &&
-                      selectedRow?.accessRightId === accessRightId ? (
-                      <input
-                        name="path"
-                        type="text"
-                        value={accessRight.path}
-                        onChange={(e) =>
-                          handleAccessRightFieldChange(
-                            groupId,
-                            accessRightId,
-                            'path',
-                            e.target.value
-                          )
-                        }
-                      />
-                    ) : (
-                      accessRight.path
-                    )}
+                  <input
+                    disabled={disabled}
+                    name="path"
+                    type="text"
+                    value={accessRight.path}
+                    onChange={(e) =>
+                      handleAccessRightFieldChange(
+                        groupId,
+                        accessRightId,
+                        'path',
+                        e.target.value
+                      )
+                    }
+                  />
                 </td>
                 <td>
-                  {editMode && selectedRow?.groupId === groupId && selectedRow?.accessRightId === accessRightId ? (
-                    <>
-                      <button onClick={saveAccessRightChange}>
-                        <SaveEditIcon />
-                      </button>
-                      <button onClick={cancelAccessRightChange}>
-                        <CancelEditIcon />
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={() => deleteAccessRight(groupId, accessRightId)} aria-label="Delete access right">
-                        <DeleteRowIcon />
-                      </button>
-                      <button onClick={() => editAccessRight(groupId, accessRightId)}>
-                        <EditRowIcon />
-                      </button>
-                    </>
-                  )}
+                  <button disabled={disabled} onClick={() => deleteAccessRight(groupId, accessRightId)} aria-label="Delete access right">
+                    <DeleteRowIcon />
+                  </button>
                 </td>
               </tr>
             ))}

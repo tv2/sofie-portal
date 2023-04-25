@@ -4,7 +4,9 @@
   position: relative;
 
   button {
-    @include button-no-style;
+    border: none;
+    margin: 0;
+    padding: 0;
   }
 
   .c-dropdown-menu-items {
@@ -14,11 +16,8 @@
   &--active {
     position: relative;
 
-    button {
-      @include button-no-style;
-    }
-
     .c-dropdown-menu-items {
+      display: block;
       position: absolute;
       background-color: $card-color;
       border-radius: 5px;

@@ -7,24 +7,39 @@ import './user-details.scss'
 
 interface UserDetailsProps {
     selectedUser: User;
-    users: User[];
 }
 
-export default function UserDetails({ users, selectedUser }: UserDetailsProps) {
-  const [isEditMode, setIsEditMode] = useState(false)
-  const [editedUser, setEditedUser] = useState(selectedUser)
+export default function UserDetails({ selectedUser }: UserDetailsProps) {
+    const [state, setState] = useState({
+        isEditMode: false,
+        editedUser: selectedUser,
+    });
 
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode)
-    setEditedUser(selectedUser)
-  }
+    const toggleEditMode = () => {
+        setState((prevState) => ({
+            ...prevState,
+            isEditMode: !prevState.isEditMode,
+            editedUser: selectedUser,
+        }));
+    };
 
-  const handleSave = () => {
-    console.log('Saving changes:', editedUser)
-    setIsEditMode(false)
-  }
+    const handleUserChange = (key: keyof User, value: string) => {
+        setState((prevState) => ({
+            ...prevState,
+            editedUser: {
+                ...prevState.editedUser,
+                [key]: value,
+            },
+        }));
+    };
 
-  const user = users.find(user => user.id === selectedUser.id)
+    const handleSave = () => {
+        console.log('Saving changes:', state.editedUser);
+        setState((prevState) => ({
+            ...prevState,
+            isEditMode: false,
+        }));
+    };
 
   return (
     <section className="c-user-details">
@@ -32,9 +47,9 @@ export default function UserDetails({ users, selectedUser }: UserDetailsProps) {
         <h2>User details</h2>
         <div className="c-user-details__header-edit">
           <button onClick={toggleEditMode}>
-            {isEditMode ? 'Cancel' : 'Edit user'}
+            {state.isEditMode ? 'Cancel' : 'Edit user'}
           </button>
-          {isEditMode && (
+          {state.isEditMode && (
             <>
               <button className="c-user-details__header-edit--save" onClick={handleSave}>Save</button>
             </>
@@ -43,17 +58,13 @@ export default function UserDetails({ users, selectedUser }: UserDetailsProps) {
         <CloneUserAccess />
       </div>
       <div>
-        {user &&
-                <>
-                  <UserInformation
-                    user={isEditMode ? editedUser : user}
-                    isEditMode={isEditMode}
-                    setEditedUser={setEditedUser}
-                    disabled={!isEditMode}
-                  />
-                  <AccessRights selectedUser={selectedUser} disabled={!isEditMode} />
-                </>
-        }
+          <UserInformation
+              user={state.isEditMode ? state.editedUser : selectedUser}
+              isEditMode={state.isEditMode}
+              onUserChange={handleUserChange}
+              disabled={!state.isEditMode}
+          />
+          <AccessRights selectedUser={selectedUser} disabled={!state.isEditMode} />
       </div>
     </section>
   )

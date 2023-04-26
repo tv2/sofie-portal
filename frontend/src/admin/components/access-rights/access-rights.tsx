@@ -9,11 +9,9 @@ interface AccessRightsProps {
 }
 
 export default function AccessRights({ selectedUser, disabled }: AccessRightsProps) {
-  const [accessRightGroups, setAccessRightGroups] = useState(selectedUser.accessRightGroups || [])
-
   const [showModal, setShowModal] = useState(false)
 
-  const handleCreateGroup = () => {
+  const toggleModal = () => {
     setShowModal(true)
   }
 
@@ -21,7 +19,7 @@ export default function AccessRights({ selectedUser, disabled }: AccessRightsPro
     <div className="c-access-rights">
       <div className="c-access-rights__header">
         <h3>Access rights</h3>
-        <button disabled={disabled} onClick={handleCreateGroup}>Create group</button>
+        <button disabled={disabled} onClick={toggleModal}>Create group</button>
       </div>
       {selectedUser && (
         <EditableTable accessRightGroups={selectedUser.accessRightGroups} disabled={disabled} />

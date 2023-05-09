@@ -1,6 +1,6 @@
 import React from "react";
-import "./user-list-item.scss";
 import {User} from "../../models/user";
+import "./user-list-item.scss";
 
 interface UserListItemProps {
     user: User,

@@ -1,0 +1,41 @@
+@import "../../../styles/main";
+
+.c-dropdown-menu {
+  position: relative;
+
+  button {
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .c-dropdown-menu-items {
+    display: none
+  }
+
+  &--active {
+    position: relative;
+
+    .c-dropdown-menu-items {
+      display: block;
+      position: absolute;
+      background-color: $card-color;
+      border-radius: 5px;
+      min-width: 180px;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+      overflow-y: auto;
+      max-height: 300px;
+
+      button {
+        cursor: pointer;
+        text-align: left;
+        padding: 1rem;
+
+        &:hover {
+          background: lighten($card-color, 30%);
+          transition: 300ms ease-in-out;
+        }
+      }
+    }
+  }
+}

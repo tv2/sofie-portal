@@ -10,4 +10,8 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  &__items {
+    overflow: auto;
+  }
 }

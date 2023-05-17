@@ -11,9 +11,9 @@ export default function EditableTable({ accessRightGroups }: { accessRightGroups
   const [editMode, setEditMode] = useState(false)
 
   const [selectedRow, setSelectedRow] = useState<{
-    groupId: number;
-    accessRightId: number;
-  } | null>(null)
+    groupId: number
+    accessRightId: number
+  }>()
 
   const newAccessRightGroup = [...accessRightGroups]
 

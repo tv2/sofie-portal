@@ -7,7 +7,7 @@ import UserDetails from './components/user-details/user-details'
 import './admin-page.scss'
 
 export default function AdminPage() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [selectedUser, setSelectedUser] = useState<User>()
 
   function handleSelectedUser (user: User) {
     setSelectedUser(user)

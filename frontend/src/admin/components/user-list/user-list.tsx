@@ -10,7 +10,7 @@ interface UserListProps {
 }
 
 export default function UserList({ users, onClick }: UserListProps) {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [selectedUser, setSelectedUser] = useState<User>()
 
   function downloadUser() {
     alert('Download')

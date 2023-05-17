@@ -37,11 +37,10 @@ describe('UserListItem', () => {
   ]
 
   it('renders user list correctly', () => {
-    const {getByText} = render(<UserList users={users} onClick={() => {
-    }}/>)
+    const {getByText} = render(<UserList users={users} onClick={() => {console.log('Mock click')}}/>)
     expect(getByText('Users')).toBeInTheDocument()
-    expect(getByText('John Doe')).toBeInTheDocument()
-    expect(getByText('Jane Doe')).toBeInTheDocument()
+    expect(getByText(users[0].name)).toBeInTheDocument()
+    expect(getByText(users[1].name)).toBeInTheDocument()
   })
 
   it('clicking "Download user" button calls downloadUser function', () => {

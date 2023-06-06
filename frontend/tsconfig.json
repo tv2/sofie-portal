@@ -6,7 +6,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "allowJs": false,
-     "outDir": "dist",
+    "outDir": "dist",
     "noEmit": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
@@ -26,6 +26,8 @@
     "exactOptionalPropertyTypes": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   }
 }

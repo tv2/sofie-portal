@@ -1,0 +1,31 @@
+@import "../../../styles/main";
+
+.c-user-information {
+  background-color: $card-color;
+  padding: 40px;
+  border-radius: 16px;
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+
+    label {
+      font-size: 1rem;
+      margin-right: 16px;
+    }
+  }
+}
+@media only screen and (max-width: 848px) {
+  .c-user-information  {
+    &__items  {
+      flex-direction: column;
+    }
+
+    &__item {
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

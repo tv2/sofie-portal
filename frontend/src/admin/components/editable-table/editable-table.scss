@@ -1,0 +1,181 @@
+@import "../../../styles/main";
+
+.c-editable-table {
+  background-color: $card-color;
+  margin-top: 2.5rem;
+
+  button {
+    max-width: 200px;
+  }
+
+  table {
+    width: 100%;
+    margin: 0 0 4rem 0;
+    border-spacing: 0;
+
+    thead {
+      padding: 1rem;
+      background-color: $background-color;
+      tr {
+        th {
+          padding: 1rem;
+          text-align: left;
+
+          &:last-child {
+            text-align: right;
+          }
+
+          button {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    tbody {
+      padding: 1rem;
+
+      tr {
+        height: 1rem;
+
+        &:nth-child(odd) {
+          background-color: $table-color-odd;
+        }
+
+        &:nth-child(even) {
+          background-color: $table-color;
+        }
+
+        td {
+          padding: 1rem;
+
+          input {
+            background-color: transparent;
+            border: 2px solid $border-color ;
+          }
+
+          input[type='checkbox'] {
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            accent-color: $contrast-color;
+          }
+
+          button {
+            margin:0 0 0 2rem;
+            width: 3.5rem;
+          }
+
+          &:last-child {
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  table {
+    display: flex;
+    flex-direction: column;
+
+    thead {
+      padding: 0 !important;
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      tr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+
+        th {
+          display: none;
+        }
+        th:first-child {
+          display: block;
+        }
+
+        th:last-child {
+          display: inline;
+          width: 200px;
+        }
+      }
+    }
+
+    tbody {
+      padding: 0 !important;
+      display: flex;
+      flex-direction: column;
+
+      tr {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 0.5rem;
+        min-height: 200px;
+
+        td {
+          display: block;
+
+          &:nth-of-type(1):before {
+            content: "Machine Id:";
+          }
+
+          &:nth-of-type(2):before {
+            content: "Label:";
+          }
+
+          &:nth-of-type(3):before {
+            content: "Anonymous:";
+          }
+          &:nth-of-type(4):before {
+            content: "Path and Args:";
+          }
+
+          &:before {
+            margin-right: 1rem;
+          }
+
+          &:last-child {
+            justify-content: flex-start !important;
+
+            button {
+              margin: 0 20px 0 0 ;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 964px) {
+  table {
+    tbody {
+      width: 100%;
+      tr {
+        min-height: 450px;
+
+        td {
+          display: flex;
+          flex-direction: column;
+          max-width: 100%;
+
+          &:before {
+            margin-bottom: 0.5rem;
+          }
+
+          &:last-child {
+            flex-direction: row;
+          }
+        }
+      }
+    }
+  }
+}

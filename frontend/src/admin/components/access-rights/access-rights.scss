@@ -1,0 +1,23 @@
+@import "../../../styles/main";
+
+.c-access-rights {
+  display: flex;
+  flex-direction: column;
+  background-color: $card-color;
+  margin-top: 24px;
+  padding: 40px;
+  border-radius: 16px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      max-width: 200px;
+      background-color: $contrast-color;
+      color: $background-color;
+      margin: 0;
+    }
+  }
+}

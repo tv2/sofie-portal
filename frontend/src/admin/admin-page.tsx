@@ -1,14 +1,25 @@
-import React from "react";
-import UserList from "./components/user-list/user-list";
+import {useState} from 'react'
 import Users from './users.json'
-import RestartServerButton from "./components/restart-server-button/restart-server-button";
-import "./admin-page.scss";
+import {User} from './models/user'
+import UserList from './components/user-list/user-list'
+import RestartServerButton from './components/restart-server-button/restart-server-button'
+import UserDetails from './components/user-details/user-details'
+import './admin-page.scss'
 
 export default function AdminPage() {
-    return (
-        <div className="c-admin-page">
-            <UserList users={Users.users}/>
-            <RestartServerButton/>
-        </div>
-    )
+  const [selectedUser, setSelectedUser] = useState<User>()
+
+  function handleSelectedUser (user: User) {
+    setSelectedUser(user)
+  }
+
+  return (
+    <div className="c-admin-page">
+      <UserList users={Users.users} onClick={handleSelectedUser}/>
+      <RestartServerButton />
+      {selectedUser &&
+          <UserDetails users={Users.users} selectedUser={selectedUser} />
+      }
+    </div>
+  )
 }

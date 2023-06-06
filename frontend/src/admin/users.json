@@ -1,20 +1,88 @@
 {
   "users": [
     {
-      "id": "test",
-      "name": "Test - Afv.D Lyd"
+      "id": "afvdlyd",
+      "name": "Afv.D Lyd",
+      "emberTarget": "/test",
+      "accessRightGroups": [
+        {
+          "name": "sofie",
+          "accessRights": [
+            {
+              "machineId": "1",
+              "label": "",
+              "path": "",
+              "anonymous": true
+            },
+            {
+              "machineId": "2",
+              "path": "/seneste",
+              "label": "2 -To Path",
+              "anonymous": false
+            },
+            {
+              "machineId": "3",
+              "path": "/test",
+              "label": "Test",
+              "anonymous": true
+            }
+          ]
+        },
+        {
+          "name": "QBOX",
+          "accessRights": [
+            {
+              "machineId": "1",
+              "label": "",
+              "path": "",
+              "anonymous": true
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "test2",
-      "name": "Test 2 - Afv.D Lyd"
+      "name": "Test 2 - Afv.D Lyd",
+      "emberTarget": "/test2",
+      "accessRightGroups": [
+        {
+          "name": "sofie",
+          "accessRights": [
+            {
+              "machineId": "1",
+              "label": "",
+              "path": "",
+              "anonymous": true
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "test3",
-      "name": "Test 3 - Afv.D Lyd"
+      "name": "Test 3 - Afv.D Lyd",
+      "emberTarget": "/test3",
+      "accessRightGroups": [
+      ]
     },
     {
       "id": "test4",
-      "name": "Test 4 - Afv.D Lyd"
+      "name": "Test 4 - Afv.D Lyd",
+      "target": "/test4",
+      "accessRightGroups": [
+        {
+          "name": "sofie",
+          "accessRights": [
+            {
+              "machineId": "1",
+              "label": "",
+              "path": "",
+              "anonymous": true
+            }
+          ]
+        }
+      ]
     }
   ]
 }
